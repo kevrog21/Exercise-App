@@ -20,6 +20,32 @@ main {
 }
 
 .header {
+
+}
+
+.header-container {
+  display: flex;
   background: #EAEAEA;
-  height: 5vh;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header-logo {
+  width: 10vw;
+}
+
+.hamburger-container {
+  height: 5vw;
+  width: 7vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-line-1,
+.hamburger-line-2,
+.hamburger-line-3 {
+  background-color: black;
+  width: 100%;
+  height: 3px;
 }
