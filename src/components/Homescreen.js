@@ -8,6 +8,8 @@ function Homescreen() {
                     <p className='star-text-day'>Day</p>
                     <p className='star-text-day-number'>55</p>
                 </div>
+                <div>current streak: 55 days</div>
+                <button>start today's workout</button>
             </div>
             
         </main>
