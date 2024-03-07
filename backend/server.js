@@ -2,7 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-// import exerciseRouter from './routes/exercises.js'
+import dailyWorkoutRouter from './routes/dailyworkouts.js'
+import usersRouter from './routes/users.js'
 // import { fileURLToPath } from 'url'
 
 const app = express()
@@ -16,15 +17,23 @@ const app = express()
 
 dotenv.config()
 
+
+
+app.use(cors({
+    origin: 'http://localhost:3000/',
+    credentials: true,
+}))
+app.use(express.json())
+
 // app.use(cors({
-//     origin: 'https://rampupfit.com',
+//     origin: 'https://dailyfitchallenge.com',
 //     credentials: true,
 // }))
 // app.use(express.json())
 
 
 //delete this after uncommenting above code
-app.use(cors())
+// app.use(cors())
 
  const uri = process.env.ATLAS_URI
  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -36,6 +45,8 @@ app.use(cors())
  })
 
 // app.use('/recipe-data', recipeRouter)
+app.use('/daily-workouts', dailyWorkoutRouter)
+app.use('/users', usersRouter)
 
 // app.get("/*", function(req, res) {
 //     res.sendFile(
