@@ -24,10 +24,14 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-router.route('/').post((req, res) => {
+router.route('/add').post((req, res) => {
     const username = req.body.username
+    const workoutRoutine = Array.isArray(req.body.workoutRoutine) ? req.body.workoutRoutine : []
 
-    const newUser = new User({username})
+    const newUser = new User({
+        username,
+        workoutRoutine
+    })
 
     newUser.save()
         .then(() => res.json('User added!'))
