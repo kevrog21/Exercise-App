@@ -120,7 +120,7 @@ main {
 
 .previous-workouts-container {
   border: 3px solid black;
-  border-radius: .5em;
+  border-radius: 1em;
   height: 20vh;
   margin: 6em 5vw;
   display: flex;
