@@ -1,16 +1,21 @@
 import starShape from '../assets/yellow_burst_shape.svg'
+import PreviousWorkouts from './PreviousWorkouts'
 
 function Homescreen() {
     return (
         <main>
-            <div className='day-container'>
-                <div className='star-text-container'>
-                    <p className='star-text-day'>Day</p>
-                    <p className='star-text-day-number'>55</p>
+            <div className='homescreen-hero-container'>
+                <div className='day-container'>
+                    <div className='star-text-container'>
+                        <p className='star-text-day'>Day</p>
+                        <p className='star-text-day-number'>55</p>
+                    </div>
                 </div>
-                <div>current streak: 55 days</div>
-                <button>start today's workout</button>
+                <div className='current-streak-text'>current streak: 55 days</div>
+                <button className='start-workout-btn'>start today's workout</button>
             </div>
+            
+            <PreviousWorkouts />
             
         </main>
     )

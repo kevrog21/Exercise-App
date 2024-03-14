@@ -20,11 +20,9 @@ code {
 }
 
 main {
-  height: 90vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   min-height: 96vh;
-  margin: 10vw 0 0 0;
 }
 
 .header-container {
@@ -65,10 +63,17 @@ main {
   height: 3px;
 }
 
+.homescreen-hero-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .day-container {
   width: 50.5vw;
   height: 50.25vw;
-  margin: 10vh 0 0 0;
+  margin: 20vh 0 0 0;
 }
 
 .star-shape{
@@ -84,6 +89,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 .star-text-day,
@@ -95,6 +101,31 @@ main {
 
 .star-text-day-number {
   font-size: 4em;
+}
+
+.current-streak-text {
+  margin: 2em 0 0 0;
+}
+
+.start-workout-btn {
+  color: white;
+  background: black;
+  padding: .5em 2em;
+  border-radius: 2em;
+  border: none;
+  font-size: 1.05em;
+  font-weight: 300;
+  margin: .75em 0;
+}
+
+.previous-workouts-container {
+  border: 3px solid black;
+  border-radius: .5em;
+  height: 20vh;
+  margin: 6em 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 footer {
