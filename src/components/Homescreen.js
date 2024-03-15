@@ -1,5 +1,6 @@
 import starShape from '../assets/yellow_burst_shape.svg'
 import PreviousWorkouts from './PreviousWorkouts'
+import { Link } from 'react-router-dom'
 
 function Homescreen() {
     return (
@@ -12,7 +13,7 @@ function Homescreen() {
                     </div>
                 </div>
                 <div className='current-streak-text'>current streak: 55 days</div>
-                <button className='start-workout-btn'>start today's workout</button>
+                <Link to='/current-workout'><button className='start-workout-btn'>start today's workout</button></Link>
             </div>
             
             <PreviousWorkouts />

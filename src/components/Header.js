@@ -1,6 +1,7 @@
 import logo from '../assets/dfc_logo.svg'
 import SideNav from './SideNav'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
 
@@ -47,7 +48,7 @@ export default function Header() {
         <div>
             <header className="header">
                 <div className='header-container'>
-                    <img className='header-logo' src={logo}></img>
+                    <Link to='/'><img className='header-logo' src={logo} onClick={handleNavItemClick}></img></Link>
                     <h2 className='app-title'>Daily Fit Challenge</h2>
                     <div className='hamburger-container' onClick={handleMenuToggle}>
                         <div className='hamburger-line-1'></div>
