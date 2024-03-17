@@ -25,6 +25,12 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+router.route('/:id').get((req, res) => {
+    User.find()
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
 router.route('/add').post(async (req, res) => {
     try{
         const username = req.body.username

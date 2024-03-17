@@ -12,13 +12,18 @@ function App() {
 
   const tempCurrentUserId = '65f612312938b12856048c79'
 
-  const [allUserData, setAllUserData] = useState()
+  const [currentUserData, setCurrentUserData] = useState()
+  const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
 
   useEffect(() => {
       const fetchData = async () => {
           try {
-              const response = await axios.get('http://localhost:5000/users')
-              setAllUserData(response.data)
+              const userResponse = await axios.get(`http://localhost:5000/users/${tempCurrentUserId}`)
+              setCurrentUserData(userResponse.data)
+
+              const workoutHistoryResponse = await axios.get(`http://localhost:5000/workout-histories/${tempCurrentUserId}`)
+              setCurrentUserWorkoutData(workoutHistoryResponse.data)
+              console.log(workoutHistoryResponse.data)
           } catch (error) {
               console.error('Error: ', error)
           }
@@ -34,13 +39,15 @@ function App() {
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
-              allUserData={allUserData}
               tempCurrentUserId={tempCurrentUserId}
+              currentUserData={currentUserData}
+              currentUserWorkoutData={currentUserWorkoutData}
             />} />
           <Route exact path="/current-workout" element={
             <CurrentWorkout 
-              allUserData={allUserData}
               tempCurrentUserId={tempCurrentUserId}
+              currentUserData={currentUserData}
+              currentUserWorkoutData={currentUserWorkoutData}
             />} />
         </Routes>
         <Footer />

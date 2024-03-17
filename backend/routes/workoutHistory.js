@@ -14,15 +14,20 @@ router.use(express.static("public"))
 router.use(express.json())
 router.use(cors())
 
-router.route('/:id').get((req, res) => {
-    WorkoutHistory.findById(req.params.id)
+router.route('/:userId').get((req, res) => {
+    const userId = req.params.userId
+    WorkoutHistory.findOne({ userId: userId })
         .then(workoutList => res.json(workoutList))
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-router.route('/update/:id').post((req, res) => {
-    WorkoutHistory.findById(req.params.id)
+router.route('/update/:userId').post((req, res) => {
+    const userId = req.params.userId
+    WorkoutHistory.findOne({ userId: userId })
         .then(workoutHistory => {
+            if (!workoutHistory) {
+                return res.status(404).json('Workout history not found for user')
+            }
 
             workoutHistory.workouts.push(req.body)
 
@@ -32,3 +37,5 @@ router.route('/update/:id').post((req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err))
 })
+
+export default router

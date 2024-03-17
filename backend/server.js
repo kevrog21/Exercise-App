@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import dailyWorkoutRouter from './routes/dailyworkouts.js'
 import usersRouter from './routes/users.js'
+import workoutHistoriesRouter from './routes/workoutHistory.js'
 // import { fileURLToPath } from 'url'
 
 const app = express()
@@ -20,7 +21,7 @@ dotenv.config()
 
 
 app.use(cors({
-    origin: 'http://localhost:5000/',
+    origin: 'http://localhost:3000',
     credentials: true,
 }))
 app.use(express.json())
@@ -44,9 +45,9 @@ app.use(express.json())
      console.log('MongoDB exercise database connection established succesfully!')
  })
 
-// app.use('/recipe-data', recipeRouter)
 app.use('/daily-workouts', dailyWorkoutRouter)
 app.use('/users', usersRouter)
+app.use('/workout-histories', workoutHistoriesRouter)
 
 // app.get("/*", function(req, res) {
 //     res.sendFile(

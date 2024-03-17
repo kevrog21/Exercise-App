@@ -7,16 +7,7 @@ const workoutHistorySchema = new mongoose.Schema({
         required: true
     },
     workouts: [
-        {
-            exerciseName: {
-                type: String,
-                required: true
-            },
-            completionStatus: {
-                type: Boolean,
-                required: true
-            }
-        }
+        
     ]
 }, {
     timestamps: true,
