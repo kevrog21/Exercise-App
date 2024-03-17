@@ -8,9 +8,10 @@ const userSchema = new mongoose.Schema({
         trim: true,
         minlength: 2
     },
-    workoutRoutine: {
-        type: Array, 
-        required: false
+    email: {
+        type: String, 
+        required: true,
+        unique: true
     }
 }, {
     timestamps: true,

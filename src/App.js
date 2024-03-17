@@ -10,6 +10,8 @@ import CurrentWorkout from './components/CurrentWorkout'
 
 function App() {
 
+  const tempCurrentUserId = '65f612312938b12856048c79'
+
   const [allUserData, setAllUserData] = useState()
 
   useEffect(() => {
@@ -33,10 +35,12 @@ function App() {
           <Route exact path="/" element={
             <Homescreen 
               allUserData={allUserData}
+              tempCurrentUserId={tempCurrentUserId}
             />} />
           <Route exact path="/current-workout" element={
             <CurrentWorkout 
               allUserData={allUserData}
+              tempCurrentUserId={tempCurrentUserId}
             />} />
         </Routes>
         <Footer />

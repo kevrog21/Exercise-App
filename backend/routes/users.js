@@ -1,5 +1,6 @@
 import { Router } from "express"
 import User from '../models/user.model.js'
+import createWorkoutHistoryForUser from './userWorkoutHistory.js'
 
 
 import cors from 'cors'
@@ -24,18 +25,25 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
-router.route('/add').post((req, res) => {
-    const username = req.body.username
-    const workoutRoutine = Array.isArray(req.body.workoutRoutine) ? req.body.workoutRoutine : []
+router.route('/add').post(async (req, res) => {
+    try{
+        const username = req.body.username
+        const email = req.body.email
+    
+        const newUser = new User({
+            username,
+            email
+        })
+    
+        await newUser.save()
 
-    const newUser = new User({
-        username,
-        workoutRoutine
-    })
+        await createWorkoutHistoryForUser(newUser._id)
 
-    newUser.save()
-        .then(() => res.json('User added!'))
-        .catch(err => res.status(400).json('Error: ' + err))
+        res.status(201).json({message: 'User created successfully'})
+    } catch (error) {
+        console.error('Error adding user: ', error)
+        res.status(500).json({ error: 'Internal server' })
+    }
 })
 
 router.route('/:id').delete((req, res) => {

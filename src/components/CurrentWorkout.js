@@ -19,6 +19,8 @@ function CurrentWorkout(props) {
         }
     }, [currentUsersDailyExercises])
 
+
+
     return (
         <main>
             <div className="workout-form-container">
