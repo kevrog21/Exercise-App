@@ -6,6 +6,7 @@ async function createWorkoutHistoryForUser(userId) {
     try {
         const workoutHistory = new WorkoutHistory({
             userId: userId,
+            dailyRoutine: [],
             workouts: []
         })
 

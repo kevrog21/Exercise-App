@@ -6,6 +6,9 @@ const workoutHistorySchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    dailyRoutine: [
+
+    ],
     workouts: [
         
     ]

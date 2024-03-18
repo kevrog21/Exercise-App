@@ -13,12 +13,11 @@ function Homescreen(props) {
                         <p className='star-text-day-number'>{props.currentUserWorkoutData ? props.currentUserWorkoutData.workouts.length + 1 : ''}</p>
                     </div>
                 </div>
-                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? props.currentUserWorkoutData.workouts.length + 1 : ''} days</div>
+                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? props.currentUserWorkoutData.workouts.length : ''} days</div>
                 <Link to='/current-workout'><button className='start-workout-btn'>start today's workout</button></Link>
             </div>
             
             <PreviousWorkouts 
-                // allUserData={props.allUserData}
                 tempCurrentUserId={props.tempCurrentUserId}
                 currentUserData={props.currentUserData}
                 currentUserWorkoutData={props.currentUserWorkoutData}

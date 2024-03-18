@@ -107,7 +107,8 @@ main {
   margin: 2em 0 0 0;
 }
 
-.start-workout-btn {
+.start-workout-btn,
+.set-routine-btn {
   color: white;
   background: black;
   padding: .5em 2em;
@@ -156,7 +157,7 @@ footer {
   width: 70%;
   height: 100%;
   margin: 0 0 0 auto;
-  padding: 23vw 0 0 0;
+  padding: 30vw 0 0 0;
   transform: translateX(100%);
   transition: transform .5s ease;
   opacity: 1;
@@ -183,6 +184,33 @@ footer {
   background: #EAEAEA;
 }
 
+.nav-link {
+  display: block;
+}
+
 .workout-form-container {
   margin: 20vw 0 0 0;
+}
+
+.daily-routine-container {
+  margin: 30vw 0 0 0;
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.routine-list-container {
+  margin: 1em auto 0 40vw;
+  width: 60%;
+  text-align: left;
+  font-weight: 400;
+}
+
+.routine-list-item {
+  margin: 1em 0;
+}
+
+.no-routine-message {
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 2em 0 2em 0;
 }

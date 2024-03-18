@@ -6,11 +6,12 @@ import Header from './components/Header';
 import Homescreen from './components/Homescreen'
 import Footer from './components/Footer'
 import CurrentWorkout from './components/CurrentWorkout'
+import DailyRoutine from './components/DailyRoutine';
 
 
 function App() {
 
-  const tempCurrentUserId = '65f612312938b12856048c79'
+  const tempCurrentUserId = '65f6126e2938b12856048c7d'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
@@ -49,6 +50,12 @@ function App() {
               currentUserData={currentUserData}
               currentUserWorkoutData={currentUserWorkoutData}
             />} />
+          <Route exact path="/daily-routine" element={
+            <DailyRoutine
+              tempCurrentUserId={tempCurrentUserId}
+              currentUserWorkoutData={currentUserWorkoutData}
+            />
+          } />
         </Routes>
         <Footer />
       </Router>

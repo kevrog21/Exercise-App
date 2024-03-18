@@ -10,7 +10,6 @@ function CurrentWorkout(props) {
         plank: 4
     })
 
-    // const currentUsersDailyExercises = props.allUserData && props.allUserData[0].workoutRoutine
     const currentUserWorkoutHistory = props.currentUserWorkoutData && props.currentUserWorkoutData
 
 
