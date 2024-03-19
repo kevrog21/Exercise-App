@@ -7,25 +7,12 @@ function CurrentWorkout(props) {
     
     const { currentUserWorkoutData } = props
 
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState({honeyp: ''})
 
     useEffect(() => {
         console.log('Checkboxes state:', checkboxes);
         console.log('formData', formData)
-
-        // setFormData((prevFormData) => ({
-        //     ...prevFormData,
-        //     [?]: checked ? 4 : 0
-        // }))
       }, [checkboxes, formData]);
-
-    // const handleCheckboxChange = (event) => {
-    //     const { name, checked } = event.target
-    //     setCheckboxes((prevCheckboxes) => ({
-    //         ...prevCheckboxes,
-    //         [name]: !prevCheckboxes[name],
-    //     }))
-    // }
 
     const handleCheckboxChange = (name, exerciseId, dailyIncrement, checked, index) => {
         setFormData((prevFormData) => ({
@@ -38,11 +25,19 @@ function CurrentWorkout(props) {
         }))
     }
 
+    const handleFormChange = (event) => {
+        const { name, value } = event.target
+        setFormData({
+            ...formData,
+            [name]: value
+        })
+    }
+
     useEffect(() => {
         if (currentUserWorkoutData) {
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                 return { ...acc, [exercise.exerciseName]: 0}
-            }, {})
+            }, {honeyp: ''})
             setFormData(initialFormData)
         }
     },[currentUserWorkoutData])
@@ -74,29 +69,31 @@ function CurrentWorkout(props) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const currentTime = new Date()
+        if (formData.honeyp === '') {
+            const currentTime = new Date()
 
-        const finalWorkoutData = {
-            timeStamp: currentTime,
-            ...formData
+            const finalWorkoutData = {
+                timeStamp: currentTime,
+                ...formData
+            }
+    
+            console.log('running submit')
+    
+            fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
+                    method: "POST",
+                    body: JSON.stringify(finalWorkoutData), 
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(res => {
+                    res.json()
+                    if (res.ok) {
+                        console.log('successfully posted!')
+                    }
+                })
+                .then(data => console.log(data))
         }
-
-        console.log('running submit')
-
-        fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
-                method: "POST",
-                body: JSON.stringify(finalWorkoutData), 
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(res => {
-                res.json()
-                if (res.ok) {
-                    console.log('successfully posted!')
-                }
-            })
-            .then(data => console.log(data))
     }
 
     return (
@@ -105,6 +102,7 @@ function CurrentWorkout(props) {
                 <form onSubmit={handleSubmit}>
                     <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>
                     {allExerciseEls.length > 0 && allExerciseEls}
+                    <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                     <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
                 </form>
             </div>

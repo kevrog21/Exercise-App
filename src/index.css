@@ -253,3 +253,7 @@ footer {
 .exercise-completion-checkbox {
   margin: .35em 0 0 0;
 }
+
+.honeyp {
+  display: none;
+}
