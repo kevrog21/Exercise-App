@@ -3,32 +3,73 @@ import { useState, useEffect } from "react"
 function CurrentWorkout(props) {
 
     const [allExerciseEls, setAllExerciseEls] = useState([])
-
-    const [formData, setFormData] = useState({
-        pushups: 4,
-        pullups: 4,
-        plank: 4
-    })
-
+    const [checkboxes, setCheckboxes] = useState({})
+    
     const { currentUserWorkoutData } = props
+
+    const [formData, setFormData] = useState({})
+
+    useEffect(() => {
+        console.log('Checkboxes state:', checkboxes);
+        console.log('formData', formData)
+
+        // setFormData((prevFormData) => ({
+        //     ...prevFormData,
+        //     [?]: checked ? 4 : 0
+        // }))
+      }, [checkboxes, formData]);
+
+    // const handleCheckboxChange = (event) => {
+    //     const { name, checked } = event.target
+    //     setCheckboxes((prevCheckboxes) => ({
+    //         ...prevCheckboxes,
+    //         [name]: !prevCheckboxes[name],
+    //     }))
+    // }
+
+    const handleCheckboxChange = (name, exerciseId, dailyIncrement, checked, index) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [exerciseId]: checked ? dailyIncrement * (currentUserWorkoutData.workouts.length + 1) : 0
+        }))
+        setCheckboxes((prevCheckboxes) => ({
+            ...prevCheckboxes,
+            [name]: !prevCheckboxes[name],
+        }))
+    }
+
+    useEffect(() => {
+        if (currentUserWorkoutData) {
+            const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                return { ...acc, [exercise.exerciseName]: 0}
+            }, {})
+            setFormData(initialFormData)
+        }
+    },[currentUserWorkoutData])
 
     useEffect(() => {
         if (currentUserWorkoutData) {
             const currentExerciseList = currentUserWorkoutData.dailyRoutine.map((exercise,index) => {
-               
-
+                const checkboxName = `checkbox_${index}`
                 return (
                     <div key={index} className='routine-list-item'>
-                        <div className='routine-exercise'>
-                        {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
-                        </div>
-                        {/* <div className='routine-details'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</div> */}
+                        <label className="label-container">
+                            <div className='routine-exercise'>
+                                {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
+                            </div>
+                            <input 
+                                className='exercise-completion-checkbox'
+                                type='checkbox'
+                                name={checkboxName}
+                                checked={formData[exercise.exerciseName] === exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} 
+                                onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)} />
+                        </label>
                     </div>
                 )
             })
             setAllExerciseEls(currentExerciseList)
         }
-    }, [currentUserWorkoutData])
+    }, [currentUserWorkoutData, checkboxes])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -61,12 +102,12 @@ function CurrentWorkout(props) {
     return (
         <main>
             <div className="workout-form-container">
-                <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>
-                {allExerciseEls.length > 0 && allExerciseEls}
+                <form onSubmit={handleSubmit}>
+                    <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>
+                    {allExerciseEls.length > 0 && allExerciseEls}
+                    <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
+                </form>
             </div>
-            <form onSubmit={handleSubmit}>
-                <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
-            </form>
         </main>
     )
 }

@@ -212,7 +212,13 @@ footer {
 }
 
 .routine-list-item {
-  margin: 1em 0;
+  
+}
+
+.label-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5em 0;
   background: #F1F1F1;
   padding: .5em 6vw;
   border-radius: 10px;
@@ -242,4 +248,8 @@ footer {
 .exercise-quantity {
   font-weight: 400;
   font-size: .75em;
+}
+
+.exercise-completion-checkbox {
+  margin: .35em 0 0 0;
 }
