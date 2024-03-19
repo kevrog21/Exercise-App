@@ -108,7 +108,8 @@ main {
 }
 
 .start-workout-btn,
-.set-routine-btn {
+.set-routine-btn,
+.submit-btn {
   color: white;
   background: black;
   padding: .5em 2em;
@@ -188,8 +189,13 @@ footer {
   display: block;
 }
 
+.daily-routine-form {
+  margin: 0 0 6em 0;
+}
+
 .workout-form-container {
-  margin: 20vw 0 0 0;
+  width: 50%;
+  margin: 20vw auto 0 auto;
 }
 
 .daily-routine-container {
@@ -199,18 +205,41 @@ footer {
 }
 
 .routine-list-container {
-  margin: 1em auto 0 40vw;
-  width: 60%;
+  margin: 1em auto 0 auto;
+  width: 40%;
   text-align: left;
   font-weight: 400;
 }
 
 .routine-list-item {
   margin: 1em 0;
+  background: #F1F1F1;
+  padding: .5em 6vw;
+  border-radius: 10px;
+}
+
+.routine-exercise {
+  font-weight: 600;
+  font-size: 1.25em;
+}
+
+.routine-details {
+  font-size: .75rem;
+  margin: 0 0 0 1em;
 }
 
 .no-routine-message {
   font-weight: 400;
   font-size: 1rem;
   margin: 2em 0 2em 0;
+}
+
+.current-workout-title {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.exercise-quantity {
+  font-weight: 400;
+  font-size: .75em;
 }

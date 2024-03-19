@@ -4,9 +4,12 @@ import WorkoutHistory from '../models/workoutHistory.model.js'
 
 async function createWorkoutHistoryForUser(userId) {
     try {
+        const currentTime = new Date()
+
         const workoutHistory = new WorkoutHistory({
             userId: userId,
             dailyRoutine: [],
+            goals: [],
             workouts: []
         })
 

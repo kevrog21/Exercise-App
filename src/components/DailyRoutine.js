@@ -10,7 +10,11 @@ function DailyRoutine(props) {
         if (currentUserWorkoutData) {
             const exerciseList = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
-                    <div key={index} className='routine-list-item'>{exercise.exerciseName}</div>
+                    <div key={index} className='routine-list-item'>
+                        <span>- {exercise.exerciseName}</span>
+                        <div className='routine-details'> daily increment: {exercise.dailyIncrement}</div>
+                        <div className='routine-details'> unit: {exercise.unit}</div>
+                    </div>
                 )
             })
             setExerciseEls(exerciseList)
@@ -39,7 +43,7 @@ function DailyRoutine(props) {
             dailyIncrement: 1,
             unit: 'seconds'  
         },{
-            exerciseName: 'pull ups',
+            exerciseName: 'pull-ups',
             dailyIncrement: .5,
             unit: 'reps'  
         },{
@@ -76,11 +80,11 @@ function DailyRoutine(props) {
                 <div>Current Daily Routine:</div>
                 
                     {currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 
-                        <div className='routine-list-container'>${exerciseEls}</div> : 
+                        <div className='routine-list-container'>{exerciseEls}</div> : 
                         <div className='no-routine-message'>you haven't set a routine yet</div>}
                 
             </div>
-            <form onSubmit={submitDailyRoutineForm}>
+            <form className='daily-routine-form' onSubmit={submitDailyRoutineForm}>
                 <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} daily routine</button>
             </form>
         </main>

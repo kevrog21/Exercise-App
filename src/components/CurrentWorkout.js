@@ -10,30 +10,41 @@ function CurrentWorkout(props) {
         plank: 4
     })
 
-    const currentUserWorkoutHistory = props.currentUserWorkoutData && props.currentUserWorkoutData
-
+    const { currentUserWorkoutData } = props
 
     useEffect(() => {
-        if (currentUserWorkoutHistory) {
-            // const currentExerciseList = currentUsersDailyExercises.map((item,index) => {
-            //     return (
-            //         <div key={index}>
-            //             {item}
-            //         </div>
-            //     )
-            // })
-            // setAllExerciseEls(currentExerciseList)
+        if (currentUserWorkoutData) {
+            const currentExerciseList = currentUserWorkoutData.dailyRoutine.map((exercise,index) => {
+               
+
+                return (
+                    <div key={index} className='routine-list-item'>
+                        <div className='routine-exercise'>
+                        {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
+                        </div>
+                        {/* <div className='routine-details'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</div> */}
+                    </div>
+                )
+            })
+            setAllExerciseEls(currentExerciseList)
         }
-    }, [currentUserWorkoutHistory])
+    }, [currentUserWorkoutData])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const currentTime = new Date()
+
+        const finalWorkoutData = {
+            timeStamp: currentTime,
+            ...formData
+        }
 
         console.log('running submit')
 
         fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
                 method: "POST",
-                body: JSON.stringify(formData), 
+                body: JSON.stringify(finalWorkoutData), 
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -50,6 +61,7 @@ function CurrentWorkout(props) {
     return (
         <main>
             <div className="workout-form-container">
+                <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>
                 {allExerciseEls.length > 0 && allExerciseEls}
             </div>
             <form onSubmit={handleSubmit}>
