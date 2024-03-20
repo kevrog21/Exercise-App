@@ -11,7 +11,7 @@ import DailyRoutine from './components/DailyRoutine';
 
 function App() {
 
-  const tempCurrentUserId = '65f6126e2938b12856048c7d'
+  const tempCurrentUserId = '65fa8466093edd552a0a52d4'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
@@ -32,7 +32,14 @@ function App() {
 
       fetchData()
   }, [])
-  
+
+  const convertUTCDate = (date) => {
+    const utcDateString = date
+    const utcDate = new Date(utcDateString)
+    const localDateString = utcDate.toLocaleString()
+    return(localDateString)
+}
+
   return (
     <div className="App">
       <Router>
@@ -43,6 +50,7 @@ function App() {
               tempCurrentUserId={tempCurrentUserId}
               currentUserData={currentUserData}
               currentUserWorkoutData={currentUserWorkoutData}
+              convertUTCDate={convertUTCDate}
             />} />
           <Route exact path="/current-workout" element={
             <CurrentWorkout 

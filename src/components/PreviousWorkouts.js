@@ -5,13 +5,13 @@ function PreviousWorkouts(props) {
 
     const [previousWorkoutEls, setPreviousWorkoutEls] = useState()
 
-    const { currentUserWorkoutData } = props
+    const { currentUserWorkoutData, convertUTCDate } = props
 
     useEffect(() => {
         if (currentUserWorkoutData) {
             const previousExerciseList = currentUserWorkoutData.workouts.map((workout, index) => {
                 return (
-                    <div key={index}>workout</div>
+                    <div key={index}>{convertUTCDate(workout.timeStamp)}</div>
                 )
             })
             setPreviousWorkoutEls(previousExerciseList)

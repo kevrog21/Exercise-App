@@ -7,7 +7,9 @@ function CurrentWorkout(props) {
     
     const { currentUserWorkoutData } = props
 
-    const [formData, setFormData] = useState({honeyp: ''})
+    const [formData, setFormData] = useState({honeyp: '', pword: ''})
+
+    const unsecureTempPassword = 'temp123'
 
     useEffect(() => {
         console.log('Checkboxes state:', checkboxes);
@@ -37,8 +39,14 @@ function CurrentWorkout(props) {
         if (currentUserWorkoutData) {
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                 return { ...acc, [exercise.exerciseName]: 0}
-            }, {honeyp: ''})
+            }, {honeyp: '', pword: ''})
             setFormData(initialFormData)
+
+            const initialCheckBoxData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                const checkboxName = `checkbox_${index}`
+                return { ...acc, [checkboxName]: false}
+            }, {})
+            setCheckboxes(initialCheckBoxData)
         }
     },[currentUserWorkoutData])
 
@@ -68,18 +76,24 @@ function CurrentWorkout(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const incompleteMessageEl = document.getElementById('incomplete-workout-message')
+        const successMessageEl = document.getElementById('success-message')
+        const incorrectPasswordEl = document.getElementById('incorrect-password-message')
 
-        if (formData.honeyp === '') {
-            const currentTime = new Date()
-
-            const finalWorkoutData = {
-                timeStamp: currentTime,
-                ...formData
-            }
-    
-            console.log('running submit')
-    
-            fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
+        if (formData.honeyp === '' && Object.values(checkboxes).every(value => value === true)) {
+            if (formData.pword === unsecureTempPassword){
+                const currentTime = new Date()
+                delete formData.honeyp
+                delete formData.pword
+                
+                const finalWorkoutData = {
+                    timeStamp: currentTime,
+                    ...formData
+                }
+        
+                console.log('running submit')
+        
+                fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
                     method: "POST",
                     body: JSON.stringify(finalWorkoutData), 
                     headers: {
@@ -90,9 +104,19 @@ function CurrentWorkout(props) {
                     res.json()
                     if (res.ok) {
                         console.log('successfully posted!')
+                        incompleteMessageEl.classList.add('hide')
+                        incorrectPasswordEl.classList.add('hide')
+                        successMessageEl.classList.remove('hide')
                     }
                 })
                 .then(data => console.log(data))
+            } else {
+                incorrectPasswordEl.classList.remove('hide')
+                incompleteMessageEl.classList.add('hide')
+            }
+            
+        } else { 
+            incompleteMessageEl.classList.remove('hide')
         }
     }
 
@@ -103,7 +127,11 @@ function CurrentWorkout(props) {
                     <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>
                     {allExerciseEls.length > 0 && allExerciseEls}
                     <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
+                    <input type='password' name='pword' value={formData.pword} onChange={handleFormChange}></input>
                     <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
+                    <div id='incomplete-workout-message' className='hide'>Make sure to complete all of today's exercises before submitting!</div>
+                    <div id='incorrect-password-message' className='hide'>incorrect password</div>
+                    <div id='success-message' className='hide'>Congrats!<br/> You did it!</div>
                 </form>
             </div>
         </main>

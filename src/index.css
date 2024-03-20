@@ -120,10 +120,16 @@ main {
   margin: .75em 0;
 }
 
+.workouy-completed-msg {
+  color: green;
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
 .previous-workouts-container {
   border: 3px solid black;
   border-radius: 1em;
-  height: 20vh;
+  min-height: 20vh;
   margin: 6em 5vw;
   display: flex;
   justify-content: center;
@@ -254,6 +260,25 @@ footer {
   margin: .35em 0 0 0;
 }
 
+#success-message {
+  color: green;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+#incomplete-workout-message,
+#incorrect-password-message {
+  color: red;
+}
+
+.disabled-btn {
+  background: rgba(0, 0, 0, .1);
+}
+
 .honeyp {
+  display: none;
+}
+
+.hide {
   display: none;
 }
