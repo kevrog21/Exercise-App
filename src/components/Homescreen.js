@@ -5,32 +5,7 @@ import { Link } from 'react-router-dom'
 
 function Homescreen(props) {
 
-    const [mostRecentWorkoutDate, setMostRecentWorkoutDate] = useState()
-    const [userCompletedTodaysWorkout, setUserCompletedTodaysWorkout] = useState(false)
-
-    const { currentUserWorkoutData, convertUTCDate } = props
-
-    useEffect(() => {
-        if (currentUserWorkoutData && currentUserWorkoutData.workouts.length > 0) {
-            setMostRecentWorkoutDate(currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1].timeStamp)
-        }
-    }, [currentUserWorkoutData])
-
-    useEffect(() => {
-        const latestWorkoutDate = new Date(mostRecentWorkoutDate)
-
-        const currentDate = new Date()
-        const currentDayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-
-        const isWithinCurrentDay = latestWorkoutDate >= currentDayStart && latestWorkoutDate < currentDate
-
-        if (isWithinCurrentDay) {
-            console.log('is within the current day')
-            setUserCompletedTodaysWorkout(true)
-        } else {
-            console.log('is not within the current day')
-        }
-    }, [mostRecentWorkoutDate])
+    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout } = props
 
     return (
         <main>

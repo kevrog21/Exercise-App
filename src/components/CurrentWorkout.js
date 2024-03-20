@@ -5,7 +5,7 @@ function CurrentWorkout(props) {
     const [allExerciseEls, setAllExerciseEls] = useState([])
     const [checkboxes, setCheckboxes] = useState({})
     
-    const { currentUserWorkoutData } = props
+    const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
 
@@ -55,7 +55,7 @@ function CurrentWorkout(props) {
             const currentExerciseList = currentUserWorkoutData.dailyRoutine.map((exercise,index) => {
                 const checkboxName = `checkbox_${index}`
                 return (
-                    <div key={index} className='routine-list-item'>
+                    <div key={index} className='current-workout-list-item'>
                         <label className="label-container">
                             <div className='routine-exercise'>
                                 {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
@@ -79,37 +79,44 @@ function CurrentWorkout(props) {
         const incompleteMessageEl = document.getElementById('incomplete-workout-message')
         const successMessageEl = document.getElementById('success-message')
         const incorrectPasswordEl = document.getElementById('incorrect-password-message')
+        const alreadyCompletedWorkoutEl = document.getElementById('already-completed-message')
 
         if (formData.honeyp === '' && Object.values(checkboxes).every(value => value === true)) {
-            if (formData.pword === unsecureTempPassword){
-                const currentTime = new Date()
-                delete formData.honeyp
-                delete formData.pword
-                
-                const finalWorkoutData = {
-                    timeStamp: currentTime,
-                    ...formData
+            if (formData.pword === unsecureTempPassword ) {
+                if (!userCompletedTodaysWorkout) {
+                    const currentTime = new Date()
+                    delete formData.honeyp
+                    delete formData.pword
+                    
+                    const finalWorkoutData = {
+                        timeStamp: currentTime,
+                        ...formData
+                    }
+            
+                    console.log('running submit')
+            
+                    fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
+                        method: "POST",
+                        body: JSON.stringify(finalWorkoutData), 
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(res => {
+                        res.json()
+                        if (res.ok) {
+                            console.log('successfully posted!')
+                            incompleteMessageEl.classList.add('hide')
+                            incorrectPasswordEl.classList.add('hide')
+                            successMessageEl.classList.remove('hide')
+                        }
+                    })
+                    .then(data => console.log(data))
+                } else {
+                    incorrectPasswordEl.classList.add('hide')
+                    incompleteMessageEl.classList.add('hide')
+                    alreadyCompletedWorkoutEl.classList.remove('hide')
                 }
-        
-                console.log('running submit')
-        
-                fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
-                    method: "POST",
-                    body: JSON.stringify(finalWorkoutData), 
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then(res => {
-                    res.json()
-                    if (res.ok) {
-                        console.log('successfully posted!')
-                        incompleteMessageEl.classList.add('hide')
-                        incorrectPasswordEl.classList.add('hide')
-                        successMessageEl.classList.remove('hide')
-                    }
-                })
-                .then(data => console.log(data))
             } else {
                 incorrectPasswordEl.classList.remove('hide')
                 incompleteMessageEl.classList.add('hide')
@@ -132,6 +139,7 @@ function CurrentWorkout(props) {
                     <div id='incomplete-workout-message' className='hide'>Make sure to complete all of today's exercises before submitting!</div>
                     <div id='incorrect-password-message' className='hide'>incorrect password</div>
                     <div id='success-message' className='hide'>Congrats!<br/> You did it!</div>
+                    <div id='already-completed-message' className="hide">You already completed today's workout! You can only complete one per day.</div>
                 </form>
             </div>
         </main>
