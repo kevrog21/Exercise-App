@@ -6,7 +6,8 @@ import Header from './components/Header';
 import Homescreen from './components/Homescreen'
 import Footer from './components/Footer'
 import CurrentWorkout from './components/CurrentWorkout'
-import DailyRoutine from './components/DailyRoutine';
+import DailyRoutine from './components/DailyRoutine'
+import UserStats from './components/UserStats'
 
 
 function App() {
@@ -92,6 +93,13 @@ function App() {
               currentUserWorkoutData={currentUserWorkoutData}
             />
           } />
+          <Route exact path="/user-stats" element={
+            <UserStats
+              tempCurrentUserId={tempCurrentUserId}
+              currentUserWorkoutData={currentUserWorkoutData}
+            />
+          } />
+
         </Routes>
         <Footer />
       </Router>

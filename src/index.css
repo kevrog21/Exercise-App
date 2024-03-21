@@ -279,6 +279,10 @@ footer {
   color: red;
 }
 
+.stats-container{
+  margin: 20vw 0;
+}
+
 .disabled-btn {
   background: rgba(0, 0, 0, .1);
 }
