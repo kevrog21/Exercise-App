@@ -120,10 +120,15 @@ main {
   margin: .75em 0;
 }
 
-.workouy-completed-msg {
+.workout-completed-msg {
   color: green;
   font-size: 1.25em;
   font-weight: 600;
+}
+
+.come-back-msg {
+  font-weight: 600;
+  margin: .25em 0 0 0;
 }
 
 .previous-workouts-container {

@@ -95,7 +95,7 @@ function CurrentWorkout(props) {
             
                     console.log('running submit')
             
-                    fetch(`http://localhost:5000/workout-histories/update/${props.tempCurrentUserId}`, {
+                    fetch(`http://54.67.59.120/workout-histories/update/${props.tempCurrentUserId}`, {
                         method: "POST",
                         body: JSON.stringify(finalWorkoutData), 
                         headers: {

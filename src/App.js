@@ -11,7 +11,7 @@ import DailyRoutine from './components/DailyRoutine';
 
 function App() {
 
-  const tempCurrentUserId = '65fa8466093edd552a0a52d4'
+  const tempCurrentUserId = '65fb5f4e83e845c2b098f860'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
@@ -29,10 +29,10 @@ function App() {
   useEffect(() => {
       const fetchData = async () => {
           try {
-              const userResponse = await axios.get(`http://localhost:5000/users/${tempCurrentUserId}`)
+              const userResponse = await axios.get(`http://54.67.59.120/users/${tempCurrentUserId}`)
               setCurrentUserData(userResponse.data)
 
-              const workoutHistoryResponse = await axios.get(`http://localhost:5000/workout-histories/${tempCurrentUserId}`)
+              const workoutHistoryResponse = await axios.get(`http://54.67.59.120/workout-histories/${tempCurrentUserId}`)
               setCurrentUserWorkoutData(workoutHistoryResponse.data)
               console.log(workoutHistoryResponse.data)
           } catch (error) {

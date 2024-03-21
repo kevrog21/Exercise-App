@@ -5,23 +5,23 @@ import dotenv from 'dotenv'
 import dailyWorkoutRouter from './routes/dailyworkouts.js'
 import usersRouter from './routes/users.js'
 import workoutHistoriesRouter from './routes/workoutHistory.js'
-// import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'url'
 
 const app = express()
 
-// import path from 'path'
+import path from 'path'
 
-// const __dirname = path.dirname(fileURLToPath(import.meta.url))
-// const buildPath = path.resolve(__dirname, '../build')
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const buildPath = path.resolve(__dirname, '../build')
 
-// app.use(express.static(buildPath))
+app.use(express.static(buildPath))
 
 dotenv.config()
 
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://54.67.59.120',
     credentials: true,
 }))
 app.use(express.json())
@@ -38,7 +38,6 @@ app.use(express.json())
 
  const uri = process.env.ATLAS_URI
  mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
- console.log('testing exercise 123')
 
  const connection = mongoose.connection
  connection.once('open', () => {
@@ -49,17 +48,17 @@ app.use('/daily-workouts', dailyWorkoutRouter)
 app.use('/users', usersRouter)
 app.use('/workout-histories', workoutHistoriesRouter)
 
-// app.get("/*", function(req, res) {
-//     res.sendFile(
-//         path.join(buildPath, "index.html"),
-//         function (err) {
-//             if (err) {
-//                 console.log(err)
-//                 res.status(500).send(err)
-//             }
-//         }
-//     )
-// })
+app.get("/*", function(req, res) {
+    res.sendFile(
+        path.join(buildPath, "index.html"),
+        function (err) {
+            if (err) {
+                console.log(err)
+                res.status(500).send(err)
+            }
+        }
+    )
+})
 
 app.use('*', (req, res) => res.status(404).json({error: "not found"}))
 
