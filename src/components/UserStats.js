@@ -11,7 +11,6 @@ export default function UserStats(props) {
             const totalPushups = currentUserWorkoutData.workouts.reduce((total, workout) => {
                 return total + (workout['push-ups'] || 0)
             }, 0)
-            console.log(totalPushups)
             setTotalPushups(totalPushups)
         }
     }, [currentUserWorkoutData])

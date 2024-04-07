@@ -14,11 +14,25 @@ router.use(express.static("public"))
 router.use(express.json())
 router.use(cors())
 
+const secretPassword = process.env.SECRET_PWORD
+
 router.route('/:userId').get((req, res) => {
     const userId = req.params.userId
     WorkoutHistory.findOne({ userId: userId })
         .then(workoutList => res.json(workoutList))
         .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/check-passwords').post((req, res) => {
+    console.log("check password running", req.body.pword)
+    const password = req.body.pword
+    const honeyp = req.body.honeyp
+
+    if (password === secretPassword && honeyp === '') {
+        res.json({ valid: true })
+    } else {
+        res.json({ valid: false })
+    }
 })
 
 router.route('/update/:userId').post((req, res) => {

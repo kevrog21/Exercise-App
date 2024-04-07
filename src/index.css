@@ -294,3 +294,7 @@ footer {
 .hide {
   display: none;
 }
+
+.disable-pointer-events {
+  pointer-events: none;
+}

@@ -82,49 +82,121 @@ function CurrentWorkout(props) {
         const alreadyCompletedWorkoutEl = document.getElementById('already-completed-message')
 
         if (formData.honeyp === '' && Object.values(checkboxes).every(value => value === true)) {
-            if (formData.pword === unsecureTempPassword ) {
-                if (!userCompletedTodaysWorkout) {
-                    const currentTime = new Date()
-                    delete formData.honeyp
-                    delete formData.pword
-                    
-                    const finalWorkoutData = {
-                        timeStamp: currentTime,
-                        ...formData
-                    }
-            
-                    console.log('running submit')
-            
-                    fetch(`http://54.67.59.120/workout-histories/update/${props.tempCurrentUserId}`, {
-                        method: "POST",
-                        body: JSON.stringify(finalWorkoutData), 
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
+            try {
+                const response = await fetch('http://54.67.59.120/workout-histories/check-passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        pword: formData.pword,
+                        honeyp: formData.honeyp 
                     })
-                    .then(res => {
-                        res.json()
-                        if (res.ok) {
-                            console.log('successfully posted!')
-                            incompleteMessageEl.classList.add('hide')
-                            incorrectPasswordEl.classList.add('hide')
-                            successMessageEl.classList.remove('hide')
-                        }
-                    })
-                    .then(data => console.log(data))
-                } else {
-                    incorrectPasswordEl.classList.add('hide')
-                    incompleteMessageEl.classList.add('hide')
-                    alreadyCompletedWorkoutEl.classList.remove('hide')
+                })
+    
+                if (!response.ok) {
+                    throw new Error('Failed to check password.')
                 }
-            } else {
-                incorrectPasswordEl.classList.remove('hide')
-                incompleteMessageEl.classList.add('hide')
+    
+                const { valid } = await response.json()
+    
+                console.log(valid)
+    
+                if (valid) {
+                    if (!userCompletedTodaysWorkout) {
+                        const currentTime = new Date()
+                        delete formData.honeyp
+                        delete formData.pword
+                        
+                        const finalWorkoutData = {
+                            timeStamp: currentTime,
+                            ...formData
+                        }
+                
+                        console.log('running submit')
+    
+                        const postResponse = await fetch(`http://54.67.59.120/workout-histories/update/${props.tempCurrentUserId}`, {
+                            method: "POST",
+                            body: JSON.stringify(finalWorkoutData), 
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+    
+                        if (!postResponse.ok) {
+                            throw new Error('Failed to post workout data.')
+                        }
+    
+                        console.log('successfully posted!')
+                        incompleteMessageEl.classList.add('hide')
+                        incorrectPasswordEl.classList.add('hide')
+                        successMessageEl.classList.remove('hide')
+    
+                        const postData = await postResponse.json()
+                        console.log(postData)
+                    } else {
+                        incorrectPasswordEl.classList.add('hide')
+                        incompleteMessageEl.classList.add('hide')
+                        alreadyCompletedWorkoutEl.classList.remove('hide')
+                    }
+                } else {
+                    console.error('Incorrect password')
+                    incorrectPasswordEl.classList.remove('hide')
+                    incompleteMessageEl.classList.add('hide')
+                }
+            } catch (error) {
+                console.error('error: ', error.message)
             }
-            
-        } else { 
+        } else {
             incompleteMessageEl.classList.remove('hide')
         }
+        
+
+
+        // if (formData.honeyp === '' && Object.values(checkboxes).every(value => value === true)) {
+        //     if (formData.pword === unsecureTempPassword ) {
+        //         if (!userCompletedTodaysWorkout) {
+        //             const currentTime = new Date()
+        //             delete formData.honeyp
+        //             delete formData.pword
+                    
+        //             const finalWorkoutData = {
+        //                 timeStamp: currentTime,
+        //                 ...formData
+        //             }
+            
+        //             console.log('running submit')
+            
+        //             fetch(`http://54.67.59.120/workout-histories/update/${props.tempCurrentUserId}`, {
+        //                 method: "POST",
+        //                 body: JSON.stringify(finalWorkoutData), 
+        //                 headers: {
+        //                     "Content-Type": "application/json"
+        //                 }
+        //             })
+        //             .then(res => {
+        //                 res.json()
+        //                 if (res.ok) {
+        //                     console.log('successfully posted!')
+        //                     incompleteMessageEl.classList.add('hide')
+        //                     incorrectPasswordEl.classList.add('hide')
+        //                     successMessageEl.classList.remove('hide')
+        //                 }
+        //             })
+        //             .then(data => console.log(data))
+        //         } else {
+        //             incorrectPasswordEl.classList.add('hide')
+        //             incompleteMessageEl.classList.add('hide')
+        //             alreadyCompletedWorkoutEl.classList.remove('hide')
+        //         }
+        //     } else {
+        //         incorrectPasswordEl.classList.remove('hide')
+        //         incompleteMessageEl.classList.add('hide')
+        //     }
+            
+        // } else { 
+        //     incompleteMessageEl.classList.remove('hide')
+        // }
     }
 
     return (
