@@ -9,9 +9,11 @@ function PreviousWorkouts(props) {
 
     useEffect(() => {
         if (currentUserWorkoutData) {
-            const previousExerciseList = currentUserWorkoutData.workouts.map((workout, index) => {
+            const previousExerciseList = currentUserWorkoutData.workouts.reverse().map((workout, index) => {
                 return (
-                    <div key={index}>{convertUTCDate(workout.timeStamp)}</div>
+                    <div key={index} className='previous-workout-item-container'>
+                        {convertUTCDate(workout.timeStamp)}
+                    </div>
                 )
             })
             setPreviousWorkoutEls(previousExerciseList)
