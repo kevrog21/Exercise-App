@@ -50,10 +50,8 @@ export default function Header() {
                 <div className='header-container'>
                     <Link to='/'><img className='header-logo' src={logo} onClick={handleNavItemClick}></img></Link>
                     <h2 className='app-title'>Daily Fit Challenge</h2>
-                    <div className='hamburger-container' onClick={handleMenuToggle}>
-                        <div className='hamburger-line-1'></div>
-                        <div className='hamburger-line-2'></div>
-                        <div className='hamburger-line-3'></div>
+                    <div className={`hamburger_div ${isSideNavOpen && 'rotate'}`} onClick={handleMenuToggle}>
+                        <div className='hamburger_lines'></div>
                     </div>
                 </div>
             </header>

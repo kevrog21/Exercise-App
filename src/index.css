@@ -47,21 +47,56 @@ main {
   font-size: 2em;
 }
 
-.hamburger-container {
+/* .hamburger-container {
   height: 5vw;
   width: 7vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+} */
+
+.hamburger_div {
+  height: 5vw;
+  width: 7vw;
+	cursor: pointer;
+	transition: transform ease .2s;
 }
 
+.hamburger_lines,
+.hamburger_div::before,
+.hamburger_div::after {
+	position: relative;
+	display: block;
+	content: "";
+	background: #000000;
+	height: 3px;
+	width: 30px;
+	border-radius: 2px;
+	margin: 6px 0;
+}
+
+.rotate .hamburger_lines {
+	transform: rotate(-45deg);
+	transition: transform ease .35s;
+}
+
+.rotate::before {
+	transform: rotate(45deg) translate(6px, 6px);
+	transition: transform ease .35s;
+}
+
+.rotate::after {
+	opacity: 0;
+	transition: opacity ease .2s;
+}
+/* 
 .hamburger-line-1,
 .hamburger-line-2,
 .hamburger-line-3 {
   background-color: black;
   width: 100%;
   height: 3px;
-}
+} */
 
 .homescreen-hero-container {
   display: flex;
@@ -300,6 +335,15 @@ footer {
 
 .hide {
   display: none;
+}
+
+.rotate {
+	transform: rotate(-90deg);
+}
+
+.rotate .hamburger_lines {
+	transform: rotate(-45deg);
+	transition: transform ease .35s;
 }
 
 .disable-pointer-events {
