@@ -7,12 +7,27 @@ function PreviousWorkouts(props) {
 
     const { currentUserWorkoutData, convertUTCDate } = props
 
+    const formatDateForPreviousWorkout = (dateString) => {
+        const date = new Date(dateString)
+
+        const formattedDate = date.toLocaleString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        })
+
+        return formattedDate
+    }
+
     useEffect(() => {
         if (currentUserWorkoutData) {
             const previousExerciseList = currentUserWorkoutData.workouts.reverse().map((workout, index) => {
                 return (
                     <div key={index} className='previous-workout-item-container'>
-                        {convertUTCDate(workout.timeStamp)}
+                        {formatDateForPreviousWorkout(workout.timeStamp)}
                     </div>
                 )
             })
