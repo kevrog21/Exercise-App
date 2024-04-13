@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import CurrentWorkout from './components/CurrentWorkout'
 import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
+import Goals from './components/Goals'
 
 
 function App() {
@@ -98,6 +99,9 @@ function App() {
               tempCurrentUserId={tempCurrentUserId}
               currentUserWorkoutData={currentUserWorkoutData}
             />
+          } />
+          <Route exact path="/goals" element={
+            <Goals />
           } />
 
         </Routes>

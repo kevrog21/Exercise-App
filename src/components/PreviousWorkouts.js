@@ -28,6 +28,7 @@ function PreviousWorkouts(props) {
                 return (
                     <div key={index} className='previous-workout-item-container'>
                         {formatDateForPreviousWorkout(workout.timeStamp)}
+                        <div>day {currentUserWorkoutData.workouts.length - index}</div>
                     </div>
                 )
             })
