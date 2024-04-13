@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     if (currentUserWorkoutData && currentUserWorkoutData.workouts.length > 0) {
-        setMostRecentWorkoutDate(currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1].timeStamp)
+        setMostRecentWorkoutDate(currentUserWorkoutData.workouts[0].timeStamp)
     }
   }, [currentUserWorkoutData])
 
