@@ -3,12 +3,13 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 import Homescreen from './components/Homescreen'
 import Footer from './components/Footer'
 import CurrentWorkout from './components/CurrentWorkout'
 import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
-import Goals from './components/Goals'
+import Goals from './components/UserGoals'
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
     <div className="App">
       <Router>
         <Header />
+        <ScrollToTop />
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
