@@ -29,22 +29,18 @@ function App() {
     return(localDateString)
   }
 
-  useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const userResponse = await axios.get(`http://54.67.59.120/users/${tempCurrentUserId}`)
-              setCurrentUserData(userResponse.data)
+  const retrieveData = async () => {
+      try {
+          const userResponse = await axios.get(`http://54.67.59.120/users/${tempCurrentUserId}`)
+          setCurrentUserData(userResponse.data)
 
-              const workoutHistoryResponse = await axios.get(`http://54.67.59.120/workout-histories/${tempCurrentUserId}`)
-              setCurrentUserWorkoutData(workoutHistoryResponse.data)
-              console.log(workoutHistoryResponse.data)
-          } catch (error) {
-              console.error('Error: ', error)
-          }
+          const workoutHistoryResponse = await axios.get(`http://54.67.59.120/workout-histories/${tempCurrentUserId}`)
+          setCurrentUserWorkoutData(workoutHistoryResponse.data)
+          console.log(workoutHistoryResponse.data)
+      } catch (error) {
+          console.error('Error: ', error)
       }
-
-      fetchData()
-  }, [])
+  }
 
   useEffect(() => {
     if (currentUserWorkoutData && currentUserWorkoutData.workouts.length > 0) {
@@ -78,6 +74,7 @@ function App() {
           <Route exact path="/" element={
             <Homescreen 
               tempCurrentUserId={tempCurrentUserId}
+              retrieveData={retrieveData}
               currentUserData={currentUserData}
               currentUserWorkoutData={currentUserWorkoutData}
               convertUTCDate={convertUTCDate}

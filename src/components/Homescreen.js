@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom'
 
 function Homescreen(props) {
 
-    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout } = props
+    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData } = props
+
+    useEffect(() => {
+        retrieveData()
+    }, [])
 
     return (
         <main>
