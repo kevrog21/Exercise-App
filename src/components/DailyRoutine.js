@@ -40,7 +40,7 @@ function DailyRoutine(props) {
             unit: 'reps'  
         },{
             exerciseName: 'plank',
-            dailyIncrement: 1,
+            dailyIncrement: 1.5,
             unit: 'seconds'  
         },{
             exerciseName: 'pull-ups',

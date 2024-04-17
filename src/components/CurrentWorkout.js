@@ -83,7 +83,7 @@ function CurrentWorkout(props) {
 
         if (formData.honeyp === '' && Object.values(checkboxes).every(value => value === true)) {
             try {
-                const response = await fetch('http://54.67.59.120/workout-histories/check-passwords', {
+                const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ function CurrentWorkout(props) {
                 
                         console.log('running submit')
     
-                        const postResponse = await fetch(`http://54.67.59.120/workout-histories/update/${props.tempCurrentUserId}`, {
+                        const postResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update/${props.tempCurrentUserId}`, {
                             method: "POST",
                             body: JSON.stringify(finalWorkoutData), 
                             headers: {

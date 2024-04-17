@@ -21,7 +21,7 @@ dotenv.config()
 
 
 app.use(cors({
-    origin: 'http://54.67.59.120',
+    origin: 'https://dailyfitchallenge.com',
     credentials: true,
 }))
 app.use(express.json())
@@ -41,7 +41,7 @@ app.use(express.json())
 
  const connection = mongoose.connection
  connection.once('open', () => {
-     console.log('MongoDB exercise database connection established succesfully!')
+     console.log('MongoDB exercise database connection established succesfully!!!!')
  })
 
 app.use('/daily-workouts', dailyWorkoutRouter)

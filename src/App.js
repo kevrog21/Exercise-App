@@ -31,16 +31,20 @@ function App() {
 
   const retrieveData = async () => {
       try {
-          const userResponse = await axios.get(`http://54.67.59.120/users/${tempCurrentUserId}`)
+          const userResponse = await axios.get(`https://dailyfitchallenge.com/users/${tempCurrentUserId}`)
           setCurrentUserData(userResponse.data)
 
-          const workoutHistoryResponse = await axios.get(`http://54.67.59.120/workout-histories/${tempCurrentUserId}`)
+          const workoutHistoryResponse = await axios.get(`https://dailyfitchallenge.com/workout-histories/${tempCurrentUserId}`)
           setCurrentUserWorkoutData(workoutHistoryResponse.data)
           console.log(workoutHistoryResponse.data)
       } catch (error) {
           console.error('Error: ', error)
       }
   }
+
+  useEffect(() => {
+    retrieveData()
+  }, [])
 
   useEffect(() => {
     if (currentUserWorkoutData && currentUserWorkoutData.workouts.length > 0) {
