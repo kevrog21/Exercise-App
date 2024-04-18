@@ -29,9 +29,13 @@ function PreviousWorkouts(props) {
                     <div key={index} className='previous-workout-item-container'>
                         {formatDateForPreviousWorkout(workout.timeStamp)}
                         <div>day {currentUserWorkoutData.workouts.length - index}</div>
-                        {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => (
-                            <div key={exerciseIndex}>{exerciseName}: {reps}</div>
-                        ))}
+                        {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
+                            if (exerciseName !== 'timeStamp') {
+                                return (
+                                    <div key={exerciseIndex}>{exerciseName}: {reps}</div>
+                                )
+                            }
+                        })}
                     </div>
                 )
             })

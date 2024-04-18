@@ -41,7 +41,7 @@ app.use(express.json())
 
  const connection = mongoose.connection
  connection.once('open', () => {
-     console.log('MongoDB exercise database connection established succesfully!!!!')
+     console.log('MongoDB exercise database connection established succesfully!')
  })
 
 app.use('/daily-workouts', dailyWorkoutRouter)
