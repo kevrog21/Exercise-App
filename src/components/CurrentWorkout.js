@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
+import { useNavigateToLink } from './ToHomeScreen'
 
 function CurrentWorkout(props) {
-
+    const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     const [checkboxes, setCheckboxes] = useState({})
     
@@ -134,6 +135,9 @@ function CurrentWorkout(props) {
     
                         const postData = await postResponse.json()
                         console.log(postData)
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 0)
                     } else {
                         incorrectPasswordEl.classList.add('hide')
                         incompleteMessageEl.classList.add('hide')

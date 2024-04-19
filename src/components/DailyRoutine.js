@@ -57,7 +57,7 @@ function DailyRoutine(props) {
         e.preventDefault()
         console.log('running submit!')
 
-        fetch(`http://54.67.59.120/workout-histories/update-routine/${props.tempCurrentUserId}`, {
+        fetch(`https://dailyfitchallenge.com/workout-histories/update-routine/${props.tempCurrentUserId}`, {
                 method: "POST",
                 body: JSON.stringify(formData), 
                 headers: {
