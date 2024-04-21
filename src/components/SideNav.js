@@ -15,7 +15,7 @@ export default function SideNav(props) {
         <div className='nav-menu-container' onClick={closeNavMenu} style={props.isSideNavOpen ? {} : {pointerEvents: 'none'}}>
             <div id='nav-menu' className=''>
                 <Link to=''  className="nav-item nav-link">Home</Link>
-                <div className="nav-item">Settings</div>
+                <Link to='/user-settings' className="nav-item nav-link">Settings</Link>
                 <Link to='/daily-routine' className="nav-item nav-link">Daily Routine</Link>
                 <Link to='/user-stats' className="nav-item nav-link">Stats</Link>
                 <Link to='/goals' className="nav-item nav-link">Goals</Link>

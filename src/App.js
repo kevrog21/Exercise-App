@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import CurrentWorkout from './components/CurrentWorkout'
 import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
+import UserSettings from './components/UserSetings'
 import Goals from './components/UserGoals'
 
 
@@ -96,6 +97,10 @@ function App() {
               tempCurrentUserId={tempCurrentUserId}
               currentUserWorkoutData={currentUserWorkoutData}
             />
+          } />
+          
+          <Route exact path="/user-settings" element={
+            <UserSettings />
           } />
           <Route exact path="/user-stats" element={
             <UserStats
