@@ -11,6 +11,7 @@ import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
 import UserSettings from './components/UserSetings'
 import Goals from './components/UserGoals'
+import Rules from './components/Rules'
 
 
 function App() {
@@ -111,7 +112,9 @@ function App() {
           <Route exact path="/goals" element={
             <Goals />
           } />
-
+          <Route exact path="/user-rules" element={
+            <Rules />
+          } />
         </Routes>
         <Footer />
       </Router>
