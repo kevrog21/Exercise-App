@@ -19,9 +19,14 @@ export default function UserStats(props) {
                 return total
             }, {})
 
-            const totalsElements = Object.keys(totals).map(exerciseName => (
-                <div key={exerciseName}>{exerciseName}: {totals[exerciseName]}</div>
-            ))
+            const totalsElements = Object.keys(totals).map(exerciseName => {
+                const unit = currentUserWorkoutData.dailyRoutine.find(item => item.exerciseName === exerciseName)?.unit
+                return (
+                    <div key={exerciseName}>
+                        {exerciseName}: {totals[exerciseName]} {unit}
+                    </div>
+                )
+            })
 
             setTotalsEls(totalsElements)
         }
