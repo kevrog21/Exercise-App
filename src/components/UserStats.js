@@ -34,10 +34,24 @@ export default function UserStats(props) {
 
     return (
         <main>
+            <div className='stats-container margin-for-header'>
+                <h2>General Totals</h2>
+                <div>Trips to the gym: </div>
+                <div>Sprint Training Sessions: </div>
+                <div>Daily Challenges Completed: </div>
+            </div>
             <div className='stats-container'>
-                <h2>Stats</h2>
+                <h2>Daily Challenge Totals</h2>
                 {/* <div>total pushups: {totalPushups}</div> */}
                 {totalsEls}
+            </div>
+            <div className='stats-container'>
+                <h2>Workout Stats</h2>
+                <div>Number of unique exercises completed: </div>
+                <div>Bench Press PR: </div>
+                <div>Squat PR: </div>
+                <div>Pull-up PR: </div>
+                <div>Plank PR: </div>
             </div>
         </main>
     )

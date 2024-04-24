@@ -322,7 +322,11 @@ footer {
 }
 
 .stats-container{
-  margin: 20vw 0;
+  margin: 5vw 0 0 0;
+}
+
+.margin-for-header {
+  margin: 20vw 0 0 0;
 }
 
 .disabled-btn {
