@@ -47,7 +47,7 @@ export default function UserStats(props) {
             </div>
             <div className='stats-container'>
                 <h2>Workout Stats</h2>
-                <div>Number of unique exercises completed: </div>
+                <div>Unique exercises completed: </div>
                 <div>Bench Press PR: </div>
                 <div>Squat PR: </div>
                 <div>Pull-up PR: </div>
