@@ -202,7 +202,8 @@ main {
   color: #ffffff;
   border-radius: 1em;
   transform: translateY(-50%);
-  padding: .15em 0;
+  padding: .15em .75em;
+  display: inline-block;
 }
 
 .previous-challenges-view-more-toggle {
