@@ -41,21 +41,23 @@ function PreviousWorkouts(props) {
                 return (
                     <div key={index} className='previous-workout-item-container'>
                         <div className='previous-workout-date'>{formatDateForPreviousWorkout(workout.timeStamp)}</div>
-                        {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
-                            if (exerciseName !== 'timeStamp') {
-                                return (
-                                    <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
-                                )
-                            }
-                            return null
-                        })}
+                        <div className='previous-workout-data-container'>
+                            {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
+                                if (exerciseName !== 'timeStamp') {
+                                    return (
+                                        <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
+                                    )
+                                }
+                                return null
+                            })}
+                        </div>
                     </div>
                 )
             })
 
             if (reversedCurrentUserWorkoutData.length > 5) {
                 previousExerciseList.push(
-                    <button key="viewMoreChallengesButton" 
+                    <button className='view-more-challenges-button' key="viewMoreChallengesButton" 
                         onClick={() => setViewMoreDailyChallenges(prevState => !prevState)}>{viewMoreDailyChallenges ? 'view less' : 'view more'}</button>
                 )
             }
