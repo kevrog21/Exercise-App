@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigateToLink } from './ToHomeScreen'
+import Timer from "./Timer"
 
 function CurrentWorkout(props) {
     const navigate = useNavigateToLink()
@@ -10,7 +11,8 @@ function CurrentWorkout(props) {
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
 
-    const unsecureTempPassword = 'temp123'
+    const [showTimer, setShowTimer] = useState(false)
+    const [timerTime, setTimerTime] = useState(0)
 
     useEffect(() => {
         console.log('Checkboxes state:', checkboxes);
@@ -57,17 +59,32 @@ function CurrentWorkout(props) {
                 const checkboxName = `checkbox_${index}`
                 return (
                     <div key={index} className='current-workout-list-item'>
-                        <label className="label-container">
-                            <div className='routine-exercise'>
-                                {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
-                            </div>
-                            <input 
-                                className='exercise-completion-checkbox'
-                                type='checkbox'
-                                name={checkboxName}
-                                checked={formData[exercise.exerciseName] === exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} 
-                                onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)} />
-                        </label>
+                        <div className="label-timer-container">
+                            <label className="label-container">
+                                <div className='routine-exercise'>
+                                    {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
+                                </div>
+                                <input 
+                                    className='exercise-completion-checkbox'
+                                    type='checkbox'
+                                    name={checkboxName}
+                                    checked={formData[exercise.exerciseName] === exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} 
+                                    onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)} />
+                            </label>
+                            {exercise.unit === 'seconds' && 
+                                <div className='timer-icon-container'
+                                onClick={() => {
+                                    console.log('clicked')
+                                    setTimerTime(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))
+                                    setShowTimer(true)
+                                }} >
+                                    <div className="timer-top"></div>
+                                    <div className="timer-stem"></div>
+                                    <div className="timer-circle">
+                                        <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div>
+                                    </div>
+                                </div>}
+                        </div>
                     </div>
                 )
             })
@@ -205,6 +222,12 @@ function CurrentWorkout(props) {
 
     return (
         <main>
+            {showTimer && 
+                <Timer 
+                    showTimer={showTimer}
+                    setShowTimer={setShowTimer}
+                    timerTime={timerTime}
+                />}
             <div className="workout-form-container">
                 <form onSubmit={handleSubmit}>
                     <div className="current-workout-title">Day {allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}:</div>

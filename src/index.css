@@ -152,7 +152,8 @@ main {
   border: none;
   font-size: 1.05em;
   font-weight: 300;
-  margin: .75em 0;
+  margin: .75em auto;
+  display: block;
 }
 
 .workout-completed-msg {
@@ -224,7 +225,8 @@ footer {
   padding: 4em 0;
 }
 
-.nav-menu-container {
+.nav-menu-container,
+.timer-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -282,11 +284,6 @@ footer {
   margin: 0 0 6em 0;
 }
 
-.workout-form-container {
-  width: 50%;
-  margin: 20vw auto 0 auto;
-}
-
 .daily-routine-container {
   margin: 30vw 0 0 0;
   font-weight: 700;
@@ -307,15 +304,6 @@ footer {
   border-radius: 10px;
 }
 
-.label-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 1.5em 0;
-  background: #F1F1F1;
-  padding: .5em 6vw;
-  border-radius: 10px;
-}
-
 .routine-exercise {
   font-weight: 600;
   font-size: 1.25em;
@@ -332,10 +320,68 @@ footer {
   margin: 2em 0 2em 0;
 }
 
+.workout-form-container {
+  margin: 20vw auto 0 auto;
+}
+
+.label-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5em 0;
+  background: #F1F1F1;
+  padding: .5em 6vw;
+  border-radius: 10px;
+}
+
+.current-workout-list-item {
+  display: flex;
+  justify-content: center;
+}
+
 .current-workout-title {
   font-weight: 700;
   font-size: 1.5em;
 }
+
+.label-timer-container {
+  display: flex;
+}
+
+.timer-icon-container {
+  display: flex;
+  flex-direction: column;
+  margin: auto .5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-top {
+  width: .4rem;
+  height: .2rem;
+  background: rgb(71, 71, 71);
+}
+
+.timer-stem {
+  width: .2rem;
+  height: .1rem;
+  background: rgb(71, 71, 71);
+}
+
+.timer-circle {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 3px solid rgb(71, 71, 71);
+  border-radius: 4em;
+  font-size: .7rem;
+  font-weight: bold;
+  color: rgb(71, 71, 71);
+}
+
+.timer-icon-text {
+  line-height: 1.5rem;
+}
+
+
 
 .exercise-quantity {
   font-weight: 400;
@@ -343,7 +389,7 @@ footer {
 }
 
 .exercise-completion-checkbox {
-  margin: .35em 0 0 0;
+  margin: auto .5em .25em .5em;
 }
 
 #success-message {
@@ -371,6 +417,19 @@ footer {
 
 .honeyp {
   display: none;
+}
+
+.timer-container {
+  background:rgba(0, 0, 0, .98);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.timer-contents {
+  background: white;
+
 }
 
 .hide {
