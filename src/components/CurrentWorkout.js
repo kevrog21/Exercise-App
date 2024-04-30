@@ -81,7 +81,11 @@ function CurrentWorkout(props) {
                                     <div className="timer-top"></div>
                                     <div className="timer-stem"></div>
                                     <div className="timer-circle">
-                                        <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div>
+                                    {/* {
+                                        exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) > 99
+                                        ? <div className='timer-icon-text-small'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div>
+                                        : <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div> } */}
+                                        <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 88)}</div>
                                     </div>
                                 </div>}
                         </div>

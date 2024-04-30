@@ -16,16 +16,16 @@ export default function Timer(props) {
     }, [time])
 
     const formatTime = (seconds) => {
-        const hours = Math.floor(seconds / 3600)
+        // const hours = Math.floor(seconds / 3600)
         const minutes = Math.floor((seconds % 3600) / 60)
         const remainingSeconds = seconds % 60
-        return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
     }
 
     return (
         <div className="timer-container">
             <div className="timer-contents">
-                <div>{time > 0 ? formatTime(time) : "times up!"}</div>
+                <div className="timer-time-display">{time > 0 ? formatTime(time) : "Time\'s Up!"}</div>
                 <div className='timer-back-btn' 
                     onClick={() => {
                     props.setShowTimer(false)
