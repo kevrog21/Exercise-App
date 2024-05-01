@@ -22,7 +22,7 @@ function CurrentWorkout(props) {
     const handleCheckboxChange = (name, exerciseId, dailyIncrement, checked, index) => {
         setFormData((prevFormData) => ({
             ...prevFormData,
-            [exerciseId]: checked ? dailyIncrement * (currentUserWorkoutData.workouts.length + 1) : 0
+            [exerciseId]: checked ? Math.ceil(dailyIncrement * (currentUserWorkoutData.workouts.length + 1)) : 0
         }))
         setCheckboxes((prevCheckboxes) => ({
             ...prevCheckboxes,
@@ -62,30 +62,26 @@ function CurrentWorkout(props) {
                         <div className="label-timer-container">
                             <label className="label-container">
                                 <div className='routine-exercise'>
-                                    {exercise.exerciseName}: <span className='exercise-quantity'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} {exercise.unit}</span>
+                                    {exercise.exerciseName}: <span className='exercise-quantity'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} {exercise.unit}</span>
                                 </div>
                                 <input 
                                     className='exercise-completion-checkbox'
                                     type='checkbox'
                                     name={checkboxName}
-                                    checked={formData[exercise.exerciseName] === exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)} 
+                                    checked={formData[exercise.exerciseName] === Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} 
                                     onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)} />
                             </label>
                             {exercise.unit === 'seconds' && 
                                 <div className='timer-icon-container'
                                 onClick={() => {
                                     console.log('clicked')
-                                    setTimerTime(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))
+                                    setTimerTime(Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)))
                                     setShowTimer(true)
                                 }} >
                                     <div className="timer-top"></div>
                                     <div className="timer-stem"></div>
                                     <div className="timer-circle">
-                                    {/* {
-                                        exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) > 99
-                                        ? <div className='timer-icon-text-small'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div>
-                                        : <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)}</div> } */}
-                                        <div className='timer-icon-text'>{exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 88)}</div>
+                                        <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))}</div>
                                     </div>
                                 </div>}
                         </div>
