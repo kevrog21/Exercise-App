@@ -56,8 +56,6 @@ main {
 } */
 
 .hamburger_div {
-  height: 5vw;
-  width: 7vw;
 	cursor: pointer;
 	transition: transform ease .2s;
 }
@@ -154,6 +152,7 @@ main {
   font-weight: 300;
   margin: .75em auto;
   display: block;
+  text-decoration: none;
 }
 
 .workout-completed-msg {
@@ -321,7 +320,7 @@ footer {
 }
 
 .workout-form-container {
-  margin: 20vw auto 0 auto;
+  margin: 10em auto 0 auto;
 }
 
 .label-container {
@@ -431,6 +430,10 @@ footer {
   color: white;
 }
 
+.timer-container-red {
+  background-color: red;
+}
+
 .timer-contents {
 
 }
@@ -446,6 +449,10 @@ footer {
 
 .hide {
   display: none;
+}
+
+.no-underline {
+  text-decoration: none;
 }
 
 .bold {

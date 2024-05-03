@@ -27,7 +27,7 @@ function Homescreen(props) {
                 <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? currentUserWorkoutData.workouts.length : ''} days</div>
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
-                <Link to='/current-workout'><button className='start-workout-btn'>start today's challenge</button></Link>}
+                <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>}
                 
                 {userCompletedTodaysWorkout && 
                 <div>

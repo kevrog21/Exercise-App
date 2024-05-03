@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 export default function Timer(props) {
 
     const [time, setTime] = useState(props.timerTime)
+    const [timesUp, setTimesUp] = useState(false)
 
     useEffect(() => {
         if (time <= 0) return
@@ -22,10 +23,14 @@ export default function Timer(props) {
         return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
     }
 
+    const handleTimesUp = () => {
+        setTimesUp(true)
+    }
+
     return (
-        <div className="timer-container">
+        <div className={`timer-container ${timesUp ? 'timer-container-red' : '' }`}>
             <div className="timer-contents">
-                <div className="timer-time-display">{time > 0 ? formatTime(time) : "Time\'s Up!"}</div>
+                <div className="timer-time-display">{time > 0 ? formatTime(time) : timesUp ? "Time's Up" : handleTimesUp()}</div>
                 <div className='timer-back-btn' 
                     onClick={() => {
                     props.setShowTimer(false)
