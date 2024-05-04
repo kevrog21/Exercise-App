@@ -38,7 +38,7 @@ export default function UserStats(props) {
                 <h2>General Totals</h2>
                 <div>Trips to the gym: </div>
                 <div>Sprint Training Sessions: </div>
-                <div>Daily Challenges Completed: </div>
+                <div>Daily Challenges Completed: {currentUserWorkoutData && currentUserWorkoutData.workouts.length}</div>
             </div>
             <div className='stats-container'>
                 <h2>Daily Challenge Totals</h2>

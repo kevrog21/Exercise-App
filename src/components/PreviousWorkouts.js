@@ -69,16 +69,29 @@ function PreviousWorkouts(props) {
     
     
     return (
-        <div className="previous-workouts-container">
-            <div className='previous-workouts-title'>Previous Daily Challenges</div>
-            <div className="previous-workouts-content">
-                {previousWorkoutEls}
-                <div className='previous-challenges-view-more-toggle'>
+        <div>
+            <div className="previous-workouts-container">
+                <div className='previous-workouts-title'>Previous Daily Challenges</div>
+                <div className="previous-workouts-content">
+                    {previousWorkoutEls}
+                    <div className='previous-challenges-view-more-toggle'>
 
+                    </div>
                 </div>
+                
             </div>
-            
+            <div className="previous-workouts-container">
+                <div className='previous-workouts-title'>Previous Workouts</div>
+                <div className="previous-workouts-content">
+                    {}
+                    <div className='previous-challenges-view-more-toggle'>
+
+                    </div>
+                </div>
+                
+            </div>
         </div>
+        
     )
 }
 
