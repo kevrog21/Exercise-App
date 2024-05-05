@@ -75,10 +75,8 @@ function PreviousWorkouts(props) {
                 <div className="previous-workouts-content">
                     {previousWorkoutEls}
                     <div className='previous-challenges-view-more-toggle'>
-
                     </div>
                 </div>
-                
             </div>
             <div className="previous-workouts-container">
                 <div className='previous-workouts-title'>Previous Workouts</div>
@@ -87,8 +85,7 @@ function PreviousWorkouts(props) {
                     <div className='previous-challenges-view-more-toggle'>
 
                     </div>
-                </div>
-                
+                </div>  
             </div>
         </div>
         
