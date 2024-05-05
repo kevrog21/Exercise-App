@@ -8,6 +8,7 @@ function PreviousWorkouts(props) {
     const [previousWorkoutEls, setPreviousWorkoutEls] = useState()
     const [reversedCurrentUserWorkoutData, setReversedCurrentWorkoutData] = useState([])
     const [viewMoreDailyChallenges, setViewMoreDailyChallenges] = useState(false)
+    const [viewMoreWorkouts, setViewMoreWorkouts] = useState(false)
 
     const formatDateForPreviousWorkout = (dateString) => {
         const date = new Date(dateString)
@@ -33,11 +34,11 @@ function PreviousWorkouts(props) {
 
     useEffect(() => {
         if (reversedCurrentUserWorkoutData.length > 0) {
-            const workoutsToShow = viewMoreDailyChallenges
+            const dailyChallengesToShow = viewMoreDailyChallenges
                 ? reversedCurrentUserWorkoutData
                 : reversedCurrentUserWorkoutData.slice(0, 5)
             
-            const previousExerciseList = workoutsToShow.map((workout, index) => {
+            const previousChallengesList = dailyChallengesToShow.map((workout, index) => {
                 return (
                     <div key={index} className='previous-workout-item-container'>
                         <div className='previous-workout-date'>{formatDateForPreviousWorkout(workout.timeStamp)}</div>
@@ -56,17 +57,52 @@ function PreviousWorkouts(props) {
             })
 
             if (reversedCurrentUserWorkoutData.length > 5) {
-                previousExerciseList.push(
+                previousChallengesList.push(
                     <button className='view-more-challenges-button' key="viewMoreChallengesButton" 
                         onClick={() => setViewMoreDailyChallenges(prevState => !prevState)}>{viewMoreDailyChallenges ? 'view less' : 'view more'}</button>
                 )
             }
 
-            setPreviousWorkoutEls(previousExerciseList)
+            setPreviousWorkoutEls(previousChallengesList)
         }
     }, [reversedCurrentUserWorkoutData, viewMoreDailyChallenges])
+
     
     
+    useEffect(() => {
+        if (reversedCurrentUserWorkoutData.length > 0) {
+            const workoutsToShow = viewMoreWorkouts
+                ? reversedCurrentUserWorkoutData
+                : reversedCurrentUserWorkoutData.slice(0, 5)
+            
+            const previousWorkoutList = workoutsToShow.map((workout, index) => {
+                return (
+                    <div key={index} className='previous-workout-item-container'>
+                        <div className='previous-workout-date'>{formatDateForPreviousWorkout(workout.timeStamp)}</div>
+                        <div className='previous-workout-data-container'>
+                            {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
+                                if (exerciseName !== 'timeStamp') {
+                                    return (
+                                        <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
+                                    )
+                                }
+                                return null
+                            })}
+                        </div>
+                    </div>
+                )
+            })
+
+            if (reversedCurrentUserWorkoutData.length > 5) {
+                previousWorkoutList.push(
+                    <button className='view-more-challenges-button' key="viewMoreChallengesButton" 
+                        onClick={() => setViewMoreWorkouts(prevState => !prevState)}>{viewMoreWorkouts ? 'view less' : 'view more'}</button>
+                )
+            }
+
+            setPreviousWorkoutEls(previousWorkoutList)
+        }
+    }, [reversedCurrentUserWorkoutData, viewMoreWorkouts])
     
     return (
         <div>
