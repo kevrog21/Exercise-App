@@ -32,10 +32,17 @@ function CurrentWorkout(props) {
 
     const handleFormChange = (event) => {
         const { name, value } = event.target
-        setFormData({
-            ...formData,
-            [name]: value
-        })
+        const newValue = parseInt(value)
+        const isChecked = newValue > (currentUserWorkoutData.workouts.length + 1)
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: newValue
+        }))
+        setCheckboxes((prevCheckboxes) => ({
+            ...prevCheckboxes,
+            [name]: isChecked
+        }))
     }
 
     useEffect(() => {
@@ -69,9 +76,10 @@ function CurrentWorkout(props) {
                                     type='checkbox'
                                     name={checkboxName}
                                     checked={formData[exercise.exerciseName] === Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} 
-                                    onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)} />
+                                    // onChange={(e) => handleCheckboxChange(e.target.name, exercise.exerciseName, exercise.dailyIncrement, e.target.checked, index)}
+                                     />
                             </label>
-                            {exercise.unit === 'seconds' && 
+                             {exercise.unit === 'seconds' && 
                                 <div className='timer-icon-container'
                                 onClick={() => {
                                     console.log('clicked')
@@ -83,7 +91,7 @@ function CurrentWorkout(props) {
                                     <div className="timer-circle">
                                         <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))}</div>
                                     </div>
-                                </div>}
+                                </div>} 
                         </div>
                     </div>
                 )

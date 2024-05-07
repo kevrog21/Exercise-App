@@ -328,13 +328,14 @@ footer {
   justify-content: space-between;
   margin: 1.5em 0;
   background: #F1F1F1;
-  padding: .5em 6vw;
+  padding: 1em 0 1em 2em;
   border-radius: 10px;
 }
 
 .current-workout-list-item {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .current-workout-title {
@@ -343,7 +344,7 @@ footer {
 }
 
 .label-timer-container {
-  display: flex;
+
 }
 
 .timer-icon-container {
