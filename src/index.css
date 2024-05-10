@@ -347,40 +347,6 @@ footer {
 
 }
 
-.timer-icon-container {
-  display: flex;
-  flex-direction: column;
-  margin: auto .5em;
-  justify-content: center;
-  align-items: center;
-}
-
-.timer-top {
-  width: .3rem;
-  height: .1rem;
-  background: rgb(104, 104, 104);
-}
-
-.timer-stem {
-  width: .1rem;
-  height: .05rem;
-  background: rgb(104, 104, 104);
-}
-
-.timer-circle {
-  height: 1rem;
-  width: 1rem;
-  border: 2px solid rgb(104, 104, 104);
-  border-radius: 4em;
-  font-weight: bold;
-  color: rgb(104, 104, 104);
-}
-
-.timer-icon-text {
-  line-height: 1rem;
-  font-size: .5rem;
-}
-
 /* .timer-icon-text-small {
   line-height: 1rem;
   font-size: .5rem;
@@ -405,6 +371,143 @@ footer {
 #incorrect-password-message {
   color: red;
 }
+
+
+
+
+
+.day-title {
+  font-size: 2.5em;
+  margin: 0 0 1rem 0;
+}
+
+.day-title-number {
+  font-weight: 800;
+}
+
+.exercise-timer-container {
+  /* background: gray; */
+  margin: 1em 0;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exercise {
+  text-align: left;
+  /* background: red; */
+  background: #F1F1F1;
+  flex: 1;
+  max-width: 60%;
+  display: flex;
+  border-radius: 1em;
+  padding: .75em;
+}
+
+.exercise-label {
+  /* background: orange; */
+  padding: .75em .5em .75em .75em;
+  flex-grow: 1;
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.required-rep-label {
+  font-weight: 400;
+  font-size: .75em;
+  padding: 0 0 0 .5em;
+}
+
+.rep-scroller-container {
+  /* background: green; */
+  width: 4em;
+  border-left: 2px solid #6B6B6B;
+}
+
+.current-rep-label {
+  font-size: .75em;
+  text-align: center;
+}
+
+.timer-background {
+  /* background: blue; */
+  height: 20px;
+  width: 20%;
+  position: absolute;
+  right: 0;
+}
+
+.timer-icon-container {
+  /* background: purple; */
+  width: 50%;
+  padding: 0 0 0 .75em;
+}
+
+.timer-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background: red; */
+}
+
+.timer-top {
+  width: .45rem;
+  height: .15rem;
+  background: rgb(104, 104, 104);
+}
+
+.timer-stem {
+  width: .15rem;
+  height: .075rem;
+  background: rgb(104, 104, 104);
+}
+
+.timer-circle {
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 3px solid rgb(104, 104, 104);
+  border-radius: 4em;
+  font-weight: bold;
+  color: rgb(104, 104, 104);
+}
+
+.timer-icon-text {
+  line-height: 1.5rem;
+  font-size: .75rem;
+}
+
+
+/* 
+.exercise-timer-container {
+  background: gray;
+  margin: 1em 0;
+  padding: 5px;
+  display: flex;
+  position: relative;
+}
+
+.exercise {
+  text-align: left;
+  background: red;
+  width: 70%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+.timer {
+  background: blue;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 0;
+} */
+
+
+
+
 
 .stats-container{
   margin: 5vw 0 0 0;
@@ -450,6 +553,10 @@ footer {
 
 .hide {
   display: none;
+}
+
+.page-margin-top {
+  margin-top: calc(6rem + 10vw);
 }
 
 .no-underline {

@@ -6,6 +6,7 @@ import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 import Homescreen from './components/Homescreen'
 import Footer from './components/Footer'
+import CurrentDailyChallenge from './components/CurrentDailyChallenge'
 import CurrentWorkout from './components/CurrentWorkout'
 import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
@@ -84,6 +85,14 @@ function App() {
               currentUserData={currentUserData}
               currentUserWorkoutData={currentUserWorkoutData}
               convertUTCDate={convertUTCDate}
+              userCompletedTodaysWorkout={userCompletedTodaysWorkout}
+            />} />
+            
+            <Route exact path="/current-daily-challenge" element={
+            <CurrentDailyChallenge 
+              tempCurrentUserId={tempCurrentUserId}
+              currentUserData={currentUserData}
+              currentUserWorkoutData={currentUserWorkoutData}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
             />} />
           <Route exact path="/current-workout" element={
