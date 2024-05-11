@@ -430,6 +430,25 @@ footer {
   text-align: center;
 }
 
+.rep-scroller {
+  width: 100%;
+  text-align: center;
+}
+
+.current-rep {
+  font-size: 1.5em;
+}
+
+.temp-button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.temp-button {
+
+}
+
+
 .timer-background {
   /* background: blue; */
   height: 20px;
@@ -476,6 +495,11 @@ footer {
 .timer-icon-text {
   line-height: 1.5rem;
   font-size: .75rem;
+}
+
+.password-input {
+  margin: 1em 0;
+  font-size: 1.5em;
 }
 
 
