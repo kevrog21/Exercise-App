@@ -23,23 +23,40 @@ export default function CurrentDailyChallenge(props) {
         }
     }, [currentUserWorkoutData])
 
+    const handleIncrement = (exerciseName) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [exerciseName]: prevData[exerciseName] + 1
+        }))
+    }
+
+    const handleDecrement = (exerciseName) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [exerciseName]: prevData[exerciseName] > 0 ? prevData[exerciseName] - 1: 0
+        }))
+    }
+
     useEffect(() => {
         if (currentUserWorkoutData) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
                     <div key={index} className='current-workout-list-item'>
                         <div className='exercise-timer-container'>
-                            <div className='exercise'>
+                            <div className={`exercise ${formData[exercise.exerciseName] >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label'>{exercise.exerciseName}:
                                     <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} {exercise.unit}</span>
                                 </div>
-                                <div className='rep-scroller-container'>
-                                    <div className='current-rep-label'>current</div>
-                                    <div className='rep-scroller'>
-                                        <div className='current-rep'>0</div>
-                                        <div className='temp-button-container'>
-                                            <div className='temp-button'>-</div>
-                                            <div className='temp-button'>+</div>
+                                <div className='exercise-label-right-side'>
+                                    {formData[exercise.exerciseName] >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) && <div className='exercise-completed-check'>✓</div>}
+                                    <div className='rep-scroller-container'>
+                                        <div className='current-rep-label'>current</div>
+                                        <div className='rep-scroller'>
+                                            <div className='current-rep'>{formData[exercise.exerciseName]}</div>
+                                            <div className='temp-button-container'>
+                                                <div className='temp-button' onClick={() => handleDecrement(exercise.exerciseName)}>-</div>
+                                                <div className='temp-button' onClick={() => handleIncrement(exercise.exerciseName)}>+</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +84,7 @@ export default function CurrentDailyChallenge(props) {
             })
             setAllExerciseEls(dailyChallengeExercises)
         }
-    }, [currentUserWorkoutData])
+    }, [currentUserWorkoutData, formData])
 
     const handleFormChange = (event) => {
         const { name, value } = event.target

@@ -402,12 +402,15 @@ footer {
   max-width: 60%;
   display: flex;
   border-radius: 1em;
-  padding: .75em;
+  padding: 0 .5em 0 0;
+}
+
+.completed-exercise {
+  background: #CAF4C1;
 }
 
 .exercise-label {
-  /* background: orange; */
-  padding: .75em .5em .75em .75em;
+  padding: 1.5em .5em 1.5em .75em;
   flex-grow: 1;
   font-weight: 700;
   font-size: 1.5em;
@@ -419,20 +422,46 @@ footer {
   padding: 0 0 0 .5em;
 }
 
-.rep-scroller-container {
-  /* background: green; */
+.exercise-label-right-side {
   width: 4em;
-  border-left: 2px solid #6B6B6B;
+  position: relative;
+  padding: 0 .75em 0 0;
+}
+
+.exercise-completed-check,
+.rep-scroller-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.exercise-completed-check {
+  color: green;
+  text-align: right;
+  font-weight: bold;
+  line-height: .5em;
+  padding: .5em 0 0 0;
+}
+
+.rep-scroller-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .current-rep-label {
   font-size: .75em;
   text-align: center;
+  border-left: 2px solid #6B6B6B;
 }
 
 .rep-scroller {
   width: 100%;
   text-align: center;
+  border-left: 2px solid #6B6B6B;
+  padding: .75em 0;
 }
 
 .current-rep {
