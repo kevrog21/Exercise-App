@@ -10,6 +10,7 @@ export default function CurrentDailyChallenge(props) {
     const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
+    const [challengeComplete, setChallengeComplete] = useState(false)
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -49,6 +50,20 @@ export default function CurrentDailyChallenge(props) {
                 isComplete: prevFormData[exerciseName].count - 1 >= prevFormData[exerciseName].goalReps
             }
         }))
+    }
+
+    const checkCompletionStatus = (objectToCheck) => {
+        const itemsWithIsCompleteKey = Object.keys(objectToCheck)
+        .filter(key => objectToCheck[key].hasOwnProperty('isComplete'))
+        .map(key => objectToCheck[key].isComplete)
+
+        if (itemsWithIsCompleteKey.length > 0 && itemsWithIsCompleteKey.every(isComplete => isComplete)) {
+            setChallengeComplete(true)
+            console.log('complete!!!')
+        } else {
+            console.log('you have not completed the challnge yet', itemsWithIsCompleteKey)
+            setChallengeComplete(false)
+        }
     }
 
     useEffect(() => {
@@ -97,6 +112,7 @@ export default function CurrentDailyChallenge(props) {
                 )
             })
             setAllExerciseEls(dailyChallengeExercises)
+            checkCompletionStatus(formData)
         }
     }, [currentUserWorkoutData, formData])
 
@@ -116,8 +132,13 @@ export default function CurrentDailyChallenge(props) {
         const successMessageEl = document.getElementById('success-message')
         const incorrectPasswordEl = document.getElementById('incorrect-password-message')
         const alreadyCompletedWorkoutEl = document.getElementById('already-completed-message')
-
         console.log(formData)
+
+        if (formData.honeyp === '' && challengeComplete) {
+            //send to database
+
+            //if all of the formData items are complete, increase the current streak value in the database
+        }
     }
 
     return (
