@@ -17,42 +17,56 @@ export default function CurrentDailyChallenge(props) {
     useEffect(() => {
         if (currentUserWorkoutData) {
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
-                return { ...acc, [exercise.exerciseName]: 0}
+                return { 
+                    ...acc, 
+                    [exercise.exerciseName]: {
+                        count: 0, 
+                        goalReps: exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1), 
+                        isComplete: false}
+                    }
             }, {honeyp: '', pword: ''})
             setFormData(initialFormData)
         }
     }, [currentUserWorkoutData])
 
     const handleIncrement = (exerciseName) => {
-        setFormData(prevData => ({
-            ...prevData,
-            [exerciseName]: prevData[exerciseName] + 1
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [exerciseName]: {
+                ...prevFormData[exerciseName],
+                count: prevFormData[exerciseName].count + 1,
+                isComplete: prevFormData[exerciseName].count + 1 >= prevFormData[exerciseName].goalReps
+            }
         }))
     }
 
     const handleDecrement = (exerciseName) => {
-        setFormData(prevData => ({
-            ...prevData,
-            [exerciseName]: prevData[exerciseName] > 0 ? prevData[exerciseName] - 1: 0
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [exerciseName]: {
+                ...prevFormData[exerciseName],
+                count: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].count - 1 : 0,
+                isComplete: prevFormData[exerciseName].count - 1 >= prevFormData[exerciseName].goalReps
+            }
         }))
     }
 
     useEffect(() => {
-        if (currentUserWorkoutData) {
+        if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
                     <div key={index} className='current-workout-list-item'>
                         <div className='exercise-timer-container'>
-                            <div className={`exercise ${formData[exercise.exerciseName] >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) ? 'completed-exercise' : ''}`}>
+                            <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label'>{exercise.exerciseName}:
                                     <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} {exercise.unit}</span>
                                 </div>
                                 <div className='exercise-label-right-side'>
-                                    {formData[exercise.exerciseName] >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) && <div className='exercise-completed-check'>✓</div>}
+                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) && <div className='exercise-completed-check'>✓</div>}
                                     <div className='rep-scroller-container'>
                                         <div className='current-rep-label'>current</div>
                                         <div className='rep-scroller'>
-                                            <div className='current-rep'>{formData[exercise.exerciseName]}</div>
+                                            <div className='current-rep'>{formData[exercise.exerciseName].count}</div>
                                             <div className='temp-button-container'>
                                                 <div className='temp-button' onClick={() => handleDecrement(exercise.exerciseName)}>-</div>
                                                 <div className='temp-button' onClick={() => handleIncrement(exercise.exerciseName)}>+</div>
