@@ -15,14 +15,17 @@ export default function CurrentDailyChallenge(props) {
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
 
+    const [challengeNumber, setChallengeNumber] = useState()
+
     useEffect(() => {
         if (currentUserWorkoutData) {
+            setChallengeNumber(currentUserWorkoutData.workouts.length + 1)
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                 return { 
                     ...acc, 
                     [exercise.exerciseName]: {
                         count: 0, 
-                        goalReps: exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1), 
+                        goalReps: exercise.dailyIncrement * challengeNumber, 
                         isComplete: false}
                     }
             }, {honeyp: '', pword: ''})
@@ -72,12 +75,12 @@ export default function CurrentDailyChallenge(props) {
                 return (
                     <div key={index} className='current-workout-list-item'>
                         <div className='exercise-timer-container'>
-                            <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) ? 'completed-exercise' : ''}`}>
-                                <div className='exercise-label'>{exercise.exerciseName}:
-                                    <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))} {exercise.unit}</span>
+                            <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber ? 'completed-exercise' : ''}`}>
+                                <div className='exercise-label' onClick={() => console.log(exercise.exerciseName, ' clicked')}>{exercise.exerciseName}:
+                                    <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * challengeNumber)} {exercise.unit}</span>
                                 </div>
                                 <div className='exercise-label-right-side'>
-                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1) && <div className='exercise-completed-check'>✓</div>}
+                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber && <div className='exercise-completed-check'>✓</div>}
                                     <div className='rep-scroller-container'>
                                         <div className='current-rep-label'>current</div>
                                         <div className='rep-scroller'>
@@ -90,23 +93,25 @@ export default function CurrentDailyChallenge(props) {
                                     </div>
                                 </div>
                             </div>
-                            {exercise.unit === 'seconds' && 
+                            {exercise.unit === 'seconds' ?
                             <div className='timer-background'>
+                                <div className="rep-update-visual-timer">+5</div>
                                 <div className='timer-icon-container'>
                                     <div className='timer-icon'
                                     onClick={() => {
                                         console.log('clicked')
-                                        setTimerTime(Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1)))
+                                        setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
                                         setShowTimer(true)
                                     }} >
                                         <div className="timer-top"></div>
                                         <div className="timer-stem"></div>
                                         <div className="timer-circle">
-                                            <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * (currentUserWorkoutData.workouts.length + 1))}</div>
+                                            <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * challengeNumber)}</div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>}
+                            </div> :
+                            <div className="rep-update-visual">+10</div>}
                         </div>
                     </div>
                 )
@@ -151,7 +156,7 @@ export default function CurrentDailyChallenge(props) {
                 />}
             <form onSubmit={handleSubmit}>
                 <div className="day-title">
-                    Day <span className="day-title-number">{allExerciseEls.length > 0 && currentUserWorkoutData.workouts.length + 1}</span>
+                    Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
                 </div>
                 {allExerciseEls}
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>

@@ -477,6 +477,24 @@ footer {
 
 }
 
+.rep-update-visual,
+.rep-update-visual-timer {
+  height: 2rem;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  line-height: 2rem;
+  font-weight: bold;
+  color: green;
+}
+
+.rep-update-visual {
+  width: 18%;
+}
+
+.rep-update-visual-timer {
+  width: 50%;
+}
 
 .timer-background {
   /* background: blue; */
