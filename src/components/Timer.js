@@ -31,16 +31,18 @@ export default function Timer(props) {
         <div className={`timer-container ${timesUp ? 'timer-container-red' : '' }`}>
             <div className="timer-contents">
                 <div className="timer-time-display">{time > 0 ? formatTime(time) : timesUp ? "Time's Up" : handleTimesUp()}</div>
-                <div className='timer-reset-btn' 
-                    onClick={() => {
-                        setTimesUp(false)
-                        setTime(props.timerTime)
-                }}>reset</div>
-                <div className='timer-back-btn' 
-                    onClick={() => {
-                        props.setShowTimer(false)
-                }}>back</div>
             </div>
+            <div className="timer-btns-container">
+                    <div className='timer-reset-btn' 
+                        onClick={() => {
+                            setTimesUp(false)
+                            setTime(props.timerTime)
+                    }}>reset</div>
+                    <div className='timer-back-btn' 
+                        onClick={() => {
+                            props.setShowTimer(false)
+                    }}>back</div>
+                </div>
         </div>
     )
 }

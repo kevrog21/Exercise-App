@@ -618,9 +618,28 @@ footer {
   margin: 3em 0 0 0;
 }
 
-.timer-back-btn {
-  padding: 2em 6em;
+.timer-btns-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 2em 0 0 0;
 }
+
+.timer-back-btn,
+.timer-reset-btn  {
+  padding: .5em 3em;
+  border-radius: 2em;
+  border: 2px solid rgb(104, 104, 104);
+  color: rgb(194, 194, 194);
+}
+
+.timer-back-btn {
+  margin: 0 0 0 1em;
+}
+
+.timer-reset-btn {
+  margin: 0 1em 0 0;
+}
+
 
 .hide {
   display: none;
