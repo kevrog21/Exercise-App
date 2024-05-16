@@ -5,12 +5,13 @@ import Timer from "./Timer"
 export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
-    const [checkboxes, setCheckboxes] = useState({})
     
     const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [challengeComplete, setChallengeComplete] = useState(false)
+
+    const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -26,34 +27,56 @@ export default function CurrentDailyChallenge(props) {
                     [exercise.exerciseName]: {
                         count: 0, 
                         goalReps: exercise.dailyIncrement * challengeNumber, 
-                        isComplete: false}
+                        isComplete: false,
+                        repChange: 0
                     }
+                }
             }, {honeyp: '', pword: ''})
             setFormData(initialFormData)
         }
     }, [currentUserWorkoutData])
 
     const handleIncrement = (exerciseName) => {
+        setLastButtonClickTime(Date.now())
         setFormData(prevFormData => ({
             ...prevFormData,
             [exerciseName]: {
                 ...prevFormData[exerciseName],
                 count: prevFormData[exerciseName].count + 1,
+                repChange: prevFormData[exerciseName].repChange + 1,
                 isComplete: prevFormData[exerciseName].count + 1 >= prevFormData[exerciseName].goalReps
             }
         }))
     }
 
     const handleDecrement = (exerciseName) => {
+        setLastButtonClickTime(Date.now())
         setFormData(prevFormData => ({
             ...prevFormData,
             [exerciseName]: {
                 ...prevFormData[exerciseName],
                 count: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].count - 1 : 0,
+                repChange: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].repChange - 1 : 0,
                 isComplete: prevFormData[exerciseName].count - 1 >= prevFormData[exerciseName].goalReps
             }
         }))
     }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setFormData((prevFormData) => {
+                const updatedFormData = { ...prevFormData }
+                Object.keys(updatedFormData).forEach((key) => {
+                    if (key !== 'honeyp' && key !== 'pword') {
+                        updatedFormData[key] = { ...updatedFormData[key], repChange: 0 }
+                    }
+                })
+                return updatedFormData
+            })
+        }, 2000)
+
+        return () => clearTimeout(timer)
+    }, [lastButtonClickTime])
 
     const checkCompletionStatus = (objectToCheck) => {
         const itemsWithIsCompleteKey = Object.keys(objectToCheck)
@@ -95,7 +118,7 @@ export default function CurrentDailyChallenge(props) {
                             </div>
                             {exercise.unit === 'seconds' ?
                             <div className='timer-background'>
-                                <div className="rep-update-visual-timer">+5</div>
+                                <div className="rep-update-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
                                 <div className='timer-icon-container'>
                                     <div className='timer-icon'
                                     onClick={() => {
@@ -111,7 +134,7 @@ export default function CurrentDailyChallenge(props) {
                                     </div>
                                 </div>
                             </div> :
-                            <div className="rep-update-visual">+10</div>}
+                            <div className="rep-update-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
                         </div>
                     </div>
                 )
