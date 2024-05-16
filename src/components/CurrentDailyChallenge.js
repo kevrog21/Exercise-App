@@ -12,6 +12,7 @@ export default function CurrentDailyChallenge(props) {
     const [challengeComplete, setChallengeComplete] = useState(false)
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
+    const [repChangeInTransition, setRepChangeInTransition] = useState(false)
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -63,19 +64,43 @@ export default function CurrentDailyChallenge(props) {
     }
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setFormData((prevFormData) => {
-                const updatedFormData = { ...prevFormData }
-                Object.keys(updatedFormData).forEach((key) => {
-                    if (key !== 'honeyp' && key !== 'pword') {
-                        updatedFormData[key] = { ...updatedFormData[key], repChange: 0 }
-                    }
+        if (lastButtonClickTime !== 0) {
+            if (repChangeInTransition) {
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                allRepChangeElements.forEach(element => {
+                    element.classList.remove('rep-change-visual-fade')
                 })
-                return updatedFormData
-            })
-        }, 2000)
+            }
+            const fade = setTimeout(() => {
+                setRepChangeInTransition(true)
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                allRepChangeElements.forEach(element => {
+                    element.classList.add('rep-change-visual-fade')
+                })
+            }, 2000)
+            const timer = setTimeout(() => {
+                setFormData((prevFormData) => {
+                    const updatedFormData = { ...prevFormData }
+                    Object.keys(updatedFormData).forEach((key) => {
+                        if (key !== 'honeyp' && key !== 'pword') {
+                            updatedFormData[key] = { ...updatedFormData[key], repChange: 0 }
+                        }
+                    })
+                    return updatedFormData
+                })
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                allRepChangeElements.forEach(element => {
+                    element.classList.remove('rep-change-visual-fade')
+                })
+                setRepChangeInTransition(false)
+                //if logged in, send to database and add 'changes saved' to UI
+            }, 2500)
 
-        return () => clearTimeout(timer)
+            return () => {
+                clearTimeout(fade)
+                clearTimeout(timer)
+            }
+        }
     }, [lastButtonClickTime])
 
     const checkCompletionStatus = (objectToCheck) => {
@@ -118,7 +143,7 @@ export default function CurrentDailyChallenge(props) {
                             </div>
                             {exercise.unit === 'seconds' ?
                             <div className='timer-background'>
-                                <div className="rep-update-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
+                                <div className="rep-change-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
                                 <div className='timer-icon-container'>
                                     <div className='timer-icon'
                                     onClick={() => {
@@ -134,7 +159,7 @@ export default function CurrentDailyChallenge(props) {
                                     </div>
                                 </div>
                             </div> :
-                            <div className="rep-update-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
+                            <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
                         </div>
                     </div>
                 )

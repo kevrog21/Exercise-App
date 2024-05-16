@@ -477,8 +477,8 @@ footer {
 
 }
 
-.rep-update-visual,
-.rep-update-visual-timer {
+.rep-change-visual,
+.rep-change-visual-timer {
   height: 2rem;
   position: absolute;
   right: 0;
@@ -486,14 +486,20 @@ footer {
   line-height: 2rem;
   font-weight: bold;
   color: green;
+  opacity: 1;
+  transition: all .5s ease;
 }
 
-.rep-update-visual {
+.rep-change-visual {
   width: 18%;
 }
 
-.rep-update-visual-timer {
+.rep-change-visual-timer {
   width: 50%;
+}
+
+.rep-change-visual.rep-change-visual-fade {
+  opacity: 0;
 }
 
 .timer-background {
@@ -641,7 +647,7 @@ footer {
 }
 
 .white-btn {
-  border: 2px solid white;
+  border: 2px solid rgb(29, 18, 18);
   color: white;
 }
 
