@@ -502,6 +502,27 @@ footer {
   opacity: 0;
 }
 
+.previous-reps-container {
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+}
+
+.manual-rep-input {
+  background: rgb(187, 187, 187);
+  border: none;
+  width: 2em;
+  margin: 0 0 0 .5em;
+}
+
+.manual-rep-input-submit {
+  color: green;
+  font-size: .8em;
+  font-weight: bold;
+  margin: 0 0 0 auto;
+}
+
 .timer-background {
   /* background: blue; */
   height: 20px;

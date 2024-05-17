@@ -29,7 +29,8 @@ export default function CurrentDailyChallenge(props) {
                         count: 0, 
                         goalReps: exercise.dailyIncrement * challengeNumber, 
                         isComplete: false,
-                        repChange: 0
+                        repChange: 0,
+                        previousSets: []
                     }
                 }
             }, {honeyp: '', pword: ''})
@@ -82,8 +83,11 @@ export default function CurrentDailyChallenge(props) {
                 setFormData((prevFormData) => {
                     const updatedFormData = { ...prevFormData }
                     Object.keys(updatedFormData).forEach((key) => {
-                        if (key !== 'honeyp' && key !== 'pword') {
-                            updatedFormData[key] = { ...updatedFormData[key], repChange: 0 }
+                        if (key !== 'honeyp' && key !== 'pword' && updatedFormData[key].repChange !== 0) {
+                            updatedFormData[key] = { 
+                                ...updatedFormData[key], 
+                                previousSets: [...updatedFormData[key].previousSets, updatedFormData[key].repChange],
+                                repChange: 0 }
                         }
                     })
                     return updatedFormData
@@ -160,6 +164,10 @@ export default function CurrentDailyChallenge(props) {
                                 </div>
                             </div> :
                             <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
+                        </div>
+                        <div className="previous-reps-container">{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
+                            <input className="manual-rep-input"></input>
+                            {/* {<div className="manual-rep-input-submit">OK</div>} */}
                         </div>
                     </div>
                 )
