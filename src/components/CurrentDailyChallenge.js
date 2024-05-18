@@ -14,6 +14,7 @@ export default function CurrentDailyChallenge(props) {
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
     const [repInputChangeTransition, setRepInputChangeTransition] = useState(false)
+    const [visibleRepsContainers, setVisibleRepsContainers] = useState({})
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -90,7 +91,7 @@ export default function CurrentDailyChallenge(props) {
                                 ...updatedFormData[key], 
                                 previousSets: [...updatedFormData[key].previousSets, updatedFormData[key].repChange],
                                 repChange: 0 }
-                        } else {
+                        } else if (key !== 'honeyp' && key !== 'pword') {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 
                                 repChange: 0 }
@@ -105,7 +106,7 @@ export default function CurrentDailyChallenge(props) {
                 })
                 setRepChangeInTransition(false)
                 //if logged in, send to database and add 'changes saved' to UI
-            }, 2500)
+            }, 2400)
 
             return () => {
                 clearTimeout(fade)
@@ -145,6 +146,13 @@ export default function CurrentDailyChallenge(props) {
         })
     }
 
+    const showPreviousReps = (exerciseName) => {
+        setVisibleRepsContainers((prevState) => ({
+            ...prevState,
+            [exerciseName]: !prevState[exerciseName]
+        }))
+    }
+
     const checkCompletionStatus = (objectToCheck) => {
         const itemsWithIsCompleteKey = Object.keys(objectToCheck)
         .filter(key => objectToCheck[key].hasOwnProperty('isComplete'))
@@ -161,13 +169,14 @@ export default function CurrentDailyChallenge(props) {
 
     useEffect(() => {
         console.log(formData)
+        console.log('visible containers', visibleRepsContainers)
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
                     <div key={index} className='current-workout-list-item'>
                         <div className='exercise-timer-container'>
                             <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber ? 'completed-exercise' : ''}`}>
-                                <div className='exercise-label' onClick={() => console.log(exercise.exerciseName, ' clicked')}>{exercise.exerciseName}:
+                                <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
                                     <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * challengeNumber)} {exercise.unit}</span>
                                 </div>
                                 <div className='exercise-label-right-side'>
@@ -204,7 +213,7 @@ export default function CurrentDailyChallenge(props) {
                             </div> :
                             <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
                         </div>
-                        <div className="previous-reps-container">{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
+                        <div className={`previous-reps-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-previous-reps-container'}`}>{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
                             <input 
                                 className="manual-rep-input"
                                 type='number'
@@ -219,7 +228,7 @@ export default function CurrentDailyChallenge(props) {
             setAllExerciseEls(dailyChallengeExercises)
             checkCompletionStatus(formData)
         }
-    }, [currentUserWorkoutData, formData])
+    }, [currentUserWorkoutData, formData, visibleRepsContainers])
 
     const handleFormChange = (event) => {
         const { name, value } = event.target

@@ -392,6 +392,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 }
 
 .exercise {
@@ -487,7 +488,7 @@ footer {
   font-weight: bold;
   color: green;
   opacity: 1;
-  transition: all .5s ease;
+  transition: all .4s ease;
 }
 
 .rep-change-visual {
@@ -500,6 +501,16 @@ footer {
 
 .rep-change-visual.rep-change-visual-fade {
   opacity: 0;
+  animation: repChangeSlide .4s;
+}
+
+@keyframes repChangeSlide {
+  20% {
+    transform: translate(2vw, 0);
+  }
+  100% {
+    transform: translate(-40vw, .5em);
+  }
 }
 
 .previous-reps-container {
@@ -507,6 +518,12 @@ footer {
   margin: 0 auto;
   text-align: left;
   display: flex;
+  transition: all .15s ease;
+  transform: translate(0, -50%);
+}
+
+.hide-previous-reps-container {
+  transform: translate(0, -200%);
 }
 
 .manual-rep-input {
@@ -514,13 +531,14 @@ footer {
   border: none;
   width: 2em;
   margin: 0 0 0 .5em;
+  padding: .25em;
 }
 
 .manual-rep-input-submit {
   color: green;
   font-size: .8em;
   font-weight: bold;
-  margin: 0 0 0 auto;
+  margin: 0 0 0 2em;
 }
 
 .timer-background {
