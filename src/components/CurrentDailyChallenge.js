@@ -13,6 +13,7 @@ export default function CurrentDailyChallenge(props) {
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
+    const [repInputChangeTransition, setRepInputChangeTransition] = useState(false)
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -30,6 +31,7 @@ export default function CurrentDailyChallenge(props) {
                         goalReps: exercise.dailyIncrement * challengeNumber, 
                         isComplete: false,
                         repChange: 0,
+                        manualRepInput: '',
                         previousSets: []
                     }
                 }
@@ -58,7 +60,7 @@ export default function CurrentDailyChallenge(props) {
             [exerciseName]: {
                 ...prevFormData[exerciseName],
                 count: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].count - 1 : 0,
-                repChange: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].repChange - 1 : 0,
+                repChange: prevFormData[exerciseName].count > 0 ? prevFormData[exerciseName].repChange - 1 : prevFormData[exerciseName].repChange,
                 isComplete: prevFormData[exerciseName].count - 1 >= prevFormData[exerciseName].goalReps
             }
         }))
@@ -83,15 +85,20 @@ export default function CurrentDailyChallenge(props) {
                 setFormData((prevFormData) => {
                     const updatedFormData = { ...prevFormData }
                     Object.keys(updatedFormData).forEach((key) => {
-                        if (key !== 'honeyp' && key !== 'pword' && updatedFormData[key].repChange !== 0) {
+                        if (key !== 'honeyp' && key !== 'pword' && updatedFormData[key].repChange !== 0 && !repInputChangeTransition) {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 
                                 previousSets: [...updatedFormData[key].previousSets, updatedFormData[key].repChange],
+                                repChange: 0 }
+                        } else {
+                            updatedFormData[key] = { 
+                                ...updatedFormData[key], 
                                 repChange: 0 }
                         }
                     })
                     return updatedFormData
                 })
+                setRepInputChangeTransition(false)
                 const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
                 allRepChangeElements.forEach(element => {
                     element.classList.remove('rep-change-visual-fade')
@@ -106,6 +113,37 @@ export default function CurrentDailyChallenge(props) {
             }
         }
     }, [lastButtonClickTime])
+
+    const handleRepInputChange = (exerciseName, value) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [exerciseName]: {
+                ...prevFormData[exerciseName],
+                manualRepInput: value,
+            }
+        }))
+    }
+
+    const pushRepToPrevReps = (exerciseName) => {
+        setRepInputChangeTransition(true)
+        setLastButtonClickTime(Date.now())
+        setFormData((prevFormData) => {
+            const updatedFormData = { ...prevFormData }
+            const repValue = parseInt(updatedFormData[exerciseName].manualRepInput, 10)
+
+            if (!isNaN(repValue) && repValue !== 0) {
+                updatedFormData[exerciseName] = {
+                    ...updatedFormData[exerciseName],
+                    count: updatedFormData[exerciseName].count + repValue,
+                    repChange: repValue,
+                    previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
+                    manualRepInput: '',
+                }
+            }
+
+            return updatedFormData
+        })
+    }
 
     const checkCompletionStatus = (objectToCheck) => {
         const itemsWithIsCompleteKey = Object.keys(objectToCheck)
@@ -122,6 +160,7 @@ export default function CurrentDailyChallenge(props) {
     }
 
     useEffect(() => {
+        console.log(formData)
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
@@ -166,8 +205,13 @@ export default function CurrentDailyChallenge(props) {
                             <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
                         </div>
                         <div className="previous-reps-container">{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
-                            <input className="manual-rep-input"></input>
-                            {/* {<div className="manual-rep-input-submit">OK</div>} */}
+                            <input 
+                                className="manual-rep-input"
+                                type='number'
+                                value={formData[exercise.exerciseName].manualRepInput || ''}
+                                onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
+                                ></input>
+                            {formData[exercise.exerciseName].manualRepInput && <div className="manual-rep-input-submit" onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
                         </div>
                     </div>
                 )
