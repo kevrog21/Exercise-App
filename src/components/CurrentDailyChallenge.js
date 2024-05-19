@@ -9,7 +9,7 @@ export default function CurrentDailyChallenge(props) {
     const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
-    const [challengeComplete, setChallengeComplete] = useState(false)
+    const [isChallengeComplete, setIsChallengeComplete] = useState(false)
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
@@ -29,7 +29,7 @@ export default function CurrentDailyChallenge(props) {
                     ...acc, 
                     [exercise.exerciseName]: {
                         count: 0, 
-                        goalReps: exercise.dailyIncrement * challengeNumber, 
+                        goalReps: exercise.dailyIncrement * currentUserWorkoutData.workouts.length + exercise.dailyIncrement, 
                         isComplete: false,
                         repChange: 0,
                         manualRepInput: '',
@@ -70,14 +70,14 @@ export default function CurrentDailyChallenge(props) {
     useEffect(() => {
         if (lastButtonClickTime !== 0) {
             if (repChangeInTransition) {
-                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual, .rep-change-visual-timer')
                 allRepChangeElements.forEach(element => {
                     element.classList.remove('rep-change-visual-fade')
                 })
             }
             const fade = setTimeout(() => {
                 setRepChangeInTransition(true)
-                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual, .rep-change-visual-timer')
                 allRepChangeElements.forEach(element => {
                     element.classList.add('rep-change-visual-fade')
                 })
@@ -100,7 +100,7 @@ export default function CurrentDailyChallenge(props) {
                     return updatedFormData
                 })
                 setRepInputChangeTransition(false)
-                const allRepChangeElements = document.querySelectorAll('.rep-change-visual')
+                const allRepChangeElements = document.querySelectorAll('.rep-change-visual, .rep-change-visual-timer')
                 allRepChangeElements.forEach(element => {
                     element.classList.remove('rep-change-visual-fade')
                 })
@@ -136,6 +136,7 @@ export default function CurrentDailyChallenge(props) {
                 updatedFormData[exerciseName] = {
                     ...updatedFormData[exerciseName],
                     count: updatedFormData[exerciseName].count + repValue,
+                    isComplete: prevFormData[exerciseName].count + repValue >= prevFormData[exerciseName].goalReps,
                     repChange: repValue,
                     previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
                     manualRepInput: '',
@@ -159,17 +160,13 @@ export default function CurrentDailyChallenge(props) {
         .map(key => objectToCheck[key].isComplete)
 
         if (itemsWithIsCompleteKey.length > 0 && itemsWithIsCompleteKey.every(isComplete => isComplete)) {
-            setChallengeComplete(true)
-            console.log('complete!!!')
+            setIsChallengeComplete(true)
         } else {
-            console.log('you have not completed the challnge yet', itemsWithIsCompleteKey)
-            setChallengeComplete(false)
+            setIsChallengeComplete(false)
         }
     }
 
     useEffect(() => {
-        console.log(formData)
-        console.log('visible containers', visibleRepsContainers)
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
@@ -199,7 +196,6 @@ export default function CurrentDailyChallenge(props) {
                                 <div className='timer-icon-container'>
                                     <div className='timer-icon'
                                     onClick={() => {
-                                        console.log('clicked')
                                         setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
                                         setShowTimer(true)
                                     }} >
@@ -232,7 +228,7 @@ export default function CurrentDailyChallenge(props) {
 
     const handleFormChange = (event) => {
         const { name, value } = event.target
-        const newValue = parseInt(value)
+        const newValue = (name === 'pword' || name === 'honeyp') ? value : parseInt(value)
 
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -248,10 +244,82 @@ export default function CurrentDailyChallenge(props) {
         const alreadyCompletedWorkoutEl = document.getElementById('already-completed-message')
         console.log(formData)
 
-        if (formData.honeyp === '' && challengeComplete) {
+        if (formData.honeyp === '' && isChallengeComplete) {
             //send to database
 
             //if all of the formData items are complete, increase the current streak value in the database
+
+            try {
+                const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        pword: formData.pword,
+                        honeyp: formData.honeyp 
+                    })
+                })
+    
+                if (!response.ok) {
+                    throw new Error('Failed to check password.')
+                }
+    
+                const { valid } = await response.json()
+    
+                console.log(valid)
+    
+                if (valid) {
+                    if (!userCompletedTodaysWorkout) {
+                        const currentTime = new Date()
+                        delete formData.honeyp
+                        delete formData.pword
+                        
+                        const finalWorkoutData = {
+                            timeStamp: currentTime,
+                            challengeComplete: isChallengeComplete,
+                            ...formData
+                        }
+                
+                        console.log('running submit')
+    
+                        const postResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update/${props.tempCurrentUserId}`, {
+                            method: "POST",
+                            body: JSON.stringify(finalWorkoutData), 
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+    
+                        if (!postResponse.ok) {
+                            throw new Error('Failed to post workout data.')
+                        }
+    
+                        console.log('successfully posted!')
+                        incompleteMessageEl.classList.add('hide')
+                        incorrectPasswordEl.classList.add('hide')
+                        successMessageEl.classList.remove('hide')
+    
+                        const postData = await postResponse.json()
+                        console.log(postData)
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 0)
+                    } else {
+                        incorrectPasswordEl.classList.add('hide')
+                        incompleteMessageEl.classList.add('hide')
+                        alreadyCompletedWorkoutEl.classList.remove('hide')
+                    }
+                } else {
+                    console.error('Incorrect password')
+                    incorrectPasswordEl.classList.remove('hide')
+                    incompleteMessageEl.classList.add('hide')
+                }
+            } catch (error) {
+                console.error('error: ', error.message)
+            }
+        } else {
+            incompleteMessageEl.classList.remove('hide')
         }
     }
 
@@ -271,6 +339,10 @@ export default function CurrentDailyChallenge(props) {
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>
                 <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
+                <div id='incomplete-workout-message' className='hide'>Make sure to complete all of today's exercises before submitting!</div>
+                <div id='incorrect-password-message' className='hide'>incorrect password</div>
+                <div id='success-message' className='hide'>Congrats!<br/> You did it!</div>
+                <div id='already-completed-message' className="hide">You already completed today's workout! You can only complete one per day.</div>
             </form>
 
 

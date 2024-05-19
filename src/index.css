@@ -232,7 +232,7 @@ footer {
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0);
-  z-index: 2;
+  z-index: 3;
   transition: background-color .35s ease;
 }
 
@@ -387,7 +387,7 @@ footer {
 
 .exercise-timer-container {
   /* background: gray; */
-  margin: 1em 0;
+  margin: 0 0 1em 0;
   padding: 5px;
   display: flex;
   align-items: center;
@@ -400,10 +400,11 @@ footer {
   /* background: red; */
   background: #F1F1F1;
   flex: 1;
-  max-width: 60%;
+  max-width: 70%;
   display: flex;
   border-radius: 1em;
   padding: 0 .5em 0 0;
+  font-size: .75em;
 }
 
 .completed-exercise {
@@ -492,14 +493,15 @@ footer {
 }
 
 .rep-change-visual {
-  width: 18%;
+  width: 12%;
 }
 
 .rep-change-visual-timer {
-  width: 50%;
+  width: 40%;
 }
 
-.rep-change-visual.rep-change-visual-fade {
+.rep-change-visual.rep-change-visual-fade,
+.rep-change-visual-timer.rep-change-visual-fade {
   opacity: 0;
   animation: repChangeSlide .4s;
 }
@@ -514,12 +516,13 @@ footer {
 }
 
 .previous-reps-container {
-  width: 57%;
+  width: 68%;
   margin: 0 auto;
   text-align: left;
   display: flex;
   transition: all .15s ease;
   transform: translate(0, -50%);
+  align-items: center;
 }
 
 .hide-previous-reps-container {
@@ -539,19 +542,25 @@ footer {
   font-size: .8em;
   font-weight: bold;
   margin: 0 0 0 2em;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  font-size: 16px;
 }
 
 .timer-background {
   /* background: blue; */
   height: 20px;
-  width: 20%;
+  width: 15%;
   position: absolute;
   right: 0;
 }
 
 .timer-icon-container {
   /* background: purple; */
-  width: 50%;
+  width: 35%;
   padding: 0 0 0 .75em;
 }
 
@@ -591,7 +600,7 @@ footer {
 
 .password-input {
   margin: 1em 0;
-  font-size: 1.5em;
+  font-size: 16px;
 }
 
 

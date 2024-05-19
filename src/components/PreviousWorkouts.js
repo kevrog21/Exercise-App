@@ -6,6 +6,7 @@ function PreviousWorkouts(props) {
     const { currentUserWorkoutData, convertUTCDate } = props
 
     const [previousWorkoutEls, setPreviousWorkoutEls] = useState()
+    const [previousChallengeEls, setPreviousChallengeEls] = useState()
     const [reversedCurrentUserWorkoutData, setReversedCurrentWorkoutData] = useState([])
     const [viewMoreDailyChallenges, setViewMoreDailyChallenges] = useState(false)
     const [viewMoreWorkouts, setViewMoreWorkouts] = useState(false)
@@ -44,13 +45,20 @@ function PreviousWorkouts(props) {
                         <div className='previous-workout-date'>{formatDateForPreviousWorkout(workout.timeStamp)}</div>
                         <div className='previous-workout-data-container'>
                             {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
-                                if (exerciseName !== 'timeStamp') {
-                                    return (
-                                        <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
-                                    )
+                                if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete') {
+                                    if (workout[exerciseName].count) {
+                                        return (
+                                            <div key={exerciseIndex}><span className='bold'>{workout[exerciseName].count}</span> {exerciseName}</div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
+                                        )
+                                    }
                                 }
                                 return null
                             })}
+                            {workout.challengeComplete && <div>completed!</div>}
                         </div>
                     </div>
                 )
@@ -63,7 +71,7 @@ function PreviousWorkouts(props) {
                 )
             }
 
-            setPreviousWorkoutEls(previousChallengesList)
+            setPreviousChallengeEls(previousChallengesList)
         }
     }, [reversedCurrentUserWorkoutData, viewMoreDailyChallenges])
 
@@ -81,10 +89,16 @@ function PreviousWorkouts(props) {
                         <div className='previous-workout-date'>{formatDateForPreviousWorkout(workout.timeStamp)}</div>
                         <div className='previous-workout-data-container'>
                             {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
-                                if (exerciseName !== 'timeStamp') {
-                                    return (
-                                        <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
-                                    )
+                                if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete') {
+                                    if (workout[exerciseName].count) {
+                                        return (
+                                            <div key={exerciseIndex}><span className='bold'>{workout[exerciseName].count}</span> {exerciseName}</div>
+                                        )
+                                    } else {
+                                        return (
+                                            <div key={exerciseIndex}><span className='bold'>{reps}</span> {exerciseName}</div>
+                                        )
+                                    }
                                 }
                                 return null
                             })}
@@ -109,7 +123,7 @@ function PreviousWorkouts(props) {
             <div className="previous-workouts-container">
                 <div className='previous-workouts-title'>Previous Daily Challenges</div>
                 <div className="previous-workouts-content">
-                    {previousWorkoutEls}
+                    {previousChallengeEls}
                     <div className='previous-challenges-view-more-toggle'>
                     </div>
                 </div>
