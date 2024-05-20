@@ -175,9 +175,9 @@ export default function CurrentDailyChallenge(props) {
                             <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
                                     <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * challengeNumber)} {exercise.unit}</span>
+                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber && <div className='exercise-completed-check'>✓</div>}
                                 </div>
                                 <div className='exercise-label-right-side'>
-                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber && <div className='exercise-completed-check'>✓</div>}
                                     <div className='rep-scroller-container'>
                                         <div className='current-rep-label'>current</div>
                                         <div className='rep-scroller'>

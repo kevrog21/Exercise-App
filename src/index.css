@@ -416,6 +416,7 @@ footer {
   flex-grow: 1;
   font-weight: 700;
   font-size: 1.5em;
+  position: relative;
 }
 
 .required-rep-label {
@@ -441,10 +442,10 @@ footer {
 
 .exercise-completed-check {
   color: green;
-  text-align: right;
+  text-align: left;
   font-weight: bold;
   line-height: .5em;
-  padding: .5em 0 0 0;
+  padding: .5em 0 0 .25em;
 }
 
 .rep-scroller-container {
@@ -498,6 +499,7 @@ footer {
 
 .rep-change-visual-timer {
   width: 40%;
+  line-height: 1.5rem;
 }
 
 .rep-change-visual.rep-change-visual-fade,
@@ -552,7 +554,6 @@ input {
 
 .timer-background {
   /* background: blue; */
-  height: 20px;
   width: 15%;
   position: absolute;
   right: 0;
@@ -573,29 +574,29 @@ input {
 }
 
 .timer-top {
-  width: .45rem;
+  width: .35rem;
   height: .15rem;
   background: rgb(104, 104, 104);
 }
 
 .timer-stem {
   width: .15rem;
-  height: .075rem;
+  height: .05rem;
   background: rgb(104, 104, 104);
 }
 
 .timer-circle {
-  height: 1.5rem;
-  width: 1.5rem;
-  border: 3px solid rgb(104, 104, 104);
+  height: 1rem;
+  width: 1rem;
+  border: 2px solid rgb(104, 104, 104);
   border-radius: 4em;
   font-weight: bold;
   color: rgb(104, 104, 104);
 }
 
 .timer-icon-text {
-  line-height: 1.5rem;
-  font-size: .75rem;
+  line-height: 1rem;
+  font-size: .6rem;
 }
 
 .password-input {
