@@ -10,6 +10,7 @@ export default function CurrentDailyChallenge(props) {
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [isChallengeComplete, setIsChallengeComplete] = useState(false)
+    const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
@@ -23,23 +24,35 @@ export default function CurrentDailyChallenge(props) {
 
     useEffect(() => {
         if (currentUserWorkoutData) {
+            setMostRecentCompletedChallengeData(getMostRecentCompletedWorkout(currentUserWorkoutData.workouts))
+        }
+    }, [currentUserWorkoutData])
+
+    useEffect(() => {
+        if (mostRecentCompletedChallengeData && currentUserWorkoutData) {
+            
             setChallengeNumber(currentUserWorkoutData.workouts.length + 1)
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                 return { 
                     ...acc, 
                     [exercise.exerciseName]: {
-                        count: 0, 
-                        goalReps: exercise.dailyIncrement * currentUserWorkoutData.workouts.length + exercise.dailyIncrement, 
+                        count: 0,
+                        goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
                         isComplete: false,
                         repChange: 0,
                         manualRepInput: '',
                         previousSets: []
                     }
                 }
-            }, {honeyp: '', pword: ''})
+            }, {
+                honeyp: '', 
+                pword: '', 
+                challengeNumber: mostRecentCompletedChallengeData.challengeNumber ? mostRecentCompletedChallengeData.challengeNumber + 1 : 1
+            })
             setFormData(initialFormData)
+            console.log('most recent completed', mostRecentCompletedChallengeData)
         }
-    }, [currentUserWorkoutData])
+    }, [mostRecentCompletedChallengeData])
 
     const handleIncrement = (exerciseName) => {
         setLastButtonClickTime(Date.now())
@@ -86,12 +99,12 @@ export default function CurrentDailyChallenge(props) {
                 setFormData((prevFormData) => {
                     const updatedFormData = { ...prevFormData }
                     Object.keys(updatedFormData).forEach((key) => {
-                        if (key !== 'honeyp' && key !== 'pword' && updatedFormData[key].repChange !== 0 && !repInputChangeTransition) {
+                        if (key !== 'honeyp' && key !== 'pword' && key !== 'challengeNumber' && updatedFormData[key].repChange !== 0 && !repInputChangeTransition) {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 
                                 previousSets: [...updatedFormData[key].previousSets, updatedFormData[key].repChange],
                                 repChange: 0 }
-                        } else if (key !== 'honeyp' && key !== 'pword') {
+                        } else if (key !== 'honeyp' && key !== 'pword' && key !== 'challengeNumber') {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 
                                 repChange: 0 }
@@ -166,16 +179,22 @@ export default function CurrentDailyChallenge(props) {
         }
     }
 
+    const getMostRecentCompletedWorkout = (workouts) => {
+        return workouts.filter(workout => workout.challengeComplete).reduce((mostRecent, current) => {
+            return !mostRecent || current.timeStamp > mostRecent.timeStamp ? current : mostRecent
+        }, null)
+    }
+
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 return (
                     <div key={index} className='current-workout-list-item'>
                         <div className='exercise-timer-container'>
-                            <div className={`exercise ${formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber ? 'completed-exercise' : ''}`}>
+                            <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
                                     <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * challengeNumber)} {exercise.unit}</span>
-                                    {formData[exercise.exerciseName].count >= exercise.dailyIncrement * challengeNumber && <div className='exercise-completed-check'>✓</div>}
+                                    {formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps && <div className='exercise-completed-check'>✓</div>}
                                 </div>
                                 <div className='exercise-label-right-side'>
                                     <div className='rep-scroller-container'>
