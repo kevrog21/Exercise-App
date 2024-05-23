@@ -14,7 +14,7 @@ export default function UserStats(props) {
                 Object.keys(workout).forEach(exerciseName => {
                     if (workout[exerciseName].count) {
                         total[exerciseName] = (total[exerciseName] || 0) + workout[exerciseName].count
-                    } else if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete') {
+                    } else if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete' && exerciseName !== 'challengeNumber') {
                         total[exerciseName] = (total[exerciseName] || 0) + workout[exerciseName]
                     }
                 })

@@ -29,15 +29,14 @@ export default function CurrentDailyChallenge(props) {
     }, [currentUserWorkoutData])
 
     useEffect(() => {
-        if (mostRecentCompletedChallengeData && currentUserWorkoutData) {
-            
-            setChallengeNumber(currentUserWorkoutData.workouts.length + 1)
+        if (Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
+            setChallengeNumber(mostRecentCompletedChallengeData.challengeNumber + 1)
             const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                 return { 
                     ...acc, 
                     [exercise.exerciseName]: {
                         count: 0,
-                        goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
+                        goalReps: mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement,
                         isComplete: false,
                         repChange: 0,
                         manualRepInput: '',
@@ -47,10 +46,30 @@ export default function CurrentDailyChallenge(props) {
             }, {
                 honeyp: '', 
                 pword: '', 
-                challengeNumber: mostRecentCompletedChallengeData.challengeNumber ? mostRecentCompletedChallengeData.challengeNumber + 1 : 1
+                challengeNumber: mostRecentCompletedChallengeData.challengeNumber + 1
             })
             setFormData(initialFormData)
             console.log('most recent completed', mostRecentCompletedChallengeData)
+        } else if (currentUserWorkoutData) {
+            setChallengeNumber(1)
+            const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                return { 
+                    ...acc, 
+                    [exercise.exerciseName]: {
+                        count: 0,
+                        goalReps: exercise.dailyIncrement,
+                        isComplete: false,
+                        repChange: 0,
+                        manualRepInput: '',
+                        previousSets: []
+                    }
+                }
+            }, {
+                honeyp: '', 
+                pword: '', 
+                challengeNumber: 1
+            })
+            setFormData(initialFormData)
         }
     }, [mostRecentCompletedChallengeData])
 
@@ -193,7 +212,7 @@ export default function CurrentDailyChallenge(props) {
                         <div className='exercise-timer-container'>
                             <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
-                                    <span className='required-rep-label'>{Math.ceil(exercise.dailyIncrement * challengeNumber)} {exercise.unit}</span>
+                                    <span className='required-rep-label'>{Math.ceil(formData[exercise.exerciseName].goalReps)} {exercise.unit}</span>
                                     {formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps && <div className='exercise-completed-check'>✓</div>}
                                 </div>
                                 <div className='exercise-label-right-side'>

@@ -574,20 +574,20 @@ input {
 }
 
 .timer-top {
-  width: .35rem;
-  height: .15rem;
+  width: .4rem;
+  height: 2px;
   background: rgb(104, 104, 104);
 }
 
 .timer-stem {
-  width: .15rem;
-  height: .05rem;
+  width: 2px;
+  height: .07rem;
   background: rgb(104, 104, 104);
 }
 
 .timer-circle {
-  height: 1rem;
-  width: 1rem;
+  height: 1.25rem;
+  width: 1.25rem;
   border: 2px solid rgb(104, 104, 104);
   border-radius: 4em;
   font-weight: bold;
@@ -595,7 +595,7 @@ input {
 }
 
 .timer-icon-text {
-  line-height: 1rem;
+  line-height: 1.25rem;
   font-size: .6rem;
 }
 
