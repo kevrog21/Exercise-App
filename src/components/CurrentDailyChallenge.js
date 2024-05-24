@@ -6,11 +6,10 @@ export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     
-    const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
+    const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [isChallengeComplete, setIsChallengeComplete] = useState(false)
-    const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
@@ -21,12 +20,6 @@ export default function CurrentDailyChallenge(props) {
     const [timerTime, setTimerTime] = useState(0)
 
     const [challengeNumber, setChallengeNumber] = useState()
-
-    useEffect(() => {
-        if (currentUserWorkoutData) {
-            setMostRecentCompletedChallengeData(getMostRecentCompletedWorkout(currentUserWorkoutData.workouts))
-        }
-    }, [currentUserWorkoutData])
 
     useEffect(() => {
         if (Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
@@ -198,12 +191,6 @@ export default function CurrentDailyChallenge(props) {
         }
     }
 
-    const getMostRecentCompletedWorkout = (workouts) => {
-        return workouts.filter(workout => workout.challengeComplete).reduce((mostRecent, current) => {
-            return !mostRecent || current.timeStamp > mostRecent.timeStamp ? current : mostRecent
-        }, null)
-    }
-
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
@@ -373,6 +360,7 @@ export default function CurrentDailyChallenge(props) {
                 <div className="day-title">
                     Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
                 </div>
+                
                 {allExerciseEls}
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>

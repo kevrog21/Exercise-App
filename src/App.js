@@ -23,7 +23,8 @@ function App() {
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
   const [mostRecentWorkoutDate, setMostRecentWorkoutDate] = useState()
   const [userCompletedTodaysWorkout, setUserCompletedTodaysWorkout] = useState(false)
-
+  const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
+  const [userCanContinueChallenge, setUserCanContinueChallenge] = useState(false)
 
   const convertUTCDate = (date) => {
     const utcDateString = date
@@ -52,6 +53,7 @@ function App() {
   useEffect(() => {
     if (currentUserWorkoutData && currentUserWorkoutData.workouts.length > 0) {
         setMostRecentWorkoutDate(currentUserWorkoutData.workouts[0].timeStamp)
+        setMostRecentCompletedChallengeData(getMostRecentCompletedWorkout(currentUserWorkoutData.workouts))
     }
   }, [currentUserWorkoutData])
 
@@ -63,14 +65,22 @@ function App() {
 
     const isWithinCurrentDay = latestWorkoutDate >= currentDayStart && latestWorkoutDate < currentDate
 
-    if (isWithinCurrentDay) {
-        console.log('is within the current day')
-        setUserCompletedTodaysWorkout(true)
+    if (isWithinCurrentDay && !currentUserWorkoutData.workouts[0].challengeComplete) {
+      console.log('is within the current day and incomplete')
+      setUserCanContinueChallenge(true)
+    } else if (isWithinCurrentDay && currentUserWorkoutData.workouts[0].challengeComplete) {
+      console.log('is within the current day and complete')
+      setUserCompletedTodaysWorkout(true)
     } else {
-        console.log('is not within the current day')
+      console.log('is not within the current day')
     }
   }, [mostRecentWorkoutDate])
-
+  
+  const getMostRecentCompletedWorkout = (workouts) => {
+    return workouts.filter(workout => workout.challengeComplete).reduce((mostRecent, current) => {
+      return !mostRecent || current.timeStamp > mostRecent.timeStamp ? current : mostRecent
+    }, null)
+  }
 
   return (
     <div className="App">
@@ -94,6 +104,7 @@ function App() {
               currentUserData={currentUserData}
               currentUserWorkoutData={currentUserWorkoutData}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
+              mostRecentCompletedChallengeData={mostRecentCompletedChallengeData}
             />} />
           <Route exact path="/current-workout" element={
             <CurrentWorkout 
