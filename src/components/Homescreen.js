@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 function Homescreen(props) {
 
-    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData } = props
+    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, userCanContinueChallenge } = props
 
     useEffect(() => {
         retrieveData()
@@ -28,7 +28,7 @@ function Homescreen(props) {
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
                 <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>}
-                <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
+                <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>{userCanContinueChallenge ? 'continue' : 'start'} today's challenge</button></Link>
                 {userCompletedTodaysWorkout && 
                 <div>
                     <div className='workout-completed-msg'>You completed your workout for the day!</div>

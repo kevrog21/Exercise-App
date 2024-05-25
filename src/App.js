@@ -25,6 +25,7 @@ function App() {
   const [userCompletedTodaysWorkout, setUserCompletedTodaysWorkout] = useState(false)
   const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
   const [userCanContinueChallenge, setUserCanContinueChallenge] = useState(false)
+  const [testUIEl, setTestUIEl] = useState('blank')
 
   const convertUTCDate = (date) => {
     const utcDateString = date
@@ -68,11 +69,14 @@ function App() {
     if (isWithinCurrentDay && !currentUserWorkoutData.workouts[0].challengeComplete) {
       console.log('is within the current day and incomplete')
       setUserCanContinueChallenge(true)
+      setTestUIEl('is within the current day and incomplete')
     } else if (isWithinCurrentDay && currentUserWorkoutData.workouts[0].challengeComplete) {
       console.log('is within the current day and complete')
+      setTestUIEl('is within the current day and complete')
       setUserCompletedTodaysWorkout(true)
     } else {
       console.log('is not within the current day')
+      setTestUIEl('is not within the current day')
     }
   }, [mostRecentWorkoutDate])
   
@@ -87,6 +91,7 @@ function App() {
       <Router>
         <Header />
         <ScrollToTop />
+        <div id='temp-test-id'>{testUIEl}</div>
         <Routes>
           <Route exact path="/" element={
             <Homescreen 
@@ -96,6 +101,7 @@ function App() {
               currentUserWorkoutData={currentUserWorkoutData}
               convertUTCDate={convertUTCDate}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
+              userCanContinueChallenge={userCanContinueChallenge}
             />} />
             
             <Route exact path="/current-daily-challenge" element={

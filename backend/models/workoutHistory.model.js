@@ -11,7 +11,8 @@ const workoutHistorySchema = new mongoose.Schema({
     ],
     workouts: [
         
-    ]
+    ],
+    currentChallengeStreak: 0
 }, {
     timestamps: true,
 })

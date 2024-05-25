@@ -10,7 +10,8 @@ async function createWorkoutHistoryForUser(userId) {
             userId: userId,
             dailyRoutine: [],
             goals: [],
-            workouts: []
+            workouts: [],
+            currentChallengeStreak: 0
         })
 
         await workoutHistory.save()
