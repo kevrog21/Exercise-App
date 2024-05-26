@@ -263,13 +263,12 @@ export default function CurrentDailyChallenge(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const incompleteMessageEl = document.getElementById('incomplete-workout-message')
         const successMessageEl = document.getElementById('success-message')
         const incorrectPasswordEl = document.getElementById('incorrect-password-message')
         const alreadyCompletedWorkoutEl = document.getElementById('already-completed-message')
         console.log(formData)
 
-        if (formData.honeyp === '' && isChallengeComplete) {
+        if (formData.honeyp === '') {
             //send to database
 
             //if all of the formData items are complete, increase the current streak value in the database
@@ -321,7 +320,6 @@ export default function CurrentDailyChallenge(props) {
                         }
     
                         console.log('successfully posted!')
-                        incompleteMessageEl.classList.add('hide')
                         incorrectPasswordEl.classList.add('hide')
                         successMessageEl.classList.remove('hide')
     
@@ -332,19 +330,15 @@ export default function CurrentDailyChallenge(props) {
                         }, 0)
                     } else {
                         incorrectPasswordEl.classList.add('hide')
-                        incompleteMessageEl.classList.add('hide')
                         alreadyCompletedWorkoutEl.classList.remove('hide')
                     }
                 } else {
                     console.error('Incorrect password')
                     incorrectPasswordEl.classList.remove('hide')
-                    incompleteMessageEl.classList.add('hide')
                 }
             } catch (error) {
                 console.error('error: ', error.message)
             }
-        } else {
-            incompleteMessageEl.classList.remove('hide')
         }
     }
 
@@ -365,7 +359,6 @@ export default function CurrentDailyChallenge(props) {
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>
                 <button type="submit" className="submit-btn" id="submit" >Submit Workout</button>
-                <div id='incomplete-workout-message' className='hide'>Make sure to complete all of today's exercises before submitting!</div>
                 <div id='incorrect-password-message' className='hide'>incorrect password</div>
                 <div id='success-message' className='hide'>Congrats!<br/> You did it!</div>
                 <div id='already-completed-message' className="hide">You already completed today's workout! You can only complete one per day.</div>
