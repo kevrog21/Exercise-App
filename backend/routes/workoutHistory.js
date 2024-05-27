@@ -1,7 +1,5 @@
 import { Router } from "express"
 import WorkoutHistory from '../models/workoutHistory.model.js'
-
-
 import cors from 'cors'
 import express from "express"
 import dotenv from 'dotenv'
@@ -50,6 +48,29 @@ router.route('/update/:userId').post((req, res) => {
                 .catch(err => res.status(400).json('Error: ' + err))
         })
         .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/update-challenge/:userId/:workoutId').put((req, res) => {
+    const userId = req.params.userId
+    const workoutId = req.params.workoutId
+    const updatedChallenge = req.body
+
+    WorkoutHistory.findOneAndUpdate(
+        {userId: userId, 'workouts._id': workoutId },
+        {
+            $set: {
+                'workouts.$': updatedChallenge
+            }
+        },
+        { new: true }
+    )
+    .then(workoutHistory => {
+        if (!workoutHistory) {
+            return res.status(404).json("Workout not found")
+        }
+        res.json('Wourkout updated successfully!')
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
 })
 
 router.route('/update-routine/:userId').post((req, res) => {

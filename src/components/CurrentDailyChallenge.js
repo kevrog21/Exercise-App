@@ -6,7 +6,7 @@ export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     
-    const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData } = props
+    const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData, userCanContinueChallenge, userIsContinuingChallenge } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [isChallengeComplete, setIsChallengeComplete] = useState(false)
@@ -22,49 +22,56 @@ export default function CurrentDailyChallenge(props) {
     const [challengeNumber, setChallengeNumber] = useState()
 
     useEffect(() => {
-        if (Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
-            setChallengeNumber(mostRecentCompletedChallengeData.challengeNumber + 1)
-            const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
-                return { 
-                    ...acc, 
-                    [exercise.exerciseName]: {
-                        count: 0,
-                        goalReps: mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement,
-                        isComplete: false,
-                        repChange: 0,
-                        manualRepInput: '',
-                        previousSets: []
+        if (userIsContinuingChallenge) {
+            console.log('here!', currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1])
+            console.log(userIsContinuingChallenge)
+        } else {
+            console.log('running else')
+            if (Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
+                setChallengeNumber(mostRecentCompletedChallengeData.challengeNumber + 1)
+                const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                    return { 
+                        ...acc, 
+                        [exercise.exerciseName]: {
+                            count: 0,
+                            goalReps: mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement,
+                            isComplete: false,
+                            repChange: 0,
+                            manualRepInput: '',
+                            previousSets: []
+                        }
                     }
-                }
-            }, {
-                honeyp: '', 
-                pword: '', 
-                challengeNumber: mostRecentCompletedChallengeData.challengeNumber + 1
-            })
-            setFormData(initialFormData)
-            console.log('most recent completed', mostRecentCompletedChallengeData)
-        } else if (currentUserWorkoutData) {
-            setChallengeNumber(1)
-            const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
-                return { 
-                    ...acc, 
-                    [exercise.exerciseName]: {
-                        count: 0,
-                        goalReps: exercise.dailyIncrement,
-                        isComplete: false,
-                        repChange: 0,
-                        manualRepInput: '',
-                        previousSets: []
+                }, {
+                    honeyp: '', 
+                    pword: '', 
+                    challengeNumber: mostRecentCompletedChallengeData.challengeNumber + 1
+                })
+                setFormData(initialFormData)
+                console.log('most recent completed', mostRecentCompletedChallengeData)
+            } else if (currentUserWorkoutData) {
+                setChallengeNumber(1)
+                const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                    return { 
+                        ...acc, 
+                        [exercise.exerciseName]: {
+                            count: 0,
+                            goalReps: exercise.dailyIncrement,
+                            isComplete: false,
+                            repChange: 0,
+                            manualRepInput: '',
+                            previousSets: []
+                        }
                     }
-                }
-            }, {
-                honeyp: '', 
-                pword: '', 
-                challengeNumber: 1
-            })
-            setFormData(initialFormData)
+                }, {
+                    honeyp: '', 
+                    pword: '', 
+                    challengeNumber: 1
+                })
+                setFormData(initialFormData)
+            }
+            console.log('userIsContinuingChallenge', userIsContinuingChallenge)
         }
-    }, [mostRecentCompletedChallengeData])
+    }, [mostRecentCompletedChallengeData, userIsContinuingChallenge])
 
     const handleIncrement = (exerciseName) => {
         setLastButtonClickTime(Date.now())
@@ -294,7 +301,7 @@ export default function CurrentDailyChallenge(props) {
                 console.log(valid)
     
                 if (valid) {
-                    if (!userCompletedTodaysWorkout) {
+                    if (!userCompletedTodaysWorkout && !userCanContinueChallenge) {
                         const currentTime = new Date()
                         delete formData.honeyp
                         delete formData.pword
@@ -328,6 +335,8 @@ export default function CurrentDailyChallenge(props) {
                         setTimeout(() => {
                             navigate('/')
                         }, 0)
+                    } else if (!userCompletedTodaysWorkout && userCanContinueChallenge) {
+
                     } else {
                         incorrectPasswordEl.classList.add('hide')
                         alreadyCompletedWorkoutEl.classList.remove('hide')

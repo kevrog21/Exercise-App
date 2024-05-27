@@ -17,7 +17,7 @@ import Rules from './components/Rules'
 
 function App() {
 
-  const tempCurrentUserId = '6652a7c6884e3872f5fb03d6'
+  const tempCurrentUserId = '65fb5f4e83e845c2b098f860'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
@@ -25,6 +25,7 @@ function App() {
   const [userCompletedTodaysWorkout, setUserCompletedTodaysWorkout] = useState(false)
   const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
   const [userCanContinueChallenge, setUserCanContinueChallenge] = useState(false)
+  const [userIsContinuingChallenge, setUserIsContinuingChallenge] = useState(false)
   const [testUIEl, setTestUIEl] = useState('blank')
 
   const convertUTCDate = (date) => {
@@ -49,6 +50,7 @@ function App() {
 
   useEffect(() => {
     retrieveData()
+    setUserIsContinuingChallenge(false)
   }, [])
 
   useEffect(() => {
@@ -102,6 +104,7 @@ function App() {
               convertUTCDate={convertUTCDate}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
               userCanContinueChallenge={userCanContinueChallenge}
+              setUserIsContinuingChallenge={setUserIsContinuingChallenge}
             />} />
             
             <Route exact path="/current-daily-challenge" element={
@@ -111,6 +114,7 @@ function App() {
               currentUserWorkoutData={currentUserWorkoutData}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
               mostRecentCompletedChallengeData={mostRecentCompletedChallengeData}
+              userIsContinuingChallenge={userIsContinuingChallenge}
             />} />
           <Route exact path="/current-workout" element={
             <CurrentWorkout 

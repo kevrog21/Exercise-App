@@ -5,11 +5,15 @@ import { Link } from 'react-router-dom'
 
 function Homescreen(props) {
 
-    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, userCanContinueChallenge } = props
+    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, mostRecentCompletedChallengeData, userCanContinueChallenge, setUserIsContinuingChallenge } = props
 
     useEffect(() => {
         retrieveData()
     }, [])
+
+    const handleContinueChallengeClick = () => {
+        setUserIsContinuingChallenge(true)
+    }
 
     return (
         <main>
@@ -18,17 +22,20 @@ function Homescreen(props) {
                     <div className='star-text-container'>
                         <p className='star-text-day'>Level</p>
                         <p className='star-text-day-number'>{
-                            currentUserWorkoutData ? 
-                            userCompletedTodaysWorkout ? currentUserWorkoutData.workouts.length : currentUserWorkoutData.workouts.length + 1 : 
-                            ''
+                            mostRecentCompletedChallengeData ? mostRecentCompletedChallengeData.challengeNumber : '1'
                         }</p>
                     </div>
                 </div>
-                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? currentUserWorkoutData.workouts.length : ''} days</div>
+                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? '' : ''} days</div>
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
-                <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>}
-                <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>{userCanContinueChallenge ? 'continue' : 'start'} today's challenge</button></Link>
+                <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
+                }
+                {userCanContinueChallenge ?
+                    <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn' onClick={handleContinueChallengeClick}>continue today's challenge</button></Link> :
+                    <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
+                }
+                
                 {userCompletedTodaysWorkout && 
                 <div>
                     <div className='workout-completed-msg'>You completed your workout for the day!</div>

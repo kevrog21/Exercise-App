@@ -46,7 +46,7 @@ function PreviousWorkouts(props) {
                         <div className='previous-workout-data-container'>
                             {Object.entries(workout).map(([exerciseName, reps], exerciseIndex) => {
                                 if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete' && exerciseName !== 'challengeNumber') {
-                                    if (workout[exerciseName].count) {
+                                    if (workout[exerciseName].count >= 0) {
                                         return (
                                             <div key={exerciseIndex}><span className='bold'>{workout[exerciseName].count}</span> {exerciseName}</div>
                                         )
