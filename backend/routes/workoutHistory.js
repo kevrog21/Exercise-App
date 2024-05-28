@@ -22,7 +22,7 @@ router.route('/:userId').get((req, res) => {
 })
 
 router.route('/check-passwords').post((req, res) => {
-    console.log("check password running", req.body.pword)
+    console.log("check password running")
     const password = req.body.pword
     const honeyp = req.body.honeyp
 
@@ -71,6 +71,23 @@ router.route('/update-challenge/:userId/:workoutId').put((req, res) => {
         res.json('Wourkout updated successfully!')
     })
     .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/update-challenge-streak/:userId').post((req, res) => {
+    const userId = req.params.userId
+    WorkoutHistory.findOne({ userId: userId })
+        .then(workoutHistory => {
+            if (!workoutHistory) {
+                return res.status(404).json('Workout history not found for user')
+            } 
+
+            workoutHistory.currentChallengeStreak = (req.body.currentChallengeStreak)
+
+            workoutHistory.save()
+                .then(() => res.json('streak updated!'))
+                .catch(err => res.status(400).json('Error: ' + err))
+        })
+        .catch(err => res.status(400).json('Error: ' + err))
 })
 
 router.route('/update-routine/:userId').post((req, res) => {

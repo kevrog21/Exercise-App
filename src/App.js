@@ -24,6 +24,7 @@ function App() {
   const [mostRecentWorkoutDate, setMostRecentWorkoutDate] = useState()
   const [userCompletedTodaysWorkout, setUserCompletedTodaysWorkout] = useState(false)
   const [mostRecentCompletedChallengeData, setMostRecentCompletedChallengeData] = useState({})
+  const [userCompletedChallengeYesterday, setUserCompletedChallengeYesterday ] = useState(false)
   const [userCanContinueChallenge, setUserCanContinueChallenge] = useState(false)
   const [userIsContinuingChallenge, setUserIsContinuingChallenge] = useState(false)
   const [testUIEl, setTestUIEl] = useState('blank')
@@ -59,6 +60,14 @@ function App() {
         setMostRecentCompletedChallengeData(getMostRecentCompletedWorkout(currentUserWorkoutData.workouts))
     }
   }, [currentUserWorkoutData])
+  
+  useEffect(() => {
+    if (mostRecentCompletedChallengeData) {
+      const completedYesterdaysChallenge = checkIfPreviousDay(mostRecentCompletedChallengeData.timeStamp)
+      setUserCompletedChallengeYesterday(completedYesterdaysChallenge)
+      console.log('completedYesterdaysChallenge ', completedYesterdaysChallenge)
+    }
+  }, [mostRecentCompletedChallengeData])
 
   useEffect(() => {
     const latestWorkoutDate = new Date(mostRecentWorkoutDate)
@@ -88,6 +97,18 @@ function App() {
     }, null)
   }
 
+  const checkIfPreviousDay = (timeStamp) => {
+    const date = new Date(timeStamp)
+
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    const yesterday = new Date(today)
+    yesterday.setDate(yesterday.getDate() - 1)
+
+    return date >= yesterday && date < today
+  }
+
   return (
     <div className="App">
       <Router>
@@ -105,6 +126,8 @@ function App() {
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
               userCanContinueChallenge={userCanContinueChallenge}
               setUserIsContinuingChallenge={setUserIsContinuingChallenge}
+              mostRecentCompletedChallengeData={mostRecentCompletedChallengeData}
+              userCompletedChallengeYesterday={userCompletedChallengeYesterday}
             />} />
             
             <Route exact path="/current-daily-challenge" element={
@@ -114,6 +137,7 @@ function App() {
               currentUserWorkoutData={currentUserWorkoutData}
               userCompletedTodaysWorkout={userCompletedTodaysWorkout}
               mostRecentCompletedChallengeData={mostRecentCompletedChallengeData}
+              userCompletedChallengeYesterday={userCompletedChallengeYesterday}
               userIsContinuingChallenge={userIsContinuingChallenge}
             />} />
           <Route exact path="/current-workout" element={

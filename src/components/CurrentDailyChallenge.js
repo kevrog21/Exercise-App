@@ -6,7 +6,7 @@ export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     
-    const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData, userCanContinueChallenge, userIsContinuingChallenge } = props
+    const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData, userCompletedChallengeYesterday, userCanContinueChallenge, userIsContinuingChallenge } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [isChallengeComplete, setIsChallengeComplete] = useState(false)
@@ -26,8 +26,7 @@ export default function CurrentDailyChallenge(props) {
             console.log('here!', currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1])
             console.log(userIsContinuingChallenge)
         } else {
-            console.log('running else')
-            if (Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
+            if (mostRecentCompletedChallengeData && Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
                 setChallengeNumber(mostRecentCompletedChallengeData.challengeNumber + 1)
                 const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
                     return { 
@@ -70,7 +69,7 @@ export default function CurrentDailyChallenge(props) {
                 setFormData(initialFormData)
             }
             console.log('userIsContinuingChallenge', userIsContinuingChallenge)
-        }
+        } 
     }, [mostRecentCompletedChallengeData, userIsContinuingChallenge])
 
     const handleIncrement = (exerciseName) => {
@@ -324,6 +323,20 @@ export default function CurrentDailyChallenge(props) {
     
                         if (!postResponse.ok) {
                             throw new Error('Failed to post workout data.')
+                        }
+
+                        const newStreak = userCompletedChallengeYesterday ? currentUserWorkoutData.currentChallengeStreak + 1 : 1
+
+                        const postStreakResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update-challenge-streak/${props.tempCurrentUserId}`, {
+                            method: "POST",
+                            body: JSON.stringify({ currentChallengeStreak: newStreak }), 
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+
+                        if (!postStreakResponse.ok) {
+                            throw new Error('Failed to post streak data.')
                         }
     
                         console.log('successfully posted!')

@@ -5,15 +5,17 @@ import { Link } from 'react-router-dom'
 
 function Homescreen(props) {
 
-    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, mostRecentCompletedChallengeData, userCanContinueChallenge, setUserIsContinuingChallenge } = props
+    const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, mostRecentCompletedChallengeData, userCanContinueChallenge, setUserIsContinuingChallenge, userCompletedChallengeYesterday } = props
 
     useEffect(() => {
         retrieveData()
+        console.log('mostRecentCompletedChallengeData', mostRecentCompletedChallengeData)
     }, [])
-
+    
     const handleContinueChallengeClick = () => {
         setUserIsContinuingChallenge(true)
     }
+
 
     return (
         <main>
@@ -22,11 +24,11 @@ function Homescreen(props) {
                     <div className='star-text-container'>
                         <p className='star-text-day'>Level</p>
                         <p className='star-text-day-number'>{
-                            mostRecentCompletedChallengeData ? mostRecentCompletedChallengeData.challengeNumber : '1'
+                            Object.keys(mostRecentCompletedChallengeData).length > 0 ? mostRecentCompletedChallengeData.challengeNumber : '1'
                         }</p>
                     </div>
                 </div>
-                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? '' : ''} days</div>
+                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : ''} day{props.currentUserWorkoutData ? props.currentUserWorkoutData.currentChallengeStreak == 1 ? '' : 's' : ''}</div>
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
                 <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
