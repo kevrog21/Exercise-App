@@ -17,7 +17,7 @@ import Rules from './components/Rules'
 
 function App() {
 
-  const tempCurrentUserId = '65fb5f4e83e845c2b098f860'
+  const tempCurrentUserId = '665634dba3abc0522ea4aa1e'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()

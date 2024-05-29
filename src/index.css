@@ -283,10 +283,58 @@ footer {
   margin: 0 0 6em 0;
 }
 
+.routine-exercise-number {
+  text-align: left;
+  font-weight: bold;
+  color: rgb(138, 138, 138);
+  margin: .5em 0 2em -1em;
+}
+
 .daily-routine-container {
   margin: 30vw 0 0 0;
   font-weight: 700;
   font-size: 1.5em;
+}
+
+.daily-routine-input-continer {
+  margin: 2em auto 2em auto;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  text-align: left;
+  background: #F1F1F1;
+  padding: 0 2em 2em 2em;
+  border-radius: 10px;
+  
+}
+
+.daily-routine-input-continer label {
+  font-size: .75em;
+  margin: 0 0 .25em .25em;
+  display: block;
+  color: rgb(104, 104, 104);
+}
+
+.daily-routine-input-continer input,
+.unit-input {
+  background: #d4d4d4;
+  border: none;
+  margin: 0 0 1em 0;
+  border-radius: 3px;
+  padding: .25em .5em;
+}
+
+.incremenet-unit-container {
+  display: flex;
+}
+
+.incremenet-input {
+  width: 3em;
+  margin: 0 1em 0 0;
+}
+
+.unit-container {
+  margin: 0 0 0 1em;
 }
 
 .routine-list-container {
