@@ -4,6 +4,10 @@ function DailyRoutine(props) {
 
     const { currentUserWorkoutData } = props
     const [exerciseEls, setExerciseEls] = useState()
+    const [tempFormData, setTempFormData] = useState({
+        pword: '',
+        honeyp: ''
+    })
     const [formData, setFormData] = useState([
         {
             exerciseName: 'push-ups',
@@ -42,8 +46,22 @@ function DailyRoutine(props) {
         setFormData(newFormData)
     }
 
+    const handleTempFormDataChange = (e) => {
+        const { name, value } = e.target
+        
+        setTempFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }))
+    }
+
     const addNewExerciseInput = () => {
-        setFormData([...formData, { exerciseName: '', dailyIncrement: '', unit: '' }])
+        setFormData([...formData, { exerciseName: '', dailyIncrement: '', unit: 'reps' }])
+    }
+
+    const removeExerciseInput = (index) => {
+        const newFormData = formData.filter((_, i) => i !== index)
+        setFormData(newFormData)
     }
 
     // const [formData, setFormData] = useState([
@@ -106,6 +124,33 @@ function DailyRoutine(props) {
 
         if (formData.honeyp === '') {
 
+
+            try {
+                const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        pword: formData.pword,
+                        honeyp: formData.honeyp 
+                    })
+                })
+    
+                if (!response.ok) {
+                    throw new Error('Failed to check password.')
+                }
+    
+                const { valid } = await response.json()
+    
+                console.log(valid)
+    
+                if (valid) {
+
+                }
+            } catch (error) {
+                console.error('error: ', error.message)
+            } 
         }
 
     }
@@ -135,35 +180,40 @@ function DailyRoutine(props) {
                                     value={exercise.exerciseName}
                                     onChange={(e) => handleInputChange(index, e)}
                                 />
-                            <div className='incremenet-unit-container'>
-                                <div className='increment-container'>
-                                    <label htmlFor="dailyIncrement" className='incremenet-label'>Increment</label>
-                                    <input className='incremenet-input'
-                                        type="number"
-                                        name="dailyIncrement"
-                                        placeholder=""
-                                        value={exercise.dailyIncrement}
-                                        onChange={(e) => handleInputChange(index, e)}
-                                    />
+                                <div className='incremenet-unit-container'>
+                                    <div className='increment-container'>
+                                        <label htmlFor="dailyIncrement" className='incremenet-label'>Increment</label>
+                                        <input className='incremenet-input'
+                                            type="number"
+                                            name="dailyIncrement"
+                                            placeholder=""
+                                            value={exercise.dailyIncrement}
+                                            onChange={(e) => handleInputChange(index, e)}
+                                        />
+                                    </div>
+                                    <div  className='unit-container'>
+                                        <label htmlFor="unit" className='unit-label'>Unit</label>
+                                        <select className='unit-input'
+                                            name="unit"
+                                            value={exercise.unit}
+                                            onChange={(e) => handleInputChange(index, e)}
+                                        >
+                                            <option value="reps">reps</option>
+                                            <option value="seconds">seconds</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div  className='unit-container'>
-                                    <label htmlFor="unit" className='unit-label'>Unit</label>
-                                    <select className='unit-input'
-                                        name="unit"
-                                        value={exercise.unit}
-                                        onChange={(e) => handleInputChange(index, e)}
-                                    >
-                                        <option value="reps">reps</option>
-                                        <option value="seconds">seconds</option>
-                                    </select>
-                                </div>
-                            </div>
                             </div>
                         </div>
                     ))
                 }
-                <button type='button' onClick={addNewExerciseInput}>add another exercise</button>
-                <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} daily routine</button>
+                <button type='button' onClick={addNewExerciseInput} className='add-exercise-button'>+ <br/>add another exercise</button>
+                <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleTempFormDataChange} tabIndex='-1' autoComplete="off"></input>
+                <label htmlFor='pword' className='password-label'>password</label>
+                <input type='password' name='pword' className="daily-routine-password" value={formData.pword} onChange={handleTempFormDataChange}></input>
+                <div id='incorrect-password-message' className='hide'>incorrect password</div>
+                <div id='success-message' className='hide'>routine set!</div>
+                <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} routine</button>
             </form>
         </main>
     )

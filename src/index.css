@@ -303,7 +303,7 @@ footer {
   width: 50%;
   text-align: left;
   background: #F1F1F1;
-  padding: 0 2em 2em 2em;
+  padding: 0 2em 1em 2em;
   border-radius: 10px;
   
 }
@@ -335,6 +335,28 @@ footer {
 
 .unit-container {
   margin: 0 0 0 1em;
+}
+
+.add-exercise-button {
+  display: block;
+  margin: 0 auto 5em auto;
+  border: none;
+  width: 40%;
+  padding: 1em 1em;
+  border-radius: 10px;
+  color: rgb(138, 138, 138);
+  background: #F1F1F1;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.password-label {
+  display: block;
+  margin: 0 auto .25em auto
+}
+
+.daily-routine-password {
+  margin: 0 auto 1em auto
 }
 
 .routine-list-container {

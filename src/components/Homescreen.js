@@ -16,7 +16,6 @@ function Homescreen(props) {
         setUserIsContinuingChallenge(true)
     }
 
-
     return (
         <main>
             <div className='homescreen-hero-container'>
