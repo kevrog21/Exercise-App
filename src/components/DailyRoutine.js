@@ -4,6 +4,7 @@ function DailyRoutine(props) {
 
     const { currentUserWorkoutData } = props
     const [exerciseEls, setExerciseEls] = useState()
+    const [formErrors, setFormErrors] = useState([])
     const [tempFormData, setTempFormData] = useState({
         pword: '',
         honeyp: ''
@@ -56,12 +57,31 @@ function DailyRoutine(props) {
     }
 
     const addNewExerciseInput = () => {
-        setFormData([...formData, { exerciseName: '', dailyIncrement: '', unit: 'reps' }])
+        setFormData([...formData, { exerciseName: '', dailyIncrement: 1, unit: 'reps' }])
     }
 
     const removeExerciseInput = (index) => {
         const newFormData = formData.filter((_, i) => i !== index)
         setFormData(newFormData)
+    }
+
+    const validateFormData = () => {
+        const newErrors = []
+
+        formData.forEach((exercise, index) => {
+            if (!exercise.exerciseName) {
+                newErrors.push(`A name is required for exercise ${index + 1}`)
+            }
+            if (!exercise.dailyIncrement) {
+                newErrors.push(`A daily increment is required for exercise ${index + 1}`)
+            }
+            if (!exercise.unit) {
+                newErrors.push(`A unit is required for exercise ${index + 1}`)
+            }
+        })
+
+        setFormErrors(newErrors)
+        return newErrors.length === 0
     }
 
     // const [formData, setFormData] = useState([
@@ -120,39 +140,55 @@ function DailyRoutine(props) {
         e.preventDefault()
         console.log('running submit!')
         console.log(formData)
+        const successMessageEl = document.getElementById('success-message')
+        const incorrectPasswordEl = document.getElementById('incorrect-password-message')
 
 
-        if (formData.honeyp === '') {
-
-
-            try {
-                const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        pword: formData.pword,
-                        honeyp: formData.honeyp 
+        if (tempFormData.honeyp === '') {
+            if (validateFormData()) {
+                try {
+                    const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            pword: tempFormData.pword,
+                            honeyp: tempFormData.honeyp 
+                        })
                     })
-                })
+        
+                    if (!response.ok) {
+                        throw new Error('Failed to check password.')
+                    }
+        
+                    const { valid } = await response.json()
+                    console.log(valid)
+        
+                    if (valid) {
     
-                if (!response.ok) {
-                    throw new Error('Failed to check password.')
-                }
+                        const postResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update-routine/${props.tempCurrentUserId}`, {
+                            method: "POST",
+                            body: JSON.stringify(formData),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
     
-                const { valid } = await response.json()
+                        if (!postResponse.ok) {
+                            throw new Error('Failed to post set routine')
+                        }
     
-                console.log(valid)
-    
-                if (valid) {
-
-                }
-            } catch (error) {
-                console.error('error: ', error.message)
-            } 
+                    }
+                } catch (error) {
+                    console.error('error: ', error.message)
+                } 
+            } else {
+                console.error('Incorrect password')
+                incorrectPasswordEl.classList.remove('hide')
+            }
         }
-
+        
     }
 
 
@@ -212,6 +248,13 @@ function DailyRoutine(props) {
                 <label htmlFor='pword' className='password-label'>password</label>
                 <input type='password' name='pword' className="daily-routine-password" value={formData.pword} onChange={handleTempFormDataChange}></input>
                 <div id='incorrect-password-message' className='hide'>incorrect password</div>
+                {formErrors.length > 0 && (
+                    <div>
+                        {formErrors.map((error, index) => (
+                            <p key={index} className='red'>{error}</p>
+                        ))}
+                    </div>
+                )}
                 <div id='success-message' className='hide'>routine set!</div>
                 <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} routine</button>
             </form>

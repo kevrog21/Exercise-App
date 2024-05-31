@@ -438,7 +438,8 @@ footer {
 }
 
 #incomplete-workout-message,
-#incorrect-password-message {
+#incorrect-password-message,
+.red {
   color: red;
 }
 
