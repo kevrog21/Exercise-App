@@ -17,7 +17,7 @@ import Rules from './components/Rules'
 
 function App() {
 
-  const tempCurrentUserId = '665634dba3abc0522ea4aa1e'
+  const tempCurrentUserId = '65fb5f4e83e845c2b098f860'
 
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
@@ -114,7 +114,7 @@ function App() {
       <Router>
         <Header />
         <ScrollToTop />
-        <div id='temp-test-id'>{testUIEl}</div>
+        {/* <div id='temp-test-id'>{testUIEl}</div> */}
         <Routes>
           <Route exact path="/" element={
             <Homescreen 

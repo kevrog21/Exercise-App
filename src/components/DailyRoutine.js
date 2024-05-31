@@ -166,6 +166,8 @@ function DailyRoutine(props) {
                     console.log(valid)
         
                     if (valid) {
+
+                        console.log('about to send post request')
     
                         const postResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update-routine/${props.tempCurrentUserId}`, {
                             method: "POST",
@@ -178,7 +180,10 @@ function DailyRoutine(props) {
                         if (!postResponse.ok) {
                             throw new Error('Failed to post set routine')
                         }
-    
+
+                        const postData = await postResponse.json()
+                        console.log('post data',postData)
+                        
                     }
                 } catch (error) {
                     console.error('error: ', error.message)
