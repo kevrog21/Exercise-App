@@ -43,7 +43,12 @@ function DailyRoutine(props) {
     const handleInputChange = (index, event) => {
         const { name, value } = event.target
         const newFormData = [...formData]
-        newFormData[index][name] = value
+        if (name === 'dailyIncrement') {
+            newFormData[index][name] = value === '' ? '' : Number(value)
+        } else {
+            newFormData[index][name] = value
+        }
+        
         setFormData(newFormData)
     }
 
@@ -182,7 +187,7 @@ function DailyRoutine(props) {
                         }
 
                         const postData = await postResponse.json()
-                        console.log('post data',postData)
+                        console.log('post data', postData)
                         
                     }
                 } catch (error) {
