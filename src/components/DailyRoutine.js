@@ -249,6 +249,7 @@ function DailyRoutine(props) {
                                         </select>
                                     </div>
                                 </div>
+                                <button type="button" className='routine-remove-btn' onClick={() => removeExerciseInput(index)}>remove</button>
                             </div>
                         </div>
                     ))

@@ -337,6 +337,13 @@ footer {
   margin: 0 0 0 1em;
 }
 
+.routine-remove-btn {
+  color: rgb(204, 30, 30);
+  text-align: right;
+  margin: 0 0 0 auto;
+  border: none;
+}
+
 .add-exercise-button {
   display: block;
   margin: 0 auto 5em auto;
