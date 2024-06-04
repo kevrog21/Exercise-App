@@ -103,6 +103,31 @@ main {
   align-items: center;
 }
 
+.new-user-message-container {
+  background: #EAEAEA;
+  width: 60%;
+  margin: 15vw auto;
+  padding: 10vw 5vw;
+  border-radius: 15px;
+}
+
+.new-user-header {
+  font-size: 1.5em;
+  margin: 0 0 .5em 0;
+}
+
+.new-user-message {
+  margin: 0 0 2em 0;
+}
+
+.new-user-set-routine-btn {
+  text-decoration: none;
+  background: black;
+  color: white;
+  padding: .5em 2em;
+  border-radius: 2em;
+}
+
 .day-container {
   width: 50.5vw;
   height: 50.25vw;

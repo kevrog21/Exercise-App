@@ -18,6 +18,13 @@ function Homescreen(props) {
 
     return (
         <main>
+            { currentUserWorkoutData && !currentUserWorkoutData.dailyRoutine.length > 0 ?
+            <div className='new-user-message-container'>
+                <div className='new-user-header'>Welcome Stranger!</div>
+                <div className='new-user-message'>Let's get started by setting up a daily exercise routine.</div>
+                <Link to='/daily-routine' className='new-user-set-routine-btn'>Set Daily Routine</Link>
+            </div>
+            :
             <div className='homescreen-hero-container'>
                 <div className='day-container'>
                     <div className='star-text-container'>
@@ -43,6 +50,7 @@ function Homescreen(props) {
                     <div className='come-back-msg'>come back tomorrow to complete level {currentUserWorkoutData.workouts.length + 1}</div>
                 </div>}
             </div>
+            }
             
             <PreviousWorkouts 
                 tempCurrentUserId={props.tempCurrentUserId}
