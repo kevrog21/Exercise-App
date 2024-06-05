@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 function DailyRoutine(props) {
 
     const { currentUserWorkoutData } = props
+    const [editRoutineMode, setEditRoutineMode] = useState(false)
     const [exerciseEls, setExerciseEls] = useState()
     const [formErrors, setFormErrors] = useState([])
     const [tempFormData, setTempFormData] = useState({
@@ -198,7 +199,6 @@ function DailyRoutine(props) {
                 incorrectPasswordEl.classList.remove('hide')
             }
         }
-        
     }
 
 
@@ -207,14 +207,15 @@ function DailyRoutine(props) {
             <div className="daily-routine-container">
                 <div>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
                 
-                    {/* {currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 
+                    {currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
                         <div className='routine-list-container'>{exerciseEls}</div> : 
-                        <div className='no-routine-message'>you haven't set a routine yet</div>} */}
-                
+                        '' }
+
+                <div onClick={() => setEditRoutineMode(true)}>edit routine</div>
             </div>
+            { editRoutineMode ?
             <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
-                {
-                    formData.map((exercise, index) => (
+                { formData.map((exercise, index) => (
                         <div key={index}>
                             <div className='daily-routine-input-continer'>
                             <div className='routine-exercise-number'>Exercise {index + 1}</div>
@@ -268,7 +269,9 @@ function DailyRoutine(props) {
                 )}
                 <div id='success-message' className='hide'>routine set!</div>
                 <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} routine</button>
-            </form>
+            </form> :
+            ''
+        }
         </main>
     )
 }
