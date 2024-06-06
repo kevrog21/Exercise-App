@@ -41,6 +41,13 @@ function DailyRoutine(props) {
         }
     }, [currentUserWorkoutData])
 
+    useEffect(() => {
+        if (editRoutineMode && currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0) {
+            setFormData(currentUserWorkoutData.dailyRoutine)
+        }
+
+    }, [editRoutineMode])
+
     const handleInputChange = (index, event) => {
         const { name, value } = event.target
         const newFormData = [...formData]
@@ -206,12 +213,18 @@ function DailyRoutine(props) {
         <main>
             <div className="daily-routine-container">
                 <div>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
-                
-                    {currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
-                        <div className='routine-list-container'>{exerciseEls}</div> : 
-                        '' }
 
-                <div onClick={() => setEditRoutineMode(true)}>edit routine</div>
+                { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ?
+                    <div onClick={() => setEditRoutineMode(true)} className='regular default-font'>edit routine</div> :
+                    <div onClick={() => setEditRoutineMode(false)} className='red regular default-font'>cancel</div>
+                }
+                
+                { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
+                    <div className='routine-list-container'>{exerciseEls}</div> : 
+                    '' 
+                }
+
+                
             </div>
             { editRoutineMode ?
             <form className='daily-routine-form' onSubmit={submitDailyRoutine}>

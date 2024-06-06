@@ -832,6 +832,14 @@ input {
   font-weight: bold;
 }
 
+.regular {
+  font-weight: 400;
+}
+
+.default-font {
+  font-size: 1rem;
+}
+
 .rotate {
 	transform: rotate(-90deg);
 }
