@@ -196,6 +196,7 @@ main {
   border-radius: 1em;
   min-height: 20vh;
   margin: 6em 5vw;
+  padding: 0 0 2em 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -241,7 +242,27 @@ main {
 
 .view-more-challenges-button {
   width: auto;
-  margin: 2em auto;
+  margin: 0 auto;
+  border: none;
+}
+
+.view-more-arrow,
+.view-less-arrow {
+  width: .5em;
+  height: .5em;
+  margin: 0 auto;
+  transform: rotate(45deg);
+}
+
+.view-more-arrow {
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.view-less-arrow {
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  transform: rotate(45deg) translate(.25em, .25em);
 }
 
 footer {
