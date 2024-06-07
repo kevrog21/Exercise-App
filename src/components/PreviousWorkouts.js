@@ -66,9 +66,9 @@ function PreviousWorkouts(props) {
 
             if (reversedCurrentUserWorkoutData.length > 5) {
                 previousChallengesList.push(
-                    <div onClick={() => setViewMoreDailyChallenges(prevState => !prevState)}>
+                    <div  key="viewMoreChallengesButton" onClick={() => setViewMoreDailyChallenges(prevState => !prevState)}>
                         {viewMoreDailyChallenges && <div className='view-less-arrow'></div>}
-                        <button className='view-more-challenges-button' key="viewMoreChallengesButton">{viewMoreDailyChallenges ? 'view less' : 'view more'}</button>
+                        <button className='view-more-challenges-button'>{viewMoreDailyChallenges ? 'view less' : 'view more'}</button>
                         {!viewMoreDailyChallenges && <div className='view-more-arrow'></div>}
                     </div>
                 )
