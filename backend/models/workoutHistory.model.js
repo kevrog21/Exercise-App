@@ -15,6 +15,12 @@ const workoutHistorySchema = new mongoose.Schema({
     currentChallengeStreak: {
         type: Number,
         default: 0
+    },
+    settings: {
+        theme: { 
+            type: String, 
+            default: 'light'
+        }
     }
 }, {
     timestamps: true,
