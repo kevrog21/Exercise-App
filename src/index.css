@@ -764,6 +764,16 @@ input {
   margin: 5vw 0 0 0;
 }
 
+.settings-header {
+  margin: 0 0 1em 0;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.theme-input {
+  margin: 0 0 0 2em;
+}
+
 .margin-for-header {
   margin: 20vw 0 0 0;
 }
