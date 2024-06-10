@@ -770,6 +770,15 @@ input {
   font-weight: 500;
 }
 
+.settings-submit-btn {
+  margin: 8em 0 0 0;
+  color: white;
+  border: none;
+  background: black;
+  padding: .5em 2em;
+  border-radius: 1em;
+}
+
 .theme-input {
   margin: 0 0 0 2em;
 }
