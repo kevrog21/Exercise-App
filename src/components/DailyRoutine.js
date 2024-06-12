@@ -196,7 +196,11 @@ function DailyRoutine(props) {
 
                         const postData = await postResponse.json()
                         console.log('post data', postData)
-                        
+                        setTempFormData({
+                            pword: '',
+                            honeyp: ''
+                        })
+                        setEditRoutineMode(false)
                     }
                 } catch (error) {
                     console.error('error: ', error.message)
