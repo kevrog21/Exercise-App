@@ -33,7 +33,7 @@ export default function CurrentDailyChallenge(props) {
                         ...acc, 
                         [exercise.exerciseName]: {
                             count: 0,
-                            goalReps: mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement,
+                            goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
                             isComplete: false,
                             repChange: 0,
                             manualRepInput: '',
@@ -47,6 +47,7 @@ export default function CurrentDailyChallenge(props) {
                 })
                 setFormData(initialFormData)
                 console.log('most recent completed', mostRecentCompletedChallengeData)
+                console.log('form data at 50', formData)
             } else if (currentUserWorkoutData) {
                 setChallengeNumber(1)
                 const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {

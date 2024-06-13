@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 function DailyRoutine(props) {
 
-    const { currentUserWorkoutData } = props
+    const { currentUserWorkoutData, retrieveData } = props
     const [editRoutineMode, setEditRoutineMode] = useState(false)
     const [exerciseEls, setExerciseEls] = useState()
     const [formErrors, setFormErrors] = useState([])
@@ -196,6 +196,7 @@ function DailyRoutine(props) {
 
                         const postData = await postResponse.json()
                         console.log('post data', postData)
+                        retrieveData()
                         setTempFormData({
                             pword: '',
                             honeyp: ''

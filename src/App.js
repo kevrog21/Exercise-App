@@ -151,6 +151,7 @@ function App() {
             <DailyRoutine
               tempCurrentUserId={tempCurrentUserId}
               currentUserWorkoutData={currentUserWorkoutData}
+              retrieveData={retrieveData}
             />
           } />
           
