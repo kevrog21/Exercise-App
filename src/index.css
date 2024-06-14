@@ -642,18 +642,30 @@ footer {
   }
 }
 
-.previous-reps-container {
+.previous-reps-container,
+.exercise-progress-container {
   width: 68%;
   margin: 0 auto;
   text-align: left;
   display: flex;
   transition: all .15s ease;
-  transform: translate(0, -50%);
   align-items: center;
+}
+
+.previous-reps-container {
+  transform: translate(0, -50%);
+}
+
+.exercise-progress-container {
+  background: orange;
 }
 
 .hide-previous-reps-container {
   transform: translate(0, -200%);
+}
+
+.hide-progress-container {
+  transform: translate(0, 200%);
 }
 
 .manual-rep-input {
