@@ -512,7 +512,7 @@ footer {
 
 .exercise-timer-container {
   /* background: gray; */
-  margin: 0 0 1em 0;
+  margin: 0 0 0 0;
   padding: 5px;
   display: flex;
   align-items: center;
@@ -652,12 +652,22 @@ footer {
   align-items: center;
 }
 
-.previous-reps-container {
-  transform: translate(0, -50%);
-}
-
 .exercise-progress-container {
   background: orange;
+  overflow: hidden;
+}
+
+.count-completed-progress {
+  background: green;
+  display: flex;
+  height: 100%;
+}
+
+.count-remaining-progress {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  background: red;
 }
 
 .hide-previous-reps-container {

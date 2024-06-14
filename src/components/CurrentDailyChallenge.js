@@ -201,9 +201,15 @@ export default function CurrentDailyChallenge(props) {
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
+                const completedCount = formData[exercise.exerciseName].count || 0
+                const goalReps = formData[exercise.exerciseName].goalReps || 1
+                const percentageCompleted = (completedCount / goalReps) * 100
                 return (
                     <div key={index} className='current-workout-list-item'>
-                        <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>progress bar goes here</div>
+                        <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
+                            <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>
+                            {percentageCompleted !== 100 && <div className='count-remaining-progress'>{Math.ceil(formData[exercise.exerciseName].goalReps) - formData[exercise.exerciseName].count}</div>}
+                        </div>
                         <div className='exercise-timer-container'>
                             <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
