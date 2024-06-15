@@ -652,22 +652,34 @@ footer {
   align-items: center;
 }
 
+.progress-bar-placer {
+  height: 1rem;
+  color: white;
+}
+
 .exercise-progress-container {
-  background: orange;
+  height: 1rem;
   overflow: hidden;
+  font-size: .7em;
+  
+}
+
+.count-completed-progress, 
+.count-remaining-progress {
+  display: flex;
+  height: 100%;
+  justify-content: center;
 }
 
 .count-completed-progress {
-  background: green;
-  display: flex;
-  height: 100%;
+  color: green;
+  border-bottom: 3px solid green;
 }
 
 .count-remaining-progress {
-  display: flex;
+  color: red;
   flex: 1;
-  height: 100%;
-  background: red;
+  border-bottom: 3px solid red;
 }
 
 .hide-previous-reps-container {

@@ -206,10 +206,11 @@ export default function CurrentDailyChallenge(props) {
                 const percentageCompleted = (completedCount / goalReps) * 100
                 return (
                     <div key={index} className='current-workout-list-item'>
-                        <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
-                            <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>
+                        {percentageCompleted == 0 && <div className='progress-bar-placer'></div>}
+                        {percentageCompleted !== 0 && <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
+                            {percentageCompleted !== 0 && <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>}
                             {percentageCompleted !== 100 && <div className='count-remaining-progress'>{Math.ceil(formData[exercise.exerciseName].goalReps) - formData[exercise.exerciseName].count}</div>}
-                        </div>
+                        </div>}
                         <div className='exercise-timer-container'>
                             <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
                                 <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
