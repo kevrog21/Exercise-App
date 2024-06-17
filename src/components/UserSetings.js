@@ -26,7 +26,7 @@ export default function Settings() {
                         onChange={handleInputChange}
                     >
                         <option value="light-mode">light mode</option>
-                        <option value="dark-mode">dark mode</option>
+                        <option value="dark-mode">dark mode</option> 
                         <option value="beast-mode">beast mode</option>
                     </select>
                     <div>

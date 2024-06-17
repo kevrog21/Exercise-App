@@ -202,7 +202,7 @@ export default function CurrentDailyChallenge(props) {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
                 const completedCount = formData[exercise.exerciseName].count || 0
-                const goalReps = formData[exercise.exerciseName].goalReps || 1
+                const goalReps = Math.ceil(formData[exercise.exerciseName].goalReps) || 1
                 const percentageCompleted = (completedCount / goalReps) * 100
                 return (
                     <div key={index} className='current-workout-list-item'>

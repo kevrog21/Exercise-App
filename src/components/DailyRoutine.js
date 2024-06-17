@@ -97,65 +97,12 @@ function DailyRoutine(props) {
         return newErrors.length === 0
     }
 
-    // const [formData, setFormData] = useState([
-    //     {
-    //         exerciseName: 'push-ups',
-    //         dailyIncrement: 1,
-    //         unit: 'reps'  
-    //     },{
-    //         exerciseName: 'sit-ups',
-    //         dailyIncrement: 1,
-    //         unit: 'reps'  
-    //     },{
-    //         exerciseName: 'leg lifts',
-    //         dailyIncrement: 1,
-    //         unit: 'reps'  
-    //     },{
-    //         exerciseName: 'leg kicks',
-    //         dailyIncrement: 1,
-    //         unit: 'reps'  
-    //     },{
-    //         exerciseName: 'plank',
-    //         dailyIncrement: 1.5 ,
-    //         unit: 'seconds'  
-    //     },{
-    //         exerciseName: 'pull-ups',
-    //         dailyIncrement: .5,
-    //         unit: 'reps'  
-    //     },{
-    //         exerciseName: 'leg stretch',
-    //         dailyIncrement: 1,
-    //         unit: 'seconds'  
-    //     }
-    // ])
-
-    function submitDailyRoutineForm(e) {
-        e.preventDefault()
-        console.log('running submit!')
-
-        fetch(`https://dailyfitchallenge.com/workout-histories/update-routine/${props.tempCurrentUserId}`, {
-                method: "POST",
-                body: JSON.stringify(formData), 
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(res => {
-                res.json()
-                if (res.ok) {
-                    console.log('successfully posted!')
-                }
-            })
-            .then(data => console.log(data))
-    }
-
     const submitDailyRoutine = async (e) => {
         e.preventDefault()
         console.log('running submit!')
         console.log(formData)
         const successMessageEl = document.getElementById('success-message')
         const incorrectPasswordEl = document.getElementById('incorrect-password-message')
-
 
         if (tempFormData.honeyp === '') {
             if (validateFormData()) {
@@ -213,7 +160,6 @@ function DailyRoutine(props) {
         }
     }
 
-
     return (
         <main>
             <div className="daily-routine-container">
@@ -228,8 +174,7 @@ function DailyRoutine(props) {
                     <div className='routine-list-container'>{exerciseEls}</div> : 
                     '' 
                 }
-
-                
+                      
             </div>
             { editRoutineMode ?
             <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
