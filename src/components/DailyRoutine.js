@@ -6,6 +6,7 @@ function DailyRoutine(props) {
     const [editRoutineMode, setEditRoutineMode] = useState(false)
     const [exerciseEls, setExerciseEls] = useState()
     const [formErrors, setFormErrors] = useState([])
+    const [showUpdateMessage, setShowUpdateMessage] = useState(false)
     const [tempFormData, setTempFormData] = useState({
         pword: '',
         honeyp: ''
@@ -47,6 +48,14 @@ function DailyRoutine(props) {
         }
 
     }, [editRoutineMode])
+
+    useEffect(() => {
+        if (showUpdateMessage) {
+            setTimeout(() => {
+                setShowUpdateMessage(false)
+            }, 2000)
+        }
+    }, [showUpdateMessage])
 
     const handleInputChange = (index, event) => {
         const { name, value } = event.target
@@ -148,6 +157,7 @@ function DailyRoutine(props) {
                             pword: '',
                             honeyp: ''
                         })
+                        setShowUpdateMessage(true)
                         setEditRoutineMode(false)
                     }
                 } catch (error) {
@@ -162,6 +172,12 @@ function DailyRoutine(props) {
 
     return (
         <main>
+            {showUpdateMessage && 
+                <div className='routine-success-container'>
+                    <div className='routine-success-message-box'>
+                        Routine Updated!
+                    </div>
+                </div>}
             <div className="daily-routine-container">
                 <div>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
 
@@ -174,7 +190,7 @@ function DailyRoutine(props) {
                     <div className='routine-list-container'>{exerciseEls}</div> : 
                     '' 
                 }
-                      
+
             </div>
             { editRoutineMode ?
             <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
