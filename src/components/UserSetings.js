@@ -16,6 +16,10 @@ export default function Settings() {
     return (
         <main>
             <div className='settings-contianer page-margin-top'>
+                <div className='back-arrow-container'>
+                    <div className='back-arrow'></div>
+                    <div className='back-arrow-tail'></div>
+                </div>
                 <div className='settings-header'>Settings</div>
                 <form>
                     <label htmlFor="theme">Theme</label>

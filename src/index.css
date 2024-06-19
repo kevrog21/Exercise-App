@@ -908,6 +908,30 @@ input {
   margin: 0 0 2em 0;
 }
 
+.back-arrow-container {
+  height: 1.5em;
+  text-align: left;
+  margin: 0 80% 0 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.back-arrow {
+  width: .5em;
+  height: .5em;
+  transform: rotate(45deg) translate(75%, -75%);
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.back-arrow-tail {
+  background: black;
+  width: 1.5em;
+  height: 2px;
+  margin: 0 .5em 0 0;
+}
+
 .white-btn {
   border: 2px solid rgb(29, 18, 18);
   color: white;
