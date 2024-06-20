@@ -22,6 +22,21 @@ export default function CurrentDailyChallenge(props) {
     const [challengeNumber, setChallengeNumber] = useState()
 
     useEffect(() => {
+        const savedFormDataLocalStorage = localStorage.getItem('formData')
+        const formDate = localStorage.getItem('formDate')
+        const currentDate = new Date().toDateString()
+        console.log('local storage here', savedFormDataLocalStorage)
+
+        if (savedFormDataLocalStorage && formDate === currentDate) {
+            setFormData(JSON.parse(savedFormDataLocalStorage))
+            console.log('formData from local storage', formData)
+        } else {
+            localStorage.removeItem('formData')
+            localStorage.removeItem('formDate')
+        }
+    }, [])
+
+    useEffect(() => {
         if (userIsContinuingChallenge) {
             console.log('here!', currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1])
             console.log(userIsContinuingChallenge)
@@ -148,13 +163,17 @@ export default function CurrentDailyChallenge(props) {
     }, [lastButtonClickTime])
 
     const handleRepInputChange = (exerciseName, value) => {
-        setFormData((prevFormData) => ({
-            ...prevFormData,
+        const newFormData = {
+            ...formData,
             [exerciseName]: {
-                ...prevFormData[exerciseName],
+                ...formData[exerciseName],
                 manualRepInput: value,
             }
-        }))
+        }
+        setFormData(newFormData)
+        localStorage.setItem('formData', JSON.stringify(newFormData))
+        localStorage.setItem('formDate', new Date().toDateString())
+        console.log('saved newFormData', newFormData)
     }
 
     const pushRepToPrevReps = (exerciseName) => {
