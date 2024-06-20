@@ -22,47 +22,45 @@ export default function CurrentDailyChallenge(props) {
     const [challengeNumber, setChallengeNumber] = useState()
 
     useEffect(() => {
-        const savedFormDataLocalStorage = localStorage.getItem('formData')
-        const formDate = localStorage.getItem('formDate')
-        const currentDate = new Date().toDateString()
-        console.log('local storage here', savedFormDataLocalStorage)
-
-        if (savedFormDataLocalStorage && formDate === currentDate) {
-            setFormData(JSON.parse(savedFormDataLocalStorage))
-            console.log('formData from local storage', formData)
-        } else {
-            localStorage.removeItem('formData')
-            localStorage.removeItem('formDate')
-        }
-    }, [])
-
-    useEffect(() => {
         if (userIsContinuingChallenge) {
-            console.log('here!', currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1])
             console.log(userIsContinuingChallenge)
         } else {
             if (mostRecentCompletedChallengeData && Object.entries(mostRecentCompletedChallengeData).length > 0 && currentUserWorkoutData) {
                 setChallengeNumber(mostRecentCompletedChallengeData.challengeNumber + 1)
-                const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
-                    return { 
-                        ...acc, 
-                        [exercise.exerciseName]: {
-                            count: 0,
-                            goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
-                            isComplete: false,
-                            repChange: 0,
-                            manualRepInput: '',
-                            previousSets: []
+                
+                const savedFormDataLocalStorage = localStorage.getItem('formData')
+                const formDate = localStorage.getItem('formDate')
+                const currentDate = new Date().toDateString()
+                console.log('local storage here', JSON.parse(savedFormDataLocalStorage))
+
+                if (savedFormDataLocalStorage && formDate === currentDate) {
+                    setFormData(JSON.parse(savedFormDataLocalStorage))
+                } else {
+                    localStorage.removeItem('formData')
+                    localStorage.removeItem('formDate')
+
+                    const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                        return { 
+                            ...acc, 
+                            [exercise.exerciseName]: {
+                                count: 0,
+                                goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
+                                isComplete: false,
+                                repChange: 0,
+                                manualRepInput: '',
+                                previousSets: []
+                            }
                         }
-                    }
-                }, {
-                    honeyp: '', 
-                    pword: '', 
-                    challengeNumber: mostRecentCompletedChallengeData.challengeNumber + 1
-                })
-                setFormData(initialFormData)
-                console.log('most recent completed', mostRecentCompletedChallengeData)
-                console.log('form data at 50', formData)
+                    }, {
+                        honeyp: '', 
+                        pword: '', 
+                        challengeNumber: mostRecentCompletedChallengeData.challengeNumber + 1
+                    })
+                    setFormData(initialFormData)
+                    console.log('most recent completed', mostRecentCompletedChallengeData)
+                    console.log('form data at 80', formData)
+                }
+                
             } else if (currentUserWorkoutData) {
                 setChallengeNumber(1)
                 const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
@@ -138,12 +136,17 @@ export default function CurrentDailyChallenge(props) {
                                 ...updatedFormData[key], 
                                 previousSets: [...updatedFormData[key].previousSets, updatedFormData[key].repChange],
                                 repChange: 0 }
-                        } else if (key !== 'honeyp' && key !== 'pword' && key !== 'challengeNumber') {
+                        } 
+                        else if (key !== 'honeyp' && key !== 'pword' && key !== 'challengeNumber') {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 
                                 repChange: 0 }
                         }
                     })
+                    localStorage.setItem('formData', JSON.stringify(updatedFormData))
+                    localStorage.setItem('formDate', new Date().toDateString())
+                    console.log('saved updatedFormData', updatedFormData)
+
                     return updatedFormData
                 })
                 setRepInputChangeTransition(false)
@@ -171,9 +174,6 @@ export default function CurrentDailyChallenge(props) {
             }
         }
         setFormData(newFormData)
-        localStorage.setItem('formData', JSON.stringify(newFormData))
-        localStorage.setItem('formDate', new Date().toDateString())
-        console.log('saved newFormData', newFormData)
     }
 
     const pushRepToPrevReps = (exerciseName) => {
@@ -367,6 +367,8 @@ export default function CurrentDailyChallenge(props) {
                             throw new Error('Failed to post streak data.')
                         }
     
+                        localStorage.removeItem('formData')
+                        localStorage.removeItem('formDate')
                         console.log('successfully posted!')
                         incorrectPasswordEl.classList.add('hide')
                         successMessageEl.classList.remove('hide')
