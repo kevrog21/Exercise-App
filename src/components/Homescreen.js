@@ -34,7 +34,8 @@ function Homescreen(props) {
                         }</p>
                     </div>
                 </div>
-                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : ''} day{props.currentUserWorkoutData ? userCompletedTodaysWorkout || userCompletedChallengeYesterday && props.currentUserWorkoutData.currentChallengeStreak == 1 ? '' : 's' : ''}</div>
+                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : '0'} day{props.currentUserWorkoutData ? userCompletedTodaysWorkout && props.currentUserWorkoutData.currentChallengeStreak == 1 || userCompletedChallengeYesterday && props.currentUserWorkoutData.currentChallengeStreak == 1 ? '' : 's' : 's'}</div>
+
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
                 <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
