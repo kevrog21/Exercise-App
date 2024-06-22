@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { useNavigateToLink } from './ToHomeScreen'
 
 export default function Settings() {
-
+    const navigate = useNavigateToLink()
     const [settingsFormData, setSettingsFormData] = useState({})
 
     const handleInputChange = (e) => {
@@ -13,10 +14,15 @@ export default function Settings() {
         }))
     }
 
+    const handleBackButtonClick = () => {
+        console.log('back button clicked')
+        navigate('/')
+      }
+
     return (
         <main>
             <div className='settings-contianer page-margin-top'>
-                <div className='back-arrow-container'>
+                <div className='back-arrow-container' onClick={handleBackButtonClick}>
                     <div className='back-arrow'></div>
                     <div className='back-arrow-tail'></div>
                 </div>

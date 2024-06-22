@@ -20,7 +20,6 @@ function App() {
   const tempCurrentUserId = '665511f420f8e81481ccdc56'
   // 65fb5f4e83e845c2b098f860
   // 665511f420f8e81481ccdc56
-
   const [currentUserData, setCurrentUserData] = useState()
   const [currentUserWorkoutData, setCurrentUserWorkoutData] = useState()
   const [mostRecentWorkoutDate, setMostRecentWorkoutDate] = useState()
