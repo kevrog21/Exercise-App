@@ -15,13 +15,12 @@ export default function Settings() {
     }
 
     const handleBackButtonClick = () => {
-        console.log('back button clicked')
         navigate('/')
       }
 
     return (
         <main>
-            <div className='settings-contianer page-margin-top'>
+            <div className='settings-container page-margin-top'>
                 <div className='back-arrow-container' onClick={handleBackButtonClick}>
                     <div className='back-arrow'></div>
                     <div className='back-arrow-tail'></div>
