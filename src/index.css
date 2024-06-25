@@ -326,6 +326,10 @@ footer {
   display: block;
 }
 
+.daily-routine-title {
+  font-size: 1.5em;
+}
+
 .routine-success-container {
   position: fixed;
   top: 0;
@@ -357,12 +361,6 @@ footer {
   font-weight: bold;
   color: rgb(138, 138, 138);
   margin: .5em 0 2em -1em;
-}
-
-.daily-routine-container {
-  margin: 30vw 0 0 0;
-  font-weight: 700;
-  font-size: 1.5em;
 }
 
 .daily-routine-input-continer {

@@ -16,7 +16,7 @@ export default function Settings() {
 
     const handleBackButtonClick = () => {
         navigate('/')
-      }
+    }
 
     return (
         <main>
