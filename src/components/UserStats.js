@@ -37,7 +37,7 @@ export default function UserStats(props) {
 
     const handleBackButtonClick = () => {
         navigate('/')
-      }
+    }
 
     return (
         <main>
