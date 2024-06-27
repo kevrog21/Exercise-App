@@ -679,9 +679,7 @@ footer {
 
 .exercise-progress-container {
   height: 1rem;
-  overflow: hidden;
   font-size: .7em;
-  
 }
 
 .count-completed-progress, 
@@ -693,13 +691,20 @@ footer {
 
 .count-completed-progress {
   color: green;
-  border-bottom: 3px solid green;
+  border-bottom: 2px solid green;
 }
 
 .count-remaining-progress {
   color: red;
   flex: 1;
-  border-bottom: 3px solid red;
+  border-bottom: 2px solid red;
+}
+
+.progress-bar-indicator {
+  background: rgb(0, 116, 0);
+  width: 2px;
+  height: 50%;
+  transform: translateY(100%);
 }
 
 .hide-previous-reps-container {
