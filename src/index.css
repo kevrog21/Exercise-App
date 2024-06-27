@@ -893,17 +893,19 @@ input {
   margin: 0 1em 0 0;
 }
 
-.rules-container {
+.rules-container,
+.goals-container {
   width: 65%;
   margin: 0 auto;
   text-align: left;
 }
 
-.rules-header {
+.rules-header,
+.goals-header {
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
-  margin: 0 0 2em 0;
+  margin: 0 0 1.5em 0;
 }
 
 .back-arrow-container {
