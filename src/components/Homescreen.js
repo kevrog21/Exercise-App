@@ -25,7 +25,8 @@ function Homescreen(props) {
                 <Link to='/daily-routine' className='new-user-set-routine-btn'>Set Daily Routine</Link>
             </div>
             :
-            <div className='homescreen-hero-container'>
+            <div className='homescreen-hero-container page-margin-top'>
+                <div className='current-streak-text'>🔥{props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : '0'} {(Object.keys(mostRecentCompletedChallengeData).length > 0 ? mostRecentCompletedChallengeData.challengeNumber < 6 ? true : false : false) && 'day streak'}</div>
                 <div className='day-container'>
                     <div className='star-text-container'>
                         <p className='star-text-day'>Level</p>
@@ -34,7 +35,9 @@ function Homescreen(props) {
                         }</p>
                     </div>
                 </div>
-                <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : '0'} day{props.currentUserWorkoutData ? userCompletedTodaysWorkout && props.currentUserWorkoutData.currentChallengeStreak == 1 || userCompletedChallengeYesterday && props.currentUserWorkoutData.currentChallengeStreak == 1 ? '' : 's' : 's'}</div>
+                {/* <div className='current-streak-text'>current streak: {props.currentUserWorkoutData ? (userCompletedTodaysWorkout || userCompletedChallengeYesterday ? props.currentUserWorkoutData.currentChallengeStreak : '0') : '0'} day{props.currentUserWorkoutData ? userCompletedTodaysWorkout && props.currentUserWorkoutData.currentChallengeStreak == 1 || userCompletedChallengeYesterday && props.currentUserWorkoutData.currentChallengeStreak == 1 ? '' : 's' : 's'}</div> */}
+                
+
 
                 {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
