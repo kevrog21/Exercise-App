@@ -162,7 +162,7 @@ main {
 }
 
 .current-streak-text {
-  margin: 0 auto 0 6vw;
+  /* margin: 0 auto 0 6vw; */
   font-weight: bold;
 }
 

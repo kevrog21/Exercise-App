@@ -395,14 +395,23 @@ export default function CurrentDailyChallenge(props) {
         }
     }
 
+    const handleBackButtonClick = () => {
+        navigate('/')
+    }
+
     return (
-        <main className="page-margin-top">
+        <main>
+            <div className="page-margin-top">
             {showTimer && 
                 <Timer 
                     showTimer={showTimer}
                     setShowTimer={setShowTimer}
                     timerTime={timerTime}
                 />}
+            <div className='back-arrow-container' onClick={handleBackButtonClick}>
+                <div className='back-arrow'></div>
+                <div className='back-arrow-tail'></div>
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="day-title">
                     Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
@@ -417,7 +426,7 @@ export default function CurrentDailyChallenge(props) {
                 <div id='already-completed-message' className="hide">You already completed today's workout! You can only complete one per day.</div>
             </form>
 
-
+            </div>
         </main>
     )
 }
