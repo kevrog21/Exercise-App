@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 function Homescreen(props) {
 
     const { currentUserWorkoutData, convertUTCDate, userCompletedTodaysWorkout, retrieveData, mostRecentCompletedChallengeData, userCanContinueChallenge, setUserIsContinuingChallenge, userCompletedChallengeYesterday } = props
+    const savedFormDataLocalStorage = localStorage.getItem('formData')
+
 
     useEffect(() => {
         retrieveData()
@@ -45,7 +47,7 @@ function Homescreen(props) {
                 }
                 {userCanContinueChallenge ?
                     <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn' onClick={handleContinueChallengeClick}>continue today's challenge</button></Link> :
-                    <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
+                    <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>{savedFormDataLocalStorage ? 'continue' : 'start'} today's challenge</button></Link>
                 }
                 
                 {userCompletedTodaysWorkout && 
