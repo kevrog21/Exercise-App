@@ -15,6 +15,7 @@ export default function CurrentDailyChallenge(props) {
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
     const [repInputChangeTransition, setRepInputChangeTransition] = useState(false)
     const [visibleRepsContainers, setVisibleRepsContainers] = useState({})
+    const [resetForm, setResetForm] = useState(false)
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
@@ -84,7 +85,7 @@ export default function CurrentDailyChallenge(props) {
             }
             console.log('userIsContinuingChallenge', userIsContinuingChallenge)
         } 
-    }, [mostRecentCompletedChallengeData, userIsContinuingChallenge])
+    }, [mostRecentCompletedChallengeData, userIsContinuingChallenge, resetForm])
 
     const handleIncrement = (exerciseName) => {
         setLastButtonClickTime(Date.now())
@@ -395,6 +396,12 @@ export default function CurrentDailyChallenge(props) {
         }
     }
 
+    const handleFormReset = () => {
+        localStorage.removeItem('formData')
+        localStorage.removeItem('formDate')
+        setResetForm((prevState) => (!prevState))
+    }
+
     const handleBackButtonClick = () => {
         navigate('/')
     }
@@ -427,6 +434,7 @@ export default function CurrentDailyChallenge(props) {
             </form>
 
             </div>
+            <button className="form-reset-btn" onClick={handleFormReset}>reset form</button>
         </main>
     )
 }

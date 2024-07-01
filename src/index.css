@@ -789,6 +789,14 @@ input {
   font-size: 16px;
 }
 
+.form-reset-btn {
+  width: 25%;
+  margin: 4em auto;
+  background: none;
+  border: none;
+  color: red;
+}
+
 
 /* 
 .exercise-timer-container {
