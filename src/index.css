@@ -756,7 +756,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background: red; */
+  padding: .75em;
 }
 
 .timer-top {
