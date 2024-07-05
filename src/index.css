@@ -908,6 +908,10 @@ input {
   margin: 0 1em 0 0;
 }
 
+.edit-goals-btn {
+  margin: 2em;
+}
+
 .rules-container,
 .goals-container {
   width: 65%;

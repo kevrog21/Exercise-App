@@ -12,8 +12,7 @@ export default function Goals() {
     }
 
     const handleEditGoalsClick = () => {
-        setEditGoalsMode(true)
-        console.log('clicked')
+        setEditGoalsMode(prevState => (!prevState))
     }
 
     return (
@@ -31,7 +30,11 @@ export default function Goals() {
                     <p>- Complete 25 sprint training sessions by 3/20/25</p>
                 </div>
 
-                <button onClick={handleEditGoalsClick}>edit</button>
+                {editGoalseMode && <form>
+                    <label htmlFor='newGoal'>new goal:</label>
+                    <input type='text' name='newGoal'></input>
+                </form>}
+                <button className='edit-goals-btn' onClick={handleEditGoalsClick}>{editGoalseMode ? 'cancel' : 'edit'}</button>
             </div>
         </main>
     )
