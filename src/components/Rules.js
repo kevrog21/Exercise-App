@@ -1,11 +1,18 @@
+import { useState, useEffect } from 'react'
 import { useNavigateToLink } from './ToHomeScreen'
 
 export default function Rules() {
+
+    const [editRulesMode, setEditRulesMode] = useState(false)
 
     const navigate = useNavigateToLink()
 
     const handleBackButtonClick = () => {
         navigate('/')
+    }
+
+    const handleEditRulesClick = () => {
+        setEditRulesMode(prevState => (!prevState))
     }
 
     return (
@@ -22,6 +29,11 @@ export default function Rules() {
                     <p>- After completion of a challenge, the user cannot start the next challenge until the following calendar day.</p>
                     <p>- The increase in repetitions/duration between each challenge is determined by the user when setting their daily routine.</p>
                 </div>
+                {editRulesMode && <form>
+                    <label htmlFor='newRule'>new rule:</label>
+                    <input type='text' name='newRule'></input>
+                </form>}
+                <button className='edit-goals-btn' onClick={handleEditRulesClick}>{editRulesMode ? 'cancel' : 'edit'}</button>
             </div>
         </main>
     )
