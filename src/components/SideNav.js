@@ -20,7 +20,7 @@ export default function SideNav(props) {
                 <Link to='/user-stats' className="nav-item nav-link">Stats</Link>
                 <Link to='/goals' className="nav-item nav-link">Goals</Link>
                 <Link to='/user-rules' className="nav-item nav-link">Rules</Link>
-                <Link to='/' className="nav-item nav-link">Exercise Index</Link>
+                <Link to='/exercise-index' className="nav-item nav-link">Exercise Index</Link>
             </div>
         </div>
     )

@@ -13,6 +13,7 @@ import UserStats from './components/UserStats'
 import UserSettings from './components/UserSetings'
 import Goals from './components/UserGoals'
 import Rules from './components/Rules'
+import ExerciseIndex from './components/ExerciseIndex'
 
 
 function App() {
@@ -170,6 +171,9 @@ function App() {
           } />
           <Route exact path="/user-rules" element={
             <Rules />
+          } />
+          <Route exact path="/exercise-index" element={
+            <ExerciseIndex />
           } />
         </Routes>
         <Footer />
