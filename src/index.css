@@ -927,6 +927,16 @@ input {
   margin: 0 0 1.5em 0;
 }
 
+.exercise-index-section {
+  font-weight: bold;
+}
+
+.exercise-item-container {
+  width: 70%;
+  margin: 1em auto;
+  text-align: left;
+}
+
 .back-arrow-container {
   height: 1.5em;
   text-align: left;
