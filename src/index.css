@@ -937,6 +937,11 @@ input {
   text-align: left;
 }
 
+.add-exercise-btn {
+  margin: 2em auto;
+  width: 50%;
+}
+
 .back-arrow-container {
   height: 1.5em;
   text-align: left;
