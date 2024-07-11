@@ -646,17 +646,31 @@ footer {
 .rep-change-visual-timer {
   width: 40%;
   line-height: 1.5rem;
+  transform: translate(-100%, 150%);
 }
 
-.rep-change-visual.rep-change-visual-fade,
-.rep-change-visual-timer.rep-change-visual-fade {
+.rep-change-visual.rep-change-visual-fade {
   opacity: 0;
   animation: repChangeSlide .4s;
+}
+
+.rep-change-visual-timer.rep-change-visual-fade {
+  opacity: 0;
+  animation: repChangeSlideTimer .4s;
 }
 
 @keyframes repChangeSlide {
   20% {
     transform: translate(2vw, 0);
+  }
+  100% {
+    transform: translate(-40vw, .5em);
+  }
+}
+
+@keyframes repChangeSlideTimer {
+  20% {
+    transform: translate(2vw, 150%);
   }
   100% {
     transform: translate(-40vw, .5em);
