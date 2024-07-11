@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigateToLink } from './ToHomeScreen'
 
 export default function Settings() {
@@ -13,6 +13,10 @@ export default function Settings() {
             [name]: value
         }))
     }
+
+    useEffect(() => {
+        localStorage.setItem('theme', settingsFormData.theme)
+    }, [settingsFormData.theme])
 
     const handleBackButtonClick = () => {
         navigate('/')
@@ -38,9 +42,9 @@ export default function Settings() {
                         <option value="dark-mode">dark mode</option> 
                         <option value="beast-mode">beast mode</option>
                     </select>
-                    <div>
+                    {/* <div>
                         <button type='submit' className='settings-submit-btn'>update settings</button>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </main>
