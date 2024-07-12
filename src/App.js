@@ -1,7 +1,8 @@
 import './App.css';
 import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ThemeContext } from './components/ThemeProvider';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 import Homescreen from './components/Homescreen'
@@ -111,8 +112,16 @@ function App() {
     return date >= yesterday && date < today
   }
 
+  const { theme } = useContext(ThemeContext)
+
+  const currentTheme = {
+    'light-mode': 'light-mode',
+    'dark-mode': 'dark-mode',
+    'beast-mode': 'beast-mode'
+  }
+
   return (
-    <div className="App">
+    <div className={`App ${currentTheme[theme]}`}>
       <Router>
         <Header />
         <ScrollToTop />

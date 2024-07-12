@@ -16,6 +16,7 @@ export default function Settings() {
 
     useEffect(() => {
         localStorage.setItem('theme', settingsFormData.theme)
+        console.log(settingsFormData.theme)
     }, [settingsFormData.theme])
 
     const handleBackButtonClick = () => {
