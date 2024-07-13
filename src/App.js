@@ -30,6 +30,7 @@ function App() {
   const [userCompletedChallengeYesterday, setUserCompletedChallengeYesterday ] = useState(false)
   const [userCanContinueChallenge, setUserCanContinueChallenge] = useState(false)
   const [userIsContinuingChallenge, setUserIsContinuingChallenge] = useState(false)
+  const [currentThemeClass, setCurrentThemeClass] = useState('')
   const [testUIEl, setTestUIEl] = useState('blank')
 
   const convertUTCDate = (date) => {

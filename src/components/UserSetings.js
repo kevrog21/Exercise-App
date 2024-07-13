@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigateToLink } from './ToHomeScreen'
+import { ThemeContext } from './ThemeProvider'
 
 export default function Settings() {
     const navigate = useNavigateToLink()
     const [settingsFormData, setSettingsFormData] = useState({})
+
+    const { theme, setTheme } = useContext(ThemeContext)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -17,6 +20,7 @@ export default function Settings() {
     useEffect(() => {
         localStorage.setItem('theme', settingsFormData.theme)
         console.log(settingsFormData.theme)
+        setTheme(settingsFormData.theme)
     }, [settingsFormData.theme])
 
     const handleBackButtonClick = () => {
