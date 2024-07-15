@@ -18,9 +18,21 @@ export default function Settings() {
     }
 
     useEffect(() => {
-        localStorage.setItem('theme', settingsFormData.theme)
-        console.log(settingsFormData.theme)
-        setTheme(settingsFormData.theme)
+        console.log('theme', theme)
+        const themeOnLoad = localStorage.getItem('theme')
+        if (themeOnLoad !== 'light-mode') {
+            setSettingsFormData((prevFormData) => ({
+                ...prevFormData,
+                theme: themeOnLoad
+            }))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (settingsFormData.theme) {
+            localStorage.setItem('theme', settingsFormData.theme)
+            setTheme(settingsFormData.theme)
+        }
     }, [settingsFormData.theme])
 
     const handleBackButtonClick = () => {
