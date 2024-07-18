@@ -8,16 +8,19 @@ export default function UserStats(props) {
     // const [totalPushups, setTotalPushups] = useState()
 
     const [totalsEls, setTotalsEls] = useState()
-    const [displayDaysRemaining, setDisplayDaysRemaining] = useState()
+    const [displayDaysRemaining, setDisplayDaysRemaining] = useState(0)
 
     useEffect(() => {
         if (currentUserWorkoutData) {
             const totals = currentUserWorkoutData.workouts.reduce((total, workout) => {
+
                 Object.keys(workout).forEach(exerciseName => {
-                    if (workout[exerciseName].count) {
-                        total[exerciseName] = (total[exerciseName] || 0) + workout[exerciseName].count
-                    } else if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete' && exerciseName !== 'challengeNumber') {
-                        total[exerciseName] = (total[exerciseName] || 0) + workout[exerciseName]
+                    const value = workout[exerciseName].count !== undefined
+                        ? workout[exerciseName].count
+                        : workout[exerciseName]
+
+                    if (exerciseName !== 'timeStamp' && exerciseName !== 'challengeComplete' && exerciseName !== 'challengeNumber' && !isNaN(value)) {
+                        total[exerciseName] = (total[exerciseName] || 0) + Number(value)
                     }
                 })
                 return total
@@ -34,7 +37,9 @@ export default function UserStats(props) {
 
             setTotalsEls(totalsElements)
 
-            const parsedStartDate = new Date(currentUserWorkoutData.workouts[0].timeStamp)
+            const parsedStartDate = currentUserWorkoutData.workouts[0].timeStamp < currentUserWorkoutData.workouts[1].timeStamp
+                ? new Date(currentUserWorkoutData.workouts[0].timeStamp)
+                : new Date(currentUserWorkoutData.workouts[currentUserWorkoutData.workouts.length - 1].timeStamp)
             const endDate = new Date(parsedStartDate)
             endDate.setDate(endDate.getDate() + 365)
             const currentDate = new Date()
@@ -80,9 +85,9 @@ export default function UserStats(props) {
                     <h2>Progress Stats</h2>
                     <div>Challenges Completed: {currentUserWorkoutData && currentUserWorkoutData.workouts.length}</div>
                     <div>Challenges Remaining: {currentUserWorkoutData && (300 - currentUserWorkoutData.workouts.length)}</div>
-                    <div>Days Remaining: {displayDaysRemaining}</div>
-                    <div>Days Missed: {currentUserWorkoutData && ((365 - displayDaysRemaining) - currentUserWorkoutData.workouts.length)}</div>
-                    <div>Days Left You Can Miss: {currentUserWorkoutData && (displayDaysRemaining - (300 - currentUserWorkoutData.workouts.length))}</div>
+                    <div>Days Remaining: {currentUserWorkoutData && displayDaysRemaining}</div>
+                    <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - currentUserWorkoutData.workouts.length)}</div>
+                    <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - currentUserWorkoutData.workouts.length))}</div>
                 </div>
             </div>
         </main>
