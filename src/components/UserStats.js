@@ -9,6 +9,7 @@ export default function UserStats(props) {
 
     const [totalsEls, setTotalsEls] = useState()
     const [displayDaysRemaining, setDisplayDaysRemaining] = useState(0)
+    const [completedChallenges, setCompletedChallenges] = useState()
 
     useEffect(() => {
         if (currentUserWorkoutData) {
@@ -48,6 +49,14 @@ export default function UserStats(props) {
             const dateDifference = endDate.getTime() - currentDate.getTime()
             const daysRemaining = Math.ceil(dateDifference / (1000 * 60 * 60 * 24))
             setDisplayDaysRemaining(daysRemaining >= 0 ? daysRemaining : 0)
+
+            const completedCount = currentUserWorkoutData.workouts.reduce((count, workout) => {
+                if (workout.challengeComplete === undefined || workout.challengeComplete) {
+                    return count + 1
+                }
+                return count
+            }, 0)
+            setCompletedChallenges(completedCount)
         }
     }, [currentUserWorkoutData])
 
@@ -66,7 +75,7 @@ export default function UserStats(props) {
                     <h2>General Totals</h2>
                     <div>Trips to the gym: </div>
                     <div>Sprint Training Sessions: </div>
-                    <div>Daily Challenges Completed: {currentUserWorkoutData && currentUserWorkoutData.workouts.length}</div>
+                    <div>Daily Challenges Completed: {completedChallenges}</div>
                 </div>
                 <div className='stats-container'>
                     <h2>Daily Challenge Totals</h2>
@@ -83,11 +92,11 @@ export default function UserStats(props) {
                 </div>
                 <div className='stats-container'>
                     <h2>Progress Stats</h2>
-                    <div>Challenges Completed: {currentUserWorkoutData && currentUserWorkoutData.workouts.length}</div>
-                    <div>Challenges Remaining: {currentUserWorkoutData && (300 - currentUserWorkoutData.workouts.length)}</div>
+                    <div>Challenges Completed: {completedChallenges}</div>
+                    <div>Challenges Remaining: {currentUserWorkoutData && (300 - completedChallenges)}</div>
                     <div>Days Remaining: {currentUserWorkoutData && displayDaysRemaining}</div>
-                    <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - currentUserWorkoutData.workouts.length)}</div>
-                    <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - currentUserWorkoutData.workouts.length))}</div>
+                    <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - completedChallenges)}</div>
+                    <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - completedChallenges))}</div>
                 </div>
             </div>
         </main>

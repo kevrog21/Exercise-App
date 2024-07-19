@@ -355,7 +355,7 @@ export default function CurrentDailyChallenge(props) {
                             throw new Error('Failed to post workout data.')
                         }
 
-                        const newStreak = userCompletedChallengeYesterday ? currentUserWorkoutData.currentChallengeStreak + 1 : 1
+                        const newStreak = userCompletedChallengeYesterday && finalWorkoutData.challengeComplete ? currentUserWorkoutData.currentChallengeStreak + 1 : 1
 
                         const postStreakResponse = await fetch(`https://dailyfitchallenge.com/workout-histories/update-challenge-streak/${props.tempCurrentUserId}`, {
                             method: "POST",
