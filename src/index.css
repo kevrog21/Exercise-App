@@ -759,7 +759,8 @@ footer {
 }
 
 .hide-previous-reps-container {
-  transform: translate(0, -200%);
+  transform: translate(0, -150%);
+  opacity: 0;
 }
 
 .hide-progress-container {
@@ -779,7 +780,7 @@ footer {
   font-size: .8em;
   font-weight: bold;
   margin: 0 0 0 1em;
-  display: flex;
+  display: inline-block;
   align-items: center;
   padding: .3em 1em;
 }
