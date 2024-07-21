@@ -74,26 +74,28 @@ function App() {
   }, [mostRecentCompletedChallengeData])
 
   useEffect(() => {
-    const latestWorkoutDate = new Date(mostRecentWorkoutDate)
+    if (currentUserWorkoutData) {
+      const latestWorkoutDate = new Date(mostRecentWorkoutDate)
 
-    const currentDate = new Date()
-    const currentDayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+      const currentDate = new Date()
+      const currentDayStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
 
-    const isWithinCurrentDay = latestWorkoutDate >= currentDayStart && latestWorkoutDate < currentDate
+      const isWithinCurrentDay = latestWorkoutDate >= currentDayStart && latestWorkoutDate < currentDate
 
-    if (isWithinCurrentDay && !currentUserWorkoutData.workouts[0].challengeComplete) {
-      console.log('is within the current day and incomplete')
-      setUserCanContinueChallenge(true)
-      setTestUIEl('is within the current day and incomplete')
-    } else if (isWithinCurrentDay && currentUserWorkoutData.workouts[0].challengeComplete) {
-      console.log('is within the current day and complete')
-      setTestUIEl('is within the current day and complete')
-      setUserCompletedTodaysWorkout(true)
-    } else {
-      console.log('is not within the current day')
-      setTestUIEl('is not within the current day')
+      if (isWithinCurrentDay && !currentUserWorkoutData.workouts[0].challengeComplete) {
+        console.log('is within the current day and incomplete')
+        setUserCanContinueChallenge(true)
+        setTestUIEl('is within the current day and incomplete')
+      } else if (isWithinCurrentDay && currentUserWorkoutData.workouts[0].challengeComplete) {
+        console.log('is within the current day and complete')
+        setTestUIEl('is within the current day and complete')
+        setUserCompletedTodaysWorkout(true)
+      } else {
+        console.log('is not within the current day')
+        setTestUIEl('is not within the current day')
+      }
     }
-  }, [mostRecentWorkoutDate])
+  }, [mostRecentWorkoutDate, currentUserWorkoutData])
   
   const getMostRecentCompletedWorkout = (workouts) => {
     return workouts.filter(workout => workout.challengeComplete).reduce((mostRecent, current) => {
@@ -174,6 +176,7 @@ function App() {
             <UserStats
               tempCurrentUserId={tempCurrentUserId}
               currentUserWorkoutData={currentUserWorkoutData}
+              userCompletedTodaysWorkout={userCompletedTodaysWorkout}
             />
           } />
           <Route exact path="/goals" element={

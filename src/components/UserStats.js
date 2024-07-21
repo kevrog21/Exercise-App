@@ -3,7 +3,7 @@ import { useNavigateToLink } from './ToHomeScreen'
 
 export default function UserStats(props) {
     const navigate = useNavigateToLink()
-    const { currentUserWorkoutData } = props
+    const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     // const [totalPushups, setTotalPushups] = useState()
 
@@ -95,7 +95,7 @@ export default function UserStats(props) {
                     <div>Challenges Completed: {completedChallenges}</div>
                     <div>Challenges Remaining: {currentUserWorkoutData && (300 - completedChallenges)}</div>
                     <div>Days Remaining: {currentUserWorkoutData && displayDaysRemaining}</div>
-                    <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - completedChallenges)}</div>
+                    <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - (userCompletedTodaysWorkout ? completedChallenges - 1 : completedChallenges))}</div>
                     <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - completedChallenges))}</div>
                 </div>
             </div>
