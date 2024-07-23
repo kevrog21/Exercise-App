@@ -194,6 +194,7 @@ main {
 }
 
 .previous-workouts-container {
+  color: black;
   background: #EFEFEF;
   border-radius: 1em;
   min-height: 20vh;
@@ -578,6 +579,7 @@ footer {
 }
 
 .exercise {
+  color: black;
   text-align: left;
   /* background: red; */
   background: #F1F1F1;
@@ -1061,4 +1063,11 @@ input {
 
 #temp-test-id {
   padding: 8em 0 0 0;
+}
+
+
+/* ------------- theme change styles -----------------> */
+
+.header .dark-mode-theme {
+  background: black;
 }

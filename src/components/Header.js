@@ -1,12 +1,17 @@
 import logo from '../assets/dfc_logo.svg'
 import SideNav from './SideNav'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { ThemeContext } from './ThemeProvider'
 
 export default function Header() {
 
     const [isSideNavOpen, setIsSideNavOpen] = useState(false)
     const [navMenuInteractedWith, setNavMenuInteractedWith] = useState(false)
+
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
 
     function showAndDisableNavMenu() {
         const container = document.querySelector('.nav-menu-container')
@@ -46,8 +51,8 @@ export default function Header() {
 
     return (
         <div>
-            <header className="header">
-                <div className='header-container'>
+            <header className='header'>
+                <div className={`header-container ${themeClass}`}>
                     <Link to='/'><img className='header-logo' src={logo} onClick={handleNavItemClick}></img></Link>
                     <h2 className='app-title'>Daily Fit Challenge</h2>
                     <div className={`hamburger_div ${isSideNavOpen && 'rotate'}`} onClick={handleMenuToggle}>

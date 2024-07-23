@@ -2,8 +2,9 @@
   text-align: center;
 }
 
-.dark-mode {
+.dark-mode-theme {
   background: rgb(35, 31, 43);
+  color: white;
 }
 
 .App-logo {

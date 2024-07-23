@@ -117,14 +117,10 @@ function App() {
 
   const { theme } = useContext(ThemeContext)
 
-  const currentTheme = {
-    'light-mode': 'light-mode',
-    'dark-mode': 'dark-mode',
-    'beast-mode': 'beast-mode'
-  }
+  const themeClass = `${theme}-theme`
 
   return (
-    <div className={`App ${currentTheme[theme]}`}>
+    <div className={`App ${themeClass}`}>
       <Router>
         <Header />
         <ScrollToTop />
