@@ -130,6 +130,7 @@ main {
 }
 
 .day-container {
+  color: black;
   width: 50.5vw;
   height: 50.25vw;
   margin: 5vh 0 7vh 0;
@@ -276,6 +277,7 @@ footer {
 
 .nav-menu-container,
 .timer-container {
+  color: black;
   position: fixed;
   top: 0;
   left: 0;
@@ -1070,4 +1072,10 @@ input {
 
 .header .dark-mode-theme {
   background: black;
+}
+
+.hamburger_lines.dark-mode-theme,
+.hamburger_div.dark-mode-theme::before,
+.hamburger_div.dark-mode-theme::after {
+  background: white;
 }
