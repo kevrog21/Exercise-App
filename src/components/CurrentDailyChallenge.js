@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigateToLink } from './ToHomeScreen'
 import Timer from "./Timer"
+import BackButton from './BackButton'
 
 export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
@@ -405,10 +406,6 @@ export default function CurrentDailyChallenge(props) {
         setResetForm((prevState) => (!prevState))
     }
 
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
-
     return (
         <main>
             <div className="page-margin-top">
@@ -418,10 +415,7 @@ export default function CurrentDailyChallenge(props) {
                     setShowTimer={setShowTimer}
                     timerTime={timerTime}
                 />}
-            <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                <div className='back-arrow'></div>
-                <div className='back-arrow-tail'></div>
-            </div>
+            <BackButton />
             <form onSubmit={handleSubmit}>
                 <div className="day-title">
                     Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
