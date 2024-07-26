@@ -2,9 +2,9 @@ import './App.css';
 import axios from 'axios'
 import { useState, useEffect, useContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ThemeContext } from './components/ThemeProvider';
-import Header from './components/Header';
-import ScrollToTop from './components/ScrollToTop';
+import { ThemeContext } from './components/ThemeProvider'
+import Header from './components/Header'
+import ScrollToTop from './components/ScrollToTop'
 import Homescreen from './components/Homescreen'
 import Footer from './components/Footer'
 import CurrentDailyChallenge from './components/CurrentDailyChallenge'

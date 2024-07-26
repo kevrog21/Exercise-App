@@ -1079,3 +1079,13 @@ input {
 .hamburger_div.dark-mode-theme::after {
   background: white;
 }
+
+.back-arrow.dark-mode-theme {
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  background: none;
+}
+
+.back-arrow-tail.dark-mode-theme {
+  background: white;
+}
