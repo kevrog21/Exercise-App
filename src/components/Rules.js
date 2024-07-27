@@ -1,27 +1,18 @@
 import { useState, useEffect } from 'react'
-import { useNavigateToLink } from './ToHomeScreen'
+import BackButton from './BackButton'
 
 export default function Rules() {
 
     const [editRulesMode, setEditRulesMode] = useState(false)
-
-    const navigate = useNavigateToLink()
-
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
 
     const handleEditRulesClick = () => {
         setEditRulesMode(prevState => (!prevState))
     }
 
     return (
-        <main className='page-margin-top'>
-            <div>
-                <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                        <div className='back-arrow'></div>
-                        <div className='back-arrow-tail'></div>
-                    </div>
+        <main>
+            <div className='page-margin-top'>
+                <BackButton />
                 <div className='rules-container'>
                     <div className='rules-header'>Rules</div>
                     <p>- A daily challenge must be completed within the calendar day that it is started in order to advance to the next challenge.</p>

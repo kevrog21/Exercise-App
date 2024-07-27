@@ -1089,3 +1089,7 @@ input {
 .back-arrow-tail.dark-mode-theme {
   background: white;
 }
+
+.routine-list-item {
+  color: black;
+}
