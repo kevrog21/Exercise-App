@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
-import { useNavigateToLink } from './ToHomeScreen'
 import { ThemeContext } from './ThemeProvider'
+import BackButton from './BackButton'
 
 export default function Settings() {
-    const navigate = useNavigateToLink()
     const [settingsFormData, setSettingsFormData] = useState({})
 
     const { theme, setTheme } = useContext(ThemeContext)
@@ -35,17 +34,10 @@ export default function Settings() {
         }
     }, [settingsFormData.theme])
 
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
-
     return (
         <main>
             <div className='settings-container page-margin-top'>
-                <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                    <div className='back-arrow'></div>
-                    <div className='back-arrow-tail'></div>
-                </div>
+                <BackButton />
                 <div className='settings-header'>Settings</div>
                 <form>
                     <label htmlFor="theme">Theme</label>

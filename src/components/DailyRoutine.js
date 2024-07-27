@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useNavigateToLink } from './ToHomeScreen'
+import BackButton from './BackButton'
 
 function DailyRoutine(props) {
-    const navigate = useNavigateToLink()
     const { currentUserWorkoutData, retrieveData } = props
     const [editRoutineMode, setEditRoutineMode] = useState(false)
     const [exerciseEls, setExerciseEls] = useState()
@@ -171,10 +170,6 @@ function DailyRoutine(props) {
         }
     }
 
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
-
     return (
         <main>
             {showUpdateMessage && 
@@ -184,10 +179,7 @@ function DailyRoutine(props) {
                     </div>
                 </div>}
             <div className="page-margin-top">
-                <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                    <div className='back-arrow'></div>
-                    <div className='back-arrow-tail'></div>
-                </div>
+                <BackButton />
                 <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
 
                 { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ?

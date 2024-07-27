@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useNavigateToLink } from './ToHomeScreen'
+import BackButton from './BackButton'
 
 export default function Goals() {
 
     const [editGoalseMode, setEditGoalsMode] = useState(false)
-
-    const navigate = useNavigateToLink()
-
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
 
     const handleEditGoalsClick = () => {
         setEditGoalsMode(prevState => (!prevState))
@@ -18,10 +12,7 @@ export default function Goals() {
     return (
         <main>
             <div className='page-margin-top'>
-                <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                    <div className='back-arrow'></div>
-                    <div className='back-arrow-tail'></div>
-                </div>
+                <BackButton />
             
                 <div className='goals-container'>
                     <div className='goals-header'>Goals</div>

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useNavigateToLink } from './ToHomeScreen'
+import BackButton from './BackButton'
 
 export default function UserStats(props) {
-    const navigate = useNavigateToLink()
     const { currentUserWorkoutData, userCompletedTodaysWorkout } = props
 
     // const [totalPushups, setTotalPushups] = useState()
@@ -60,17 +59,10 @@ export default function UserStats(props) {
         }
     }, [currentUserWorkoutData])
 
-    const handleBackButtonClick = () => {
-        navigate('/')
-    }
-
     return (
         <main>
             <div className='page-margin-top'>
-                <div className='back-arrow-container' onClick={handleBackButtonClick}>
-                    <div className='back-arrow'></div>
-                    <div className='back-arrow-tail'></div>
-                </div>
+                <BackButton />
                 <div className='stats-container'>
                     <h2>General Totals</h2>
                     <div>Trips to the gym: </div>
