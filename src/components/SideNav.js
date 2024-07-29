@@ -1,7 +1,12 @@
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
 import { Link } from "react-router-dom"
+import { ThemeContext } from './ThemeProvider'
 
 export default function SideNav(props) {
+
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
 
     function closeNavMenu() {
         props.setIsSideNavOpen(false)
@@ -13,7 +18,7 @@ export default function SideNav(props) {
 
     return (
         <div className='nav-menu-container' onClick={closeNavMenu} style={props.isSideNavOpen ? {} : {pointerEvents: 'none'}}>
-            <div id='nav-menu' className=''>
+            <div id='nav-menu' className={`nav-menu ${themeClass}`}>
                 <div className='profile-icon-text-container'>
                     <div className='profile-icon-container'>
                         <div className='profile-icon-head'></div>

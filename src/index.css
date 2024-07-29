@@ -1093,3 +1093,12 @@ input {
 .routine-list-item {
   color: black;
 }
+
+#nav-menu.dark-mode-theme {
+  color: black;
+  background: rgb(179, 179, 179);
+}
+
+.dark-mode-theme .nav-item {
+  background: rgb(167, 167, 167);
+}
