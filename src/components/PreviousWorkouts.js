@@ -1,9 +1,14 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { ThemeContext } from './ThemeProvider'
 
 function PreviousWorkouts(props) {
 
     const { currentUserWorkoutData, convertUTCDate } = props
+
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
 
     const [previousWorkoutEls, setPreviousWorkoutEls] = useState()
     const [previousChallengeEls, setPreviousChallengeEls] = useState()
@@ -123,7 +128,7 @@ function PreviousWorkouts(props) {
     
     return (
         <div>
-            <div className="previous-workouts-container">
+            <div className={`previous-workouts-container ${themeClass}`}>
                 <div className='previous-workouts-title'>Previous Daily Challenges</div>
                 <div className="previous-workouts-content">
                     {previousChallengeEls}

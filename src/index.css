@@ -1100,5 +1100,10 @@ input {
 }
 
 .dark-mode-theme .nav-item {
-  background: rgb(167, 167, 167);
+  background: rgb(197, 197, 197);
+}
+
+.previous-workouts-container.dark-mode-theme {
+  background: rgb(102, 100, 105);
+  color: black;
 }
