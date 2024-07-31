@@ -136,7 +136,7 @@ function PreviousWorkouts(props) {
                     </div>
                 </div>
             </div>
-            <div className="previous-workouts-container">
+            <div className={`previous-workouts-container ${themeClass}`}>
                 <div className='previous-workouts-title'>Previous Workouts</div>
                 <div className="previous-workouts-content">
                     {}

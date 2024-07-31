@@ -249,6 +249,7 @@ main {
   margin: 0 auto;
   border: none;
   color: black;
+  background: none;
 }
 
 .view-more-arrow,
@@ -1067,6 +1068,10 @@ input {
   padding: 8em 0 0 0;
 }
 
+footer {
+  color: black;
+}
+
 
 /* ------------- theme change styles -----------------> */
 
@@ -1096,7 +1101,7 @@ input {
 
 #nav-menu.dark-mode-theme {
   color: black;
-  background: rgb(179, 179, 179);
+  background:  rgb(158, 158, 158);
 }
 
 .dark-mode-theme .nav-item {
