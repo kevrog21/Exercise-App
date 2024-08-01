@@ -53,7 +53,7 @@ function Homescreen(props) {
                 {userCompletedTodaysWorkout && 
                 <div>
                     <div className='workout-completed-msg'>You completed your workout for the day!</div>
-                    <div className='come-back-msg'>come back tomorrow to complete level {currentUserWorkoutData.workouts.length + 1}</div>
+                    <div className='come-back-msg'>come back tomorrow to complete level {mostRecentCompletedChallengeData.challengeNumber + 1}</div>
                 </div>}
             </div>
             }

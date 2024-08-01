@@ -1112,3 +1112,8 @@ footer {
   background: rgb(102, 100, 105);
   color: black;
 }
+
+footer.dark-mode-theme {
+  background: rgb(158, 158, 158);
+  color: black;
+}
