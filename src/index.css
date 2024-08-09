@@ -772,6 +772,10 @@ footer {
   transform: translate(0, 200%);
 }
 
+.manual-rep-input-container {
+  display: inline-block;
+}
+
 .manual-rep-input {
   background: rgb(187, 187, 187);
   border: none;
@@ -1029,6 +1033,10 @@ input {
 
 .hide {
   display: none;
+}
+
+.opacity-none {
+  opacity: 0;
 }
 
 .page-margin-top {

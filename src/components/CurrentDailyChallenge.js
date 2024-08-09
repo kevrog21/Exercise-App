@@ -273,14 +273,16 @@ export default function CurrentDailyChallenge(props) {
                         </div>
                         <div className={`previous-reps-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-previous-reps-container'}`}>
                             <div>{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
-                                <input 
-                                    className="manual-rep-input"
-                                    type='number'
-                                    value={formData[exercise.exerciseName].manualRepInput || ''}
-                                    onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
-                                    >
-                                </input>
-                                {formData[exercise.exerciseName].manualRepInput && <div className="manual-rep-input-submit" onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
+                                <div className='manual-rep-input-container'>
+                                    <input 
+                                        className="manual-rep-input"
+                                        type='number'
+                                        value={formData[exercise.exerciseName].manualRepInput || ''}
+                                        onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
+                                        >
+                                    </input>
+                                    {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
+                                </div>
                             </div>
                         </div>
                     </div>
