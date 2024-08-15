@@ -1,3 +1,5 @@
+import BackButton from "./BackButton"
+
 export default function UserProfile() {
     return (
         <main>

@@ -11,6 +11,7 @@ import CurrentDailyChallenge from './components/CurrentDailyChallenge'
 import CurrentWorkout from './components/CurrentWorkout'
 import DailyRoutine from './components/DailyRoutine'
 import UserStats from './components/UserStats'
+import UserProfile from './components/UserProfile'
 import UserSettings from './components/UserSetings'
 import Goals from './components/UserGoals'
 import Rules from './components/Rules'
@@ -164,7 +165,9 @@ function App() {
               retrieveData={retrieveData}
             />
           } />
-          
+          <Route exact path="/user-profile" element={
+            <UserProfile />
+          } />
           <Route exact path="/user-settings" element={
             <UserSettings />
           } />
