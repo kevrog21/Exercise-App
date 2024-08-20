@@ -5,7 +5,12 @@ export default function UserProfile() {
         <main>
             <div className='page-margin-top'>
                 <BackButton />
-                <div>user profile</div>
+                <div>username: </div>
+                <div>email: </div>
+                <div>account created on: </div>
+                <div>active challenges: </div>
+                <div className="red">delete account</div>
+                <div></div>
             </div>
         </main>
     )
