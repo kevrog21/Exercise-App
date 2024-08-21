@@ -645,14 +645,14 @@ footer {
 .current-rep-label {
   font-size: .75em;
   text-align: center;
-  border-left: 2px solid #6B6B6B;
+  transform: translateY(-1em);
 }
 
 .rep-scroller {
   width: 100%;
   text-align: center;
   border-left: 2px solid #6B6B6B;
-  padding: .75em 0;
+  padding: 0 0 0 0;
 }
 
 .current-rep {
@@ -664,8 +664,23 @@ footer {
   justify-content: space-around;
 }
 
-.temp-button {
+.increase-rep-button,
+.decrease-rep-button {
+  width: .35em;
+  height: .35em;
+  margin: 0 auto;
+  rotate: 45deg;
+}
 
+.increase-rep-button {
+  border-top: 1px solid #6B6B6B;
+  border-left: 1px solid #6B6B6B;
+  transform: translate(.05em, .05em);
+}
+
+.decrease-rep-button {
+  border-bottom: 1px solid #6B6B6B;
+  border-right: 1px solid #6B6B6B;
 }
 
 .rep-change-visual,

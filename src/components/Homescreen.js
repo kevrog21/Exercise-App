@@ -41,10 +41,10 @@ function Homescreen(props) {
                 
 
 
-                {userCompletedTodaysWorkout ? 
+                {/* {userCompletedTodaysWorkout ? 
                 <button className='start-workout-btn disabled-btn'>start today's challenge</button> :
                 <Link to='/current-workout' className='no-underline'><button className='start-workout-btn'>start today's challenge</button></Link>
-                }
+                } */}
                 {userCanContinueChallenge ?
                     <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn' onClick={handleContinueChallengeClick}>continue today's challenge</button></Link> :
                     <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>{savedFormDataLocalStorage ? 'continue' : 'start'} today's challenge</button></Link>

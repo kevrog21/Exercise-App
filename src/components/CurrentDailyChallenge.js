@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext} from "react"
 import { useNavigateToLink } from './ToHomeScreen'
 import Timer from "./Timer"
 import BackButton from './BackButton'
@@ -248,11 +248,13 @@ export default function CurrentDailyChallenge(props) {
                                     <div className='rep-scroller-container'>
                                         <div className='current-rep-label'>current</div>
                                         <div className='rep-scroller'>
+                                            <div className='increase-rep-button' onClick={() => handleIncrement(exercise.exerciseName)}></div>
                                             <div className='current-rep'>{formData[exercise.exerciseName].count}</div>
-                                            <div className='temp-button-container'>
+                                            <div className='decrease-rep-button' onClick={() => handleDecrement(exercise.exerciseName)}></div>
+                                            {/* <div className='temp-button-container'>
                                                 <div className='temp-button' onClick={() => handleDecrement(exercise.exerciseName)}>-</div>
                                                 <div className='temp-button' onClick={() => handleIncrement(exercise.exerciseName)}>+</div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
