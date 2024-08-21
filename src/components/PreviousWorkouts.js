@@ -63,7 +63,7 @@ function PreviousWorkouts(props) {
                                 }
                                 return null
                             })}
-                            {workout.challengeComplete && <div>completed!</div>}
+                            {workout.challengeComplete && <div className='green'>completed!</div>}
                         </div>
                     </div>
                 )

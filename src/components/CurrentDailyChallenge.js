@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useNavigateToLink } from './ToHomeScreen'
 import Timer from "./Timer"
 import BackButton from './BackButton'
+import { ThemeContext } from './ThemeProvider'
 
 export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
@@ -20,6 +21,10 @@ export default function CurrentDailyChallenge(props) {
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
+
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
 
     const [challengeNumber, setChallengeNumber] = useState()
 
@@ -253,7 +258,7 @@ export default function CurrentDailyChallenge(props) {
                                 </div>
                             </div>
                             {exercise.unit === 'seconds' ?
-                            <div className='timer-background'>
+                            <div className={`timer-background ${themeClass}`}>
                                 <div className="rep-change-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
                                 <div className='timer-icon-container'>
                                     <div className='timer-icon'

@@ -12,7 +12,7 @@ function CurrentWorkout(props) {
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
 
     const [showTimer, setShowTimer] = useState(false)
-    const [timerTime, setTimerTime] = useState(0)
+    const [timerTime, setTimerTime] = useState(0) 
 
     useEffect(() => {
         console.log('Checkboxes state:', checkboxes);
