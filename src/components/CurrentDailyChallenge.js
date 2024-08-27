@@ -172,17 +172,6 @@ export default function CurrentDailyChallenge(props) {
         }
     }, [lastButtonClickTime])
 
-    const handleRepInputChange = (exerciseName, value) => {
-        const newFormData = {
-            ...formData,
-            [exerciseName]: {
-                ...formData[exerciseName],
-                manualRepInput: value,
-            }
-        }
-        setFormData(newFormData)
-    }
-
     const pushRepToPrevReps = (exerciseName) => {
         setRepInputChangeTransition(true)
         setLastButtonClickTime(Date.now())
@@ -203,6 +192,24 @@ export default function CurrentDailyChallenge(props) {
 
             return updatedFormData
         })
+    }
+
+    const handleRepInputChange = (exerciseName, value) => {
+        const newFormData = {
+            ...formData,
+            [exerciseName]: {
+                ...formData[exerciseName],
+                manualRepInput: value,
+            }
+        }
+        setFormData(newFormData)
+    }
+
+    const handleRepInputKeydown = (exerciseName, e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            pushRepToPrevReps(exerciseName)
+        }
     }
 
     const showPreviousReps = (exerciseName) => {
@@ -286,6 +293,7 @@ export default function CurrentDailyChallenge(props) {
                                         type='number'
                                         value={formData[exercise.exerciseName].manualRepInput || ''}
                                         onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
+                                        onKeyDown={(e) => handleRepInputKeydown(exercise.exerciseName, e)}
                                         >
                                     </input>
                                     {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
