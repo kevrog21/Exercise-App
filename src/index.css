@@ -673,14 +673,14 @@ footer {
 }
 
 .increase-rep-button {
-  border-top: 1px solid #6B6B6B;
-  border-left: 1px solid #6B6B6B;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
   transform: translate(.05em, .05em);
 }
 
 .decrease-rep-button {
-  border-bottom: 1px solid #6B6B6B;
-  border-right: 1px solid #6B6B6B;
+  border-bottom: 1px solid #808080;
+  border-right: 1px solid #808080;
 }
 
 .rep-change-visual,

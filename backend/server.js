@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import dailyWorkoutRouter from './routes/dailyworkouts.js'
 import usersRouter from './routes/users.js'
 import workoutHistoriesRouter from './routes/workoutHistory.js'
+import exerciseIndexRouter from './routes/exerciseIndex.js'
 import { fileURLToPath } from 'url'
 
 const app = express()
@@ -47,6 +48,7 @@ app.use(express.json())
 app.use('/daily-workouts', dailyWorkoutRouter)
 app.use('/users', usersRouter)
 app.use('/workout-histories', workoutHistoriesRouter)
+app.use('/exercise-index', exerciseIndexRouter)
 
 app.get("/*", function(req, res) {
     res.sendFile(
