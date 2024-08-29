@@ -48,7 +48,7 @@ app.use(express.json())
 app.use('/daily-workouts', dailyWorkoutRouter)
 app.use('/users', usersRouter)
 app.use('/workout-histories', workoutHistoriesRouter)
-app.use('/exercise-index', exerciseIndexRouter)
+app.use('/exercise-index-data', exerciseIndexRouter)
 
 app.get("/*", function(req, res) {
     res.sendFile(

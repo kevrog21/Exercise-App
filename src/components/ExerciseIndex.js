@@ -1,13 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BackButton from './BackButton'
+import axios from 'axios'
 
 export default function Rules() {
 
     const [addExerciseMode, setAddExerciseMode] = useState(false)
+    const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
 
     const handleAddExerciseClick = () => {
         setAddExerciseMode(prevState => (!prevState))
     }
+
+    const retrieveExerciseData = async () => {
+        try {
+            const allExerciseIndexData = await axios.get(`https://dailyfitchallenge.com/exercise-index-data}`)
+            console.log('index data here: ', allExerciseIndexData.data)
+        } catch (error) {
+          console.error('Error: ', error)
+      }
+    }
+
+    useEffect(() => {
+        retrieveExerciseData()
+    }, [])
 
     return (
         <main>
