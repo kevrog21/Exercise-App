@@ -49,7 +49,8 @@ export default function Settings() {
                     >
                         <option value="light-mode">light mode</option>
                         <option value="dark-mode">dark mode</option> 
-                        <option value="beast-mode">beast mode</option>
+                        {/* <option value="beast-mode">beast mode</option> */}
+                        <option value="colorful-mode">colorful mode</option>
                     </select>
                     {/* <div>
                         <button type='submit' className='settings-submit-btn'>update settings</button>

@@ -1123,10 +1123,20 @@ footer {
   background: black;
 }
 
+.header .colorful-mode-theme {
+  background: red;
+}
+
 .hamburger_lines.dark-mode-theme,
 .hamburger_div.dark-mode-theme::before,
 .hamburger_div.dark-mode-theme::after {
   background: white;
+}
+
+.hamburger_lines.colorful-mode-theme,
+.hamburger_div.colorful-mode-theme::before,
+.hamburger_div.colorful-mode-theme::after {
+  background: rgb(49, 255, 101);
 }
 
 .back-arrow.dark-mode-theme {
@@ -1148,8 +1158,19 @@ footer {
   background:  rgb(158, 158, 158);
 }
 
+#nav-menu.colorful-mode-theme {
+  color: black;
+  background:  rgb(189, 103, 230);
+}
+
+/* rgb(255, 182, 24); */
+
 .dark-mode-theme .nav-item {
   background: rgb(197, 197, 197);
+}
+
+.colorful-mode-theme .nav-item {
+  background: rgb(216, 172, 236)
 }
 
 .previous-workouts-container.dark-mode-theme {
@@ -1157,7 +1178,17 @@ footer {
   color: black;
 }
 
+.previous-workouts-container.colorful-mode-theme {
+  background: rgb(163, 189, 236);
+  color: black;
+}
+
 footer.dark-mode-theme {
   background: rgb(158, 158, 158);
+  color: black;
+}
+
+footer.colorful-mode-theme {
+  background: rgb(66, 241, 60);
   color: black;
 }

@@ -7,6 +7,10 @@
   color: white;
 }
 
+.colorful-mode-theme {
+  background: rgb(87, 148, 230);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
