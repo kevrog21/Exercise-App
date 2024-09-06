@@ -28,6 +28,7 @@ export default function SideNav(props) {
                 </Link>
                 <div className='profile-name'></div>
                 <Link to=''  className="nav-item nav-link">Home</Link>
+                <Link to='/current-daily-challenge' className="nav-item nav-link">Current Challenge</Link>
                 <Link to='/user-settings' className="nav-item nav-link">Settings</Link>
                 <Link to='/daily-routine' className="nav-item nav-link">Daily Routine</Link>
                 <Link to='/user-stats' className="nav-item nav-link">Stats</Link>
