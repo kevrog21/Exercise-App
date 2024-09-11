@@ -845,6 +845,10 @@ input {
   background: rgb(192, 192, 192);
 }
 
+.colorful-mode-theme .timer-top {
+  background: rgb(31, 31, 31);
+}
+
 .timer-stem {
   width: 2px;
   height: .07rem;
@@ -853,6 +857,10 @@ input {
 
 .dark-mode-theme .timer-stem {
   background: rgb(192, 192, 192);
+}
+
+.colorful-mode-theme .timer-stem {
+  background: rgb(31, 31, 31);
 }
 
 .timer-circle {
@@ -868,6 +876,10 @@ input {
   border: 2px solid rgb(192, 192, 192);
 }
 
+.colorful-mode-theme .timer-circle {
+  border: 2px solid rgb(31, 31, 31);
+}
+
 .timer-icon-text {
   line-height: 1.25rem;
   font-size: .6rem;
@@ -875,6 +887,10 @@ input {
 
 .dark-mode-theme .timer-icon-text {
   color: rgb(192, 192, 192);
+}
+
+.colorful-mode-theme .timer-icon-text {
+  color: black;
 }
 
 .password-input {
