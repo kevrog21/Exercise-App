@@ -13,7 +13,7 @@ export default function Rules() {
 
     const retrieveExerciseData = async () => {
         try {
-            const allExerciseIndexData = await axios.get(`https://dailyfitchallenge.com/exercise-index-data}`)
+            const allExerciseIndexData = await axios.get(`https://dailyfitchallenge.com/exercise-index-data`)
             console.log('index data here: ', allExerciseIndexData.data)
         } catch (error) {
           console.error('Error: ', error)
