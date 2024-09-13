@@ -6,6 +6,7 @@ export default function Rules() {
 
     const [addExerciseMode, setAddExerciseMode] = useState(false)
     const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
+    const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
 
     const handleAddExerciseClick = () => {
         setAddExerciseMode(prevState => (!prevState))
@@ -13,8 +14,8 @@ export default function Rules() {
 
     const retrieveExerciseData = async () => {
         try {
-            const allExerciseIndexData = await axios.get(`https://dailyfitchallenge.com/exercise-index-data`)
-            console.log('index data here: ', allExerciseIndexData.data)
+            const allExerciseIndexDataResponse = await axios.get(`https://dailyfitchallenge.com/exercise-index-data`)
+            setAllExerciseIndexData(allExerciseIndexDataResponse.data)
         } catch (error) {
           console.error('Error: ', error)
       }
@@ -23,6 +24,21 @@ export default function Rules() {
     useEffect(() => {
         retrieveExerciseData()
     }, [])
+
+    useEffect(() => {
+        if (allExeriseIndexData.length > 0) {
+            console.log('index data: ', allExeriseIndexData)
+
+            const exerciseIndexItems = allExeriseIndexData.map((exercise, index) => {
+                return (
+                    <div key={index}>
+                        {exercise.exerciseTitle}
+                    </div>
+                )
+            })
+            setExerciseIndexItemEls(exerciseIndexItems)
+        }
+    }, [allExeriseIndexData])
 
     return (
         <main>
@@ -59,6 +75,7 @@ export default function Rules() {
                     <input type='text' name='newExercise'></input>
                 </form>}
                 <button className='add-exercise-btn' onClick={handleAddExerciseClick}>{addExerciseMode ? 'cancel' : 'add exercise'}</button>
+                {exerciseIndexItemEls}
             </div>
         </main>
     )
