@@ -1,12 +1,18 @@
-import { useState, useEffect } from 'react'
-import BackButton from './BackButton'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import BackButton from './BackButton'
+import { ThemeContext } from './ThemeProvider'
+import AddExerciseToIndexModal from './AddExerciseToIndexModal'
 
 export default function Rules() {
 
     const [addExerciseMode, setAddExerciseMode] = useState(false)
     const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
     const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
+
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
 
     const handleAddExerciseClick = () => {
         setAddExerciseMode(prevState => (!prevState))
@@ -43,38 +49,16 @@ export default function Rules() {
     return (
         <main>
             <div className='page-margin-top'>
-                <BackButton />
-                <div className="exercise-index-section">Arm Exercises</div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
+                <div className='exercise-index-buttons'>
+                    <BackButton />
+                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>{addExerciseMode ? 'cancel' : 'add exercise'}</button>
+                    <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
                 </div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
-                </div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
-                </div>
-                <div className="exercise-index-section">Back Exercises</div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
-                </div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
-                </div>
-                <div className='exercise-item-container'>
-                    <div>Title</div>
-                    <div>Description</div>
-                </div>
-                {addExerciseMode && <form>
-                    <label htmlFor='newExercise'>new exercise:</label>
-                    <input type='text' name='newExercise'></input>
-                </form>}
-                <button className='add-exercise-btn' onClick={handleAddExerciseClick}>{addExerciseMode ? 'cancel' : 'add exercise'}</button>
+                {addExerciseMode ? 
+                    <form className='add-exercise-form'>
+                        <AddExerciseToIndexModal/>
+                    </form> : 
+                    <div className='add-exercise-form-placeholder'></div>}
                 {exerciseIndexItemEls}
             </div>
         </main>
