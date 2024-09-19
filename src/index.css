@@ -278,7 +278,8 @@ footer {
 }
 
 .nav-menu-container,
-.timer-container {
+.timer-container,
+.add-exercise-container {
   color: black;
   position: fixed;
   top: 0;
@@ -1065,7 +1066,7 @@ input {
 }
 
 .add-exercise-btn.dark-mode-theme {
-  border-bottom: none;
+  border-bottom: 1px solid rgb(192, 192, 192);
 }
 
 .add-exercise-symbol {
@@ -1085,6 +1086,42 @@ input {
 
 .add-exercise-form-placeholder {
   height: 3em;
+}
+
+.add-exercise-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .68);
+}
+
+.exercise-modal-container {
+  background: red;
+  width: 50vw;
+  height: 50vw;
+}
+
+.x-button-container {
+
+  height: 1.5em;
+  width: 1.5em;
+  margin: 0 1.5em 0 auto;
+}
+
+.x-1,
+.x-2 {
+  background: black;
+  width: 100%;
+  height: 10%;
+  margin: 1em 0 0 auto;
+}
+
+.x-1 {
+  transform: rotate(45deg) translate(55%, 0);
+}
+
+.x-2 {
+  transform: rotate(-45deg) translate(55%, 0);
 }
 
 .back-arrow-container {

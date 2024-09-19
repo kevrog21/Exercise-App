@@ -56,7 +56,9 @@ export default function Rules() {
                 </div>
                 {addExerciseMode ? 
                     <form className='add-exercise-form'>
-                        <AddExerciseToIndexModal/>
+                        <AddExerciseToIndexModal
+                            setAddExerciseMode={setAddExerciseMode}
+                        />
                     </form> : 
                     <div className='add-exercise-form-placeholder'></div>}
                 {exerciseIndexItemEls}
