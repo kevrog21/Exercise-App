@@ -46,22 +46,31 @@ export default function Rules() {
         }
     }, [allExeriseIndexData])
 
+    const closeModal = (e) => {
+        if (e.target === e.currentTarget) {
+            setAddExerciseMode(false)
+        }
+    }
+
     return (
         <main>
             <div className='page-margin-top'>
                 <div className='exercise-index-buttons'>
                     <BackButton />
-                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>{addExerciseMode ? 'cancel' : 'add exercise'}</button>
+                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
                     <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
                 </div>
-                {addExerciseMode ? 
-                    <form className='add-exercise-form'>
+                <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={closeModal}>
+                    {addExerciseMode ? 
                         <AddExerciseToIndexModal
+                            closeModal={closeModal}
                             setAddExerciseMode={setAddExerciseMode}
-                        />
-                    </form> : 
-                    <div className='add-exercise-form-placeholder'></div>}
-                {exerciseIndexItemEls}
+                        /> : 
+                        <div className='add-exercise-form-placeholder'></div>}
+                </div>
+                <div>
+                    {exerciseIndexItemEls}
+                </div>
             </div>
         </main>
     )

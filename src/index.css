@@ -1088,7 +1088,7 @@ input {
   height: 3em;
 }
 
-.add-exercise-container {
+.add-exercise-container.show {
   display: flex;
   justify-content: center;
   align-items: center;
