@@ -1125,6 +1125,10 @@ input {
   transform: rotate(-45deg);
 }
 
+.modal-content-container {
+  background: white;
+}
+
 .back-arrow-container {
   height: 1.5em;
   width: 80%;
