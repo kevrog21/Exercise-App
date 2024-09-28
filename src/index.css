@@ -1080,6 +1080,10 @@ input {
   border: 1px solid white;
 }
 
+.add-exercise-container {
+  z-index: 2;
+}
+
 .add-exercise-form {
   height: 3em;
 }
@@ -1092,13 +1096,16 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, .68);
+  background-color: rgba(0, 0, 0, .45);
 }
 
 .exercise-modal-container {
-  background: red;
-  width: 50vw;
-  height: 50vw;
+  width: 70vw;
+  height: 70vw;
+}
+
+#exercise-modal-id {
+  background: black;
 }
 
 .x-button-container {
@@ -1117,6 +1124,11 @@ input {
   height: 4%;
 }
 
+.dark-mode-theme .x-1,
+.dark-mode-theme .x-2 {
+  background: white;
+}
+
 .x-1 {
   transform: rotate(45deg);
 }
@@ -1127,6 +1139,12 @@ input {
 
 .modal-content-container {
   background: white;
+  margin: 2em 1em 1em 1em;
+  padding: 1em;
+}
+
+.dark-mode-theme .modal-content-container {
+  background: #141414;
 }
 
 .back-arrow-container {
@@ -1202,6 +1220,10 @@ input {
 
 .disable-pointer-events {
   pointer-events: none;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 #temp-test-id {

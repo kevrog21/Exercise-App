@@ -1,9 +1,14 @@
 import { useContext, useState } from 'react'
+import { ThemeContext } from './ThemeProvider'
 
 export default function AddExerciseToIndexModal(props) {
     
     const { closeModal } = props
 
+    const { theme } = useContext(ThemeContext)
+
+    const themeClass = `${theme}-theme`
+    
     const [formData, setFormData] = useState({
         exerciseTitle: '',
         pword: '',
@@ -23,18 +28,17 @@ export default function AddExerciseToIndexModal(props) {
         console.log('add exerise formData here: ', formData)
     }
 
-
     return (
-        <div className='exercise-modal-container'>
+        <div className={`exercise-modal-container ${themeClass}`} id='exercise-modal-id'>
             <div className="x-button-container" onClick={closeModal}>
                 <div className="x-1"  onClick={closeModal}></div>
                 <div className="x-2"  onClick={closeModal}></div>
             </div>
+            <div className=''>
+                add a new exercise
+            </div>
             <div className='modal-content-container'>
                 <form onSubmit={handleSubmit}>
-                    <div className=''>
-                        add a new exercise
-                    </div>
 
                     <label htmlFor='pword' className='password-label'>Title</label>
                     <input type='text' name='exerciseTitle' value={formData.exerciseTitle} onChange={handleInputChange}></input>

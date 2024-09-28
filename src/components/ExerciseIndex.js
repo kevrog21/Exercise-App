@@ -52,6 +52,21 @@ export default function Rules() {
         }
     }
 
+    function disableBackgroundScroll() {
+        const bodyEl = document.querySelector('body')
+
+        if (addExerciseMode) {
+            bodyEl.classList.add('no-scroll')
+            
+        } else {
+            bodyEl.classList.remove('no-scroll')
+        }
+    }
+
+    useEffect(() => {
+        disableBackgroundScroll()
+    }, [addExerciseMode])
+
     return (
         <main>
             <div className='page-margin-top'>
