@@ -9,6 +9,7 @@ export default function Rules() {
     const [addExerciseMode, setAddExerciseMode] = useState(false)
     const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
     const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
+    const [activeFormState, setActiveFormState] = useState(false)
 
     const { theme } = useContext(ThemeContext)
 
@@ -52,6 +53,11 @@ export default function Rules() {
         }
     }
 
+    const deactivateFormState = () => {
+        setActiveFormState(false)
+        console.log('deactivating form state')
+    }
+
     function disableBackgroundScroll() {
         const bodyEl = document.querySelector('body')
 
@@ -75,13 +81,14 @@ export default function Rules() {
                     <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
                     <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
                 </div>
-                <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={closeModal}>
-                    {addExerciseMode ? 
+                <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={activeFormState ? deactivateFormState : closeModal}>
+                    {addExerciseMode && 
                         <AddExerciseToIndexModal
                             closeModal={closeModal}
                             setAddExerciseMode={setAddExerciseMode}
-                        /> : 
-                        <div className='add-exercise-form-placeholder'></div>}
+                            activeFormState={activeFormState}
+                            setActiveFormState={setActiveFormState}
+                        /> }
                 </div>
                 <div>
                     {exerciseIndexItemEls}

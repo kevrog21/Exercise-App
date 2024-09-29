@@ -1084,14 +1084,6 @@ input {
   z-index: 2;
 }
 
-.add-exercise-form {
-  height: 3em;
-}
-
-.add-exercise-form-placeholder {
-  height: 3em;
-}
-
 .add-exercise-container.show {
   display: flex;
   justify-content: center;
@@ -1100,20 +1092,25 @@ input {
 }
 
 .exercise-modal-container {
-  width: 70vw;
-  height: 70vw;
+  width: 85vw;
 }
 
 #exercise-modal-id {
   background: black;
 }
 
+.adding-exercise {
+  color: #696969;
+  margin: .25em;
+  font-size: .9em;
+}
+
 .x-button-container {
   height: 1.5em;
   width: 1.5em;
-  margin: 0 0 0 auto;
+  margin: 0 .5em 0 auto;
   position: relative;
-  padding: 1.5em 1em 0 1em;
+  padding: .75em 1em 0 1em;
 }
 
 .x-1,
@@ -1121,12 +1118,12 @@ input {
   position: absolute;
   background: black;
   width: 50%;
-  height: 4%;
+  height: 2px;
 }
 
 .dark-mode-theme .x-1,
 .dark-mode-theme .x-2 {
-  background: white;
+  background: #969696;
 }
 
 .x-1 {
@@ -1139,12 +1136,97 @@ input {
 
 .modal-content-container {
   background: white;
-  margin: 2em 1em 1em 1em;
+  margin: 1em 1.5em;
   padding: 1em;
 }
 
 .dark-mode-theme .modal-content-container {
-  background: #141414;
+  background: #181818;
+  border: 1px solid #474747;
+}
+
+.add-exercise-input-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+.exercise-title-input {
+  border: none;
+  padding: .5em 0;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 0 0 .75em 0;
+  width: 100%;
+}
+
+.dark-mode-theme  .exercise-title-input {
+  background: #2c2c2c;
+  color: #cacaca;
+}
+
+.exercise-input-with-border {
+  margin: 1em 0;
+
+}
+
+.dark-mode-theme .exercise-input-with-border {
+  border-bottom: 1px solid #414141;
+}
+
+.exercise-input-label {
+  padding: 0 0 .25em 0;
+}
+
+.exercise-dropdown,
+.exercise-password {
+  background: none;
+  margin: 0 0 0 auto;
+  color: #6B6B6B;
+  border: none;
+}
+
+.exercise-dropdown * {
+  background: #414141;
+  color: white;
+}
+
+select option:checked {
+  background: black;
+}
+
+
+
+
+
+
+
+
+.exercise-index-submit-btn,
+.save-exercise-symbol {
+  background: none;
+  color: #C1A014;
+  border: none;
+  font-size: 1em;
+  letter-spacing: .04em;
+}
+
+.save-exercise-symbol-container {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0 .5em 0;
+}
+
+.save-exercise-symbol {
+  height: 1.25em;
+  width: 1.25em;
+  font-size: 1em;
+  font-weight: 400;
+  border: 1px solid #C1A014;
+  border-radius: 50%;
+  margin: 0;
+  padding: 0;
+  letter-spacing: normal;
 }
 
 .back-arrow-container {
