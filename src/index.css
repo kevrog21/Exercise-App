@@ -1080,6 +1080,13 @@ input {
   border: 1px solid white;
 }
 
+.all-exercises-container {
+  margin: 4em 0 0 0;
+}
+
+
+
+
 .add-exercise-container {
   z-index: 2;
 }
@@ -1195,7 +1202,20 @@ select option:checked {
   background: black;
 }
 
+.exercise-description-input,
+.exercise-password {
+  margin: 0 0 .5em auto;
+  padding: .35em;
+  border: none;
+  background: #2c2c2c;
+  color: #cacaca;
+  font-family: inherit;
+  width: 60%;
+}
 
+.has-selection {
+  color: #cacaca;
+}
 
 
 

@@ -55,7 +55,6 @@ export default function Rules() {
 
     const deactivateFormState = () => {
         setActiveFormState(false)
-        console.log('deactivating form state')
     }
 
     function disableBackgroundScroll() {
@@ -90,7 +89,7 @@ export default function Rules() {
                             setActiveFormState={setActiveFormState}
                         /> }
                 </div>
-                <div>
+                <div className='all-exercises-container'>
                     {exerciseIndexItemEls}
                 </div>
             </div>

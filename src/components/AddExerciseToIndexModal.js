@@ -13,6 +13,7 @@ export default function AddExerciseToIndexModal(props) {
         exerciseTitle: '',
         exerciseCategory: '',
         workoutType: '',
+        exerciseDescription: '',
         pword: '',
         honeyp: ''
     })
@@ -25,14 +26,14 @@ export default function AddExerciseToIndexModal(props) {
             [name]: value
         }))
     }
-      
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('add exerise formData here: ', formData)
-    }
 
     const handleModalInteraction = (e) => {
         setActiveFormState(true)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('add exerise formData here: ', formData)
     }
 
     return (
@@ -50,7 +51,7 @@ export default function AddExerciseToIndexModal(props) {
                     </div>
                     <div className='add-exercise-input-container exercise-input-with-border'>
                         <label htmlFor='exerciseCategory' className='exercise-input-label' >category:</label>
-                        <select className='exercise-dropdown' name='exerciseCategory' onChange={handleInputChange} value={formData.exerciseCategory}>
+                        <select className={`exercise-dropdown ${formData.exerciseCategory ? 'has-selection' : ''}`} name='exerciseCategory' onChange={handleInputChange} value={formData.exerciseCategory}>
                             <option value=''>please select...</option>
                             <option value='back'>back</option>
                             <option value='chest'>chest</option>
@@ -64,18 +65,22 @@ export default function AddExerciseToIndexModal(props) {
                     </div>
                     <div className='add-exercise-input-container exercise-input-with-border'>
                         <label htmlFor='workoutType' className='exercise-input-label' >workout type:</label>
-                        <select className='exercise-dropdown' name='workoutType' onChange={handleInputChange} value={formData.workoutType}>
-                            <option value='weights and reps'>weights and reps</option>
+                        <select className={`exercise-dropdown ${formData.workoutType ? 'has-selection' : ''}`} name='workoutType' onChange={handleInputChange} value={formData.workoutType}>
+                            <option value=''>please select...</option>  
+                            <option value='weights and reps'>weights & reps</option>
                             <option value='yoga'>yoga</option>
                             <option value='stretch'>stretch</option>
                         </select>
                     </div>
                     <div className='add-exercise-input-container exercise-input-with-border'>
+                        <label htmlFor='exerciseDescription' className='exercise-input-label' >description:</label>
+                        <textarea rows="3" type="text" className='exercise-description-input' name='exerciseDescription' value={formData.exerciseDescription} onChange={handleInputChange}
+                        placeholder='(optional)'></textarea>
+                    </div>
+                    <div className='add-exercise-input-container exercise-input-with-border'>
                         <label htmlFor='pword' className='exercise-input-label'>password:</label>
                         <input type='password' className='exercise-password' name='pword' value={formData.pword} onChange={handleInputChange}></input>
                     </div>
-                    
-                    
                 
                     <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleInputChange} tabIndex='-1' autoComplete="off"></input>
                     {/* <label htmlFor='pword' className='password-label'>password</label>
