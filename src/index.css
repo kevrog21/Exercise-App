@@ -279,7 +279,8 @@ footer {
 
 .nav-menu-container,
 .timer-container,
-.add-exercise-container {
+.add-exercise-container,
+.add-exercise-success-msg-container {
   color: black;
   position: fixed;
   top: 0;
@@ -1080,11 +1081,19 @@ input {
   border: 1px solid white;
 }
 
+.add-exercise-success-msg-container {
+  pointer-events: none;
+}
+
+.add-exercise-success-msg-container.show {
+  background: rgba(0, 0, 0, .92);
+}
+
 .add-exercise-success-msg {
   height: 2em;
-  color: green;
+  color: rgb(54, 184, 54);
   font-weight: bold;
-  margin: 2em 0;
+  margin: 30vh 0;
 }
 
 .all-exercises-container {
@@ -1107,6 +1116,7 @@ input {
 
 .exercise-modal-container {
   width: 85vw;
+  margin: 8vh 0 0 0;
 }
 
 #exercise-modal-id {

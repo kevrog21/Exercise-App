@@ -37,7 +37,7 @@ export default function Rules() {
         if (showSuccessMessage) {
             setTimeout(() => {
                 setShowSuccessMessage(false)
-            }, 4000)
+            }, 3000)
         }
     }, [showSuccessMessage])
 
@@ -92,7 +92,9 @@ export default function Rules() {
                     <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
                     <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
                 </div>
-                <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}</div>
+                <div className={`add-exercise-success-msg-container ${showSuccessMessage && 'show'}`}>
+                    <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}</div>
+                </div>
                 <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={activeFormState ? deactivateFormState : closeModal}>
                     {addExerciseMode && 
                         <AddExerciseToIndexModal
