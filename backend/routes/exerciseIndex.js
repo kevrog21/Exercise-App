@@ -16,10 +16,14 @@ router.route('/add').post(async (req, res) => {
     console.log('trying to add now')
     try{
         const exerciseTitle = req.body.exerciseTitle
+        const exerciseCategory = req.body.exerciseCategory
+        const workoutType = req.body.workoutType
         const exerciseDescription = req.body.exerciseDescription
     
         const exercise = new ExerciseIndex({
             exerciseTitle,
+            exerciseCategory,
+            workoutType,
             exerciseDescription
         })
     

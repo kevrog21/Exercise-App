@@ -1080,8 +1080,15 @@ input {
   border: 1px solid white;
 }
 
+.add-exercise-success-msg {
+  height: 2em;
+  color: green;
+  font-weight: bold;
+  margin: 2em 0;
+}
+
 .all-exercises-container {
-  margin: 4em 0 0 0;
+  margin: 2em 0 0 0;
 }
 
 
@@ -1139,6 +1146,13 @@ input {
 
 .x-2 {
   transform: rotate(-45deg);
+}
+
+.exercise-index-error {
+  color: red;
+  font-size: .75em;
+  line-height: 1em;
+  margin: 0;
 }
 
 .modal-content-container {

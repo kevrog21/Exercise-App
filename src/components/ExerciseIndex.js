@@ -10,6 +10,7 @@ export default function Rules() {
     const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
     const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
     const [activeFormState, setActiveFormState] = useState(false)
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
     const { theme } = useContext(ThemeContext)
 
@@ -33,13 +34,24 @@ export default function Rules() {
     }, [])
 
     useEffect(() => {
+        if (showSuccessMessage) {
+            setTimeout(() => {
+                setShowSuccessMessage(false)
+            }, 4000)
+        }
+    }, [showSuccessMessage])
+
+    useEffect(() => {
         if (allExeriseIndexData.length > 0) {
             console.log('index data: ', allExeriseIndexData)
 
             const exerciseIndexItems = allExeriseIndexData.map((exercise, index) => {
                 return (
                     <div key={index}>
-                        {exercise.exerciseTitle}
+                        {exercise.exerciseTitle}<br/>
+                        {exercise.exerciseCategory}<br/>
+                        {exercise.workoutType}<br/>
+                        {exercise.exerciseDescription}<br/>
                     </div>
                 )
             })
@@ -80,13 +92,16 @@ export default function Rules() {
                     <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
                     <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
                 </div>
+                <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}</div>
                 <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={activeFormState ? deactivateFormState : closeModal}>
                     {addExerciseMode && 
                         <AddExerciseToIndexModal
+                            retrieveExerciseData={retrieveExerciseData}
                             closeModal={closeModal}
                             setAddExerciseMode={setAddExerciseMode}
                             activeFormState={activeFormState}
                             setActiveFormState={setActiveFormState}
+                            setShowSuccessMessage={setShowSuccessMessage}
                         /> }
                 </div>
                 <div className='all-exercises-container'>

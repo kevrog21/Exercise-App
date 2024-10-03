@@ -3,7 +3,7 @@ import { ThemeContext } from './ThemeProvider'
 
 export default function AddExerciseToIndexModal(props) {
     
-    const { closeModal, setActiveFormState } = props
+    const { retrieveExerciseData, setAddExerciseMode, closeModal, setActiveFormState, setShowSuccessMessage } = props
 
     const { theme } = useContext(ThemeContext)
 
@@ -18,6 +18,8 @@ export default function AddExerciseToIndexModal(props) {
         honeyp: ''
     })
 
+    const [formErrors, setFormErrors] = useState([])
+
     const handleInputChange = (e) => {
         const { name, value } = e.target
         
@@ -31,9 +33,87 @@ export default function AddExerciseToIndexModal(props) {
         setActiveFormState(true)
     }
 
-    const handleSubmit = (e) => {
+    const validateFormData = () => {
+        const newErrors = []
+
+        if (!formData.exerciseTitle) {
+            newErrors.push(`Please add a title for the exercise`)
+        }
+        if (!formData.exerciseCategory) {
+            newErrors.push(`Please select a category`)
+        }
+        if (!formData.workoutType) {
+            newErrors.push(`Please select a workout type`)
+        }
+
+        setFormErrors(newErrors)
+        return newErrors.length === 0
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log('add exerise formData here: ', formData)
+
+        if (formData.honeyp === '') {
+            if (validateFormData()) {
+                try {
+                    const response = await fetch('https://dailyfitchallenge.com/workout-histories/check-passwords', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            pword: formData.pword,
+                            honeyp: formData.honeyp 
+                        })
+                    })
+        
+                    if (!response.ok) {
+                        throw new Error('Failed to check password.')
+                    }
+        
+                    const { valid } = await response.json()
+
+                    if (valid) {
+
+                        console.log('about to send post request')
+    
+                        const postResponse = await fetch(`https://dailyfitchallenge.com/exercise-index-data/add`, {
+                            method: "POST",
+                            body: JSON.stringify(formData),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
+    
+                        if (!postResponse.ok) {
+                            throw new Error('Failed to post new exercise to exercise index')
+                        }
+
+                        const postData = await postResponse.json()
+                        console.log('post data', postData)
+                        retrieveExerciseData()
+                        setFormData({
+                            exerciseTitle: '',
+                            exerciseCategory: '',
+                            workoutType: '',
+                            exerciseDescription: '',
+                            pword: '',
+                            honeyp: ''
+                        })
+                        setShowSuccessMessage(true)
+                        setAddExerciseMode(false)
+                    } else {
+                        setFormErrors((prevErrors) => {
+                            return [...prevErrors, 'Incorrect Password']
+                        })
+                    }
+ 
+                } catch (error) {
+                    console.error('error: ', error.message)
+                } 
+            }
+        }
     }
 
     return (
@@ -43,6 +123,7 @@ export default function AddExerciseToIndexModal(props) {
                 <div className="x-1"  onClick={closeModal}></div>
                 <div className="x-2"  onClick={closeModal}></div>
             </div>
+            <div className='exercise-index-error'>{formErrors[0]}</div>
             <div className='modal-content-container' onClick={handleModalInteraction}>
                 <form onSubmit={handleSubmit} className='add-exercise-form'>
                     <div className='add-exercise-input-container'>
