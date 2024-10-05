@@ -1049,8 +1049,10 @@ input {
 
 .exercise-index-buttons {
   display: flex;
-  width: 80%;
-  margin: 0 auto;
+  width: 82%;
+  padding: calc(4.5rem + 10vw) 8% 1.5em 10%;
+  position: sticky;
+  top: 0;
 }
 
 .exercise-index-buttons .back-arrow-container {
@@ -1067,7 +1069,7 @@ input {
 }
 
 .add-exercise-btn.dark-mode-theme {
-  border-bottom: 1px solid rgb(192, 192, 192);
+  border-bottom: 1px solid rgb(184, 181, 181);
 }
 
 .add-exercise-symbol {
@@ -1077,7 +1079,7 @@ input {
 }
 
 .add-exercise-symbol.dark-mode-theme {
-  fill: rgb(192, 192, 192);
+  fill: rgb(184, 181, 181);
 }
 
 .add-exercise-success-msg-container {
@@ -1099,12 +1101,75 @@ input {
   margin: 2em 0 0 0;
 }
 
-.exercise-category-group-wrapper {
-  margin: 2em;
-  background: red;
+.select-search-container {
+  width: 85%;
+  margin: 0 auto;
+  display: flex;
 }
 
+.search-icon {
+  width: 1.5em;
+  margin: 0 .25em 0 auto;
+}
 
+.search-icon.dark-mode-theme {
+  fill: rgb(155, 155, 155);
+  background: none;
+}
+
+.exercise-category-group-wrapper {
+  margin: 2em auto;
+  width: 76%;
+  background: #1b1b1b;
+  border: 2px solid black;
+  color:  rgb(204, 204, 204);
+  text-align: left;
+  padding: .5em 1em 1em 1em;
+  box-shadow: -4px 4px #0c0c0c;
+}
+
+.category-title {
+  font-size: 1.5em;
+  display: inline-block;
+  border-bottom: 2px solid;
+  margin: 0 0 .25em 0;
+}
+
+.exercise-selection-container {
+  background: #0e0e0e;
+  border: 2px solid black;
+  padding: 1em;
+  margin: .5em 0;
+  display: flex;
+}
+
+.select-exercise-circle {
+  height: .55em;
+  width: .55em;
+  background: #252525;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: auto .5em auto 0;
+}
+
+.exercise-title {
+  color: rgb(129, 129, 129);
+}
+
+.exerise-elipses-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 auto;
+}
+
+.exerise-elipses-container * {
+  height: .3em;
+  width: .3em;
+  background: #252525;
+  border: 2px solid black;
+  border-radius: 50%;
+  margin: 0 0 0 0;
+}
 
 
 .add-exercise-container {
@@ -1115,7 +1180,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, .45);
+  background-color: rgba(68, 68, 68, 0.85);
 }
 
 .exercise-modal-container {
@@ -1245,9 +1310,6 @@ select option:checked {
 .has-selection {
   color: #cacaca;
 }
-
-
-
 
 
 

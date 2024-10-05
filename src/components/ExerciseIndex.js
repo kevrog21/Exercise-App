@@ -3,6 +3,7 @@ import axios from 'axios'
 import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
 import { ReactComponent as AddIcon } from '../assets/add_button.svg'
+import { ReactComponent as SearchIcon } from '../assets/search_icon.svg'
 import AddExerciseToIndexModal from './AddExerciseToIndexModal'
 
 export default function Rules() {
@@ -77,23 +78,23 @@ export default function Rules() {
         }
     }, [showSuccessMessage])
 
-    useEffect(() => {
-        if (allExeriseIndexData.length > 0) {
-            console.log('index data: ', allExeriseIndexData)
+    // useEffect(() => {
+    //     if (allExeriseIndexData.length > 0) {
+    //         console.log('index data: ', allExeriseIndexData)
 
-            const exerciseIndexItems = allExeriseIndexData.map((exercise, index) => {
-                return (
-                    <div key={index}>
-                        {exercise.exerciseTitle}<br/>
-                        {exercise.exerciseCategory}<br/>
-                        {exercise.workoutType}<br/>
-                        {exercise.exerciseDescription}<br/>
-                    </div>
-                )
-            })
-            setExerciseIndexItemEls(exerciseIndexItems)
-        }
-    }, [allExeriseIndexData])
+    //         const exerciseIndexItems = allExeriseIndexData.map((exercise, index) => {
+    //             return (
+    //                 <div key={index}>
+    //                     {exercise.exerciseTitle}<br/>
+    //                     {exercise.exerciseCategory}<br/>
+    //                     {exercise.workoutType}<br/>
+    //                     {exercise.exerciseDescription}<br/>
+    //                 </div>
+    //             )
+    //         })
+    //         setExerciseIndexItemEls(exerciseIndexItems)
+    //     }
+    // }, [allExeriseIndexData])
 
     const closeModal = (e) => {
         if (e.target === e.currentTarget) {
@@ -122,10 +123,10 @@ export default function Rules() {
 
     return (
         <main>
-            <div className='page-margin-top'>
-                <div className='exercise-index-buttons'>
+            <div className=''>
+                <div className={`exercise-index-buttons ${themeClass}`}>
                     <BackButton />
-                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercises</button>
+                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
                     <AddIcon 
                         className={`add-exercise-symbol ${themeClass}`}
                         onClick={handleAddExerciseClick} 
@@ -146,21 +147,30 @@ export default function Rules() {
                         /> }
                 </div>
 
-                <div>
+                <div className='select-search-container'>
                     <select value={selectedCategory} onChange={handleCategorySelectChange}>
                         <option value='all'>All</option>
                         {uniqueCategories.map(category => (
                             <option key={category} value={category}>{category}</option>
                         ))}
                     </select>
+                    <SearchIcon 
+                        className={`search-icon ${themeClass}`}
+                    />
                 </div>
                 <div className='exercise-elements-container'>
                     {filteredExercises.map(group => (
                         <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
-                            <div>{group.exerciseCategory}</div>
+                            <div className='category-title'>{group.exerciseCategory}</div>
                             {group.exercises.map(exercise => (
-                                <div key={exercise.exerciseTitle}>
-                                    <div>{exercise.exerciseTitle}</div>
+                                <div key={exercise.exerciseTitle} className='exercise-selection-container'>
+                                    <div className='select-exercise-circle'></div>
+                                    <div className='exercise-title'>{exercise.exerciseTitle}</div>
+                                    <div className='exerise-elipses-container'>
+                                        <div className='circle-one'></div>
+                                        <div className='circle-two'></div>
+                                        <div className='circle-three'></div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
