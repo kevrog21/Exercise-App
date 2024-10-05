@@ -1071,14 +1071,13 @@ input {
 }
 
 .add-exercise-symbol {
-  width: 2em;
-  height: 2em;
-  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
   margin: 0 0 0 .5em;
 }
 
 .add-exercise-symbol.dark-mode-theme {
-  border: 1px solid white;
+  fill: rgb(192, 192, 192);
 }
 
 .add-exercise-success-msg-container {
@@ -1096,8 +1095,13 @@ input {
   margin: 30vh 0;
 }
 
-.all-exercises-container {
+.exercise-elements-container {
   margin: 2em 0 0 0;
+}
+
+.exercise-category-group-wrapper {
+  margin: 2em;
+  background: red;
 }
 
 
@@ -1116,7 +1120,8 @@ input {
 
 .exercise-modal-container {
   width: 85vw;
-  margin: 8vh 0 0 0;
+  margin: 2vh 0 0 0;
+  box-shadow: black 0 0 .5em;
 }
 
 #exercise-modal-id {
@@ -1264,13 +1269,11 @@ select option:checked {
 .save-exercise-symbol {
   height: 1.25em;
   width: 1.25em;
-  font-size: 1em;
-  font-weight: 400;
-  border: 1px solid #C1A014;
-  border-radius: 50%;
-  margin: 0;
-  padding: 0;
-  letter-spacing: normal;
+}
+
+.save-exercise-symbol.dark-mode-theme {
+  fill: #C1A014;
+  background: none;
 }
 
 .back-arrow-container {

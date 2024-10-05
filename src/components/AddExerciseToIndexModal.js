@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { ThemeContext } from './ThemeProvider'
+import { ReactComponent as AddIcon } from '../assets/add_button.svg'
 
 export default function AddExerciseToIndexModal(props) {
     
@@ -164,11 +165,11 @@ export default function AddExerciseToIndexModal(props) {
                     </div>
                 
                     <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleInputChange} tabIndex='-1' autoComplete="off"></input>
-                    {/* <label htmlFor='pword' className='password-label'>password</label>
-                    <input type='password' name='pword' value={formData.pword} onChange={handleInputChange}></input>
-                    <div id='incorrect-password-message' className='hide'>incorrect password</div> */}
                     <div className='save-exercise-symbol-container'>
-                        <button type="submit" className='save-exercise-symbol'>+</button>
+                        <AddIcon 
+                            type="submit"
+                            className={`save-exercise-symbol ${themeClass}`}
+                        />
                         <button type="submit" className="exercise-index-submit-btn" id="submit" >Save Exercise</button>
                     </div>
                 </form>

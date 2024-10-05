@@ -2,15 +2,51 @@ import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
+import { ReactComponent as AddIcon } from '../assets/add_button.svg'
 import AddExerciseToIndexModal from './AddExerciseToIndexModal'
 
 export default function Rules() {
 
     const [addExerciseMode, setAddExerciseMode] = useState(false)
-    const [allExeriseIndexData, setAllExerciseIndexData] = useState({})
+    const [allExeriseIndexData, setAllExerciseIndexData] = useState([])
     const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
     const [activeFormState, setActiveFormState] = useState(false)
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
+    const [selectedCategory, setSelectedCategory] = useState('all')
+    const [filteredExercises, setFilteredExercises] = useState([])
+    const [uniqueCategories, setUniqueCategories] = useState([])
+
+    useEffect(() => {
+        const categories = [
+            ...new Set(allExeriseIndexData.map(exercise => exercise.exerciseCategory))
+        ]
+        setUniqueCategories(categories)
+    }, [allExeriseIndexData])
+
+    useEffect(() => {
+        if (selectedCategory === 'all') {
+            const groupedExercises = uniqueCategories.map(exerciseCategory => ({
+                exerciseCategory,
+                exercises: allExeriseIndexData.filter(
+                    exercise => exercise.exerciseCategory === exerciseCategory
+                )
+            }))
+            setFilteredExercises(groupedExercises)
+        } else {
+            const exercises = allExeriseIndexData.filter(
+                exercise => exercise.exerciseCategory === selectedCategory
+            )
+            setFilteredExercises([{
+                exerciseCategory: selectedCategory, 
+                exercises
+            }])
+        }
+    }, [selectedCategory, allExeriseIndexData, uniqueCategories])
+
+    function handleCategorySelectChange(e) {
+        setSelectedCategory(e.target.value)
+    }
 
     const { theme } = useContext(ThemeContext)
 
@@ -89,8 +125,11 @@ export default function Rules() {
             <div className='page-margin-top'>
                 <div className='exercise-index-buttons'>
                     <BackButton />
-                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercise</button>
-                    <button className={`add-exercise-symbol ${themeClass}`} onClick={handleAddExerciseClick}>+</button>
+                    <button className={`add-exercise-btn ${themeClass}`} onClick={handleAddExerciseClick}>add exercises</button>
+                    <AddIcon 
+                        className={`add-exercise-symbol ${themeClass}`}
+                        onClick={handleAddExerciseClick} 
+                    />
                 </div>
                 <div className={`add-exercise-success-msg-container ${showSuccessMessage && 'show'}`}>
                     <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}</div>
@@ -106,8 +145,26 @@ export default function Rules() {
                             setShowSuccessMessage={setShowSuccessMessage}
                         /> }
                 </div>
-                <div className='all-exercises-container'>
-                    {exerciseIndexItemEls}
+
+                <div>
+                    <select value={selectedCategory} onChange={handleCategorySelectChange}>
+                        <option value='all'>All</option>
+                        {uniqueCategories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className='exercise-elements-container'>
+                    {filteredExercises.map(group => (
+                        <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
+                            <div>{group.exerciseCategory}</div>
+                            {group.exercises.map(exercise => (
+                                <div key={exercise.exerciseTitle}>
+                                    <div>{exercise.exerciseTitle}</div>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
         </main>
