@@ -16,6 +16,7 @@ import UserSettings from './components/UserSetings'
 import Goals from './components/UserGoals'
 import Rules from './components/Rules'
 import ExerciseIndex from './components/ExerciseIndex'
+import ExerciseDetailPage from './components/ExerciseDetailPage';
 
 
 function App() {
@@ -186,6 +187,9 @@ function App() {
           } />
           <Route exact path="/exercise-index" element={
             <ExerciseIndex />
+          } />
+          <Route exact path="/exercise-index/:id" element={
+            <ExerciseDetailPage />
           } />
         </Routes>
         <Footer />

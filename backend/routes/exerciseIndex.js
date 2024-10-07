@@ -42,4 +42,10 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err))
 })
 
+router.route('/:id').get((req, res) => {
+    ExerciseIndex.findById(req.params.id)
+        .then(exercise => res.json(exercise))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
 export default router

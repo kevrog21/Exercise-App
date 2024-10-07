@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
@@ -163,7 +164,7 @@ export default function Rules() {
                         <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
                             <div className='category-title'>{group.exerciseCategory}</div>
                             {group.exercises.map(exercise => (
-                                <div key={exercise.exerciseTitle} className='exercise-selection-container'>
+                                <Link to={`${exercise._id}`} key={exercise.exerciseTitle} className='exercise-selection-container'>
                                     <div className='select-exercise-circle'></div>
                                     <div className='exercise-title'>{exercise.exerciseTitle}</div>
                                     <div className='exerise-elipses-container'>
@@ -171,7 +172,7 @@ export default function Rules() {
                                         <div className='circle-two'></div>
                                         <div className='circle-three'></div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     ))}

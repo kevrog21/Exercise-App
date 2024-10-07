@@ -1103,7 +1103,7 @@ input {
 
 .select-search-container {
   width: 85%;
-  margin: 0 auto;
+  margin: .5em auto 0 auto;
   display: flex;
 }
 
@@ -1136,6 +1136,7 @@ input {
 }
 
 .exercise-selection-container {
+  text-decoration: none;
   background: #0e0e0e;
   border: 2px solid black;
   padding: 1em;
@@ -1154,6 +1155,7 @@ input {
 
 .exercise-title {
   color: rgb(129, 129, 129);
+  text-decoration: none;
 }
 
 .exerise-elipses-container {
