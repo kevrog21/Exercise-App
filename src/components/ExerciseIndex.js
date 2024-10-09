@@ -6,6 +6,7 @@ import { ThemeContext } from './ThemeProvider'
 import { ReactComponent as AddIcon } from '../assets/add_button.svg'
 import { ReactComponent as SearchIcon } from '../assets/search_icon.svg'
 import AddExerciseToIndexModal from './AddExerciseToIndexModal'
+import CategorySelect from './CategorySelect'
 
 export default function Rules() {
 
@@ -79,24 +80,6 @@ export default function Rules() {
         }
     }, [showSuccessMessage])
 
-    // useEffect(() => {
-    //     if (allExeriseIndexData.length > 0) {
-    //         console.log('index data: ', allExeriseIndexData)
-
-    //         const exerciseIndexItems = allExeriseIndexData.map((exercise, index) => {
-    //             return (
-    //                 <div key={index}>
-    //                     {exercise.exerciseTitle}<br/>
-    //                     {exercise.exerciseCategory}<br/>
-    //                     {exercise.workoutType}<br/>
-    //                     {exercise.exerciseDescription}<br/>
-    //                 </div>
-    //             )
-    //         })
-    //         setExerciseIndexItemEls(exerciseIndexItems)
-    //     }
-    // }, [allExeriseIndexData])
-
     const closeModal = (e) => {
         if (e.target === e.currentTarget) {
             setAddExerciseMode(false)
@@ -148,13 +131,14 @@ export default function Rules() {
                         /> }
                 </div>
 
-                <div className='select-search-container'>
-                    <select value={selectedCategory} onChange={handleCategorySelectChange}>
-                        <option value='all'>All</option>
-                        {uniqueCategories.map(category => (
-                            <option key={category} value={category}>{category}</option>
-                        ))}
-                    </select>
+                <div className={`select-search-container ${theme}-theme`}>
+                    <CategorySelect 
+                        uniqueCategories={uniqueCategories}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                        handleCategorySelectChange={handleCategorySelectChange}
+                        theme={theme}
+                    />
                     <SearchIcon 
                         className={`search-icon ${themeClass}`}
                     />

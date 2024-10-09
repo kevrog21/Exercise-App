@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import BackButton from './BackButton'
 
 export default function ExerciseDetailPage() {
 
@@ -7,7 +8,8 @@ export default function ExerciseDetailPage() {
     return (
         <main>
             <div className="page-margin-top">
-                Detail for exercise {id}
+                <BackButton />
+                <div>Detail for exercise {id}</div>
             </div>
         </main>
     )

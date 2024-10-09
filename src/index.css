@@ -1050,9 +1050,11 @@ input {
 .exercise-index-buttons {
   display: flex;
   width: 82%;
-  padding: calc(4.5rem + 10vw) 8% 1.5em 10%;
+  padding: calc(3.5rem + 10vw) 8% .25em 10%;
+  margin: 1rem 0 0 0;
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .exercise-index-buttons .back-arrow-container {
@@ -1098,14 +1100,77 @@ input {
 }
 
 .exercise-elements-container {
-  margin: 2em 0 0 0;
+  margin: 0 0 0 0;
 }
 
 .select-search-container {
   width: 85%;
-  margin: .5em auto 0 auto;
+  margin: .75em auto 0 auto;
   display: flex;
+  padding: 0 7.5% .75em 7.5%;
+  background: orange;
+  position: sticky;
+  top: calc(4.5rem + 10vw + .75em);
 }
+
+.category-button-wrapper {
+  position: relative;
+}
+
+.current-category-display {
+  display: flex;
+  background: red;
+  padding: .25em 1em;
+  justify-content: center;
+  color: rgb(218, 218, 218);
+  min-width: 4em;
+}
+
+.current-category-display.dark-mode-theme {
+  background: #525252;
+  border: 2px solid black;
+  box-shadow: -2px 2px #0c0c0c;
+}
+
+.filter-text {
+  display: inline-block;
+  margin: 0 auto 0 0;
+}
+
+.filter-icon {
+  display: inline-block;
+  height: .75em;
+  margin: auto 0;
+}
+
+.filter-icon.dark-mode-theme {
+  fill: rgb(218, 218, 218);
+  background: none;
+}
+
+.option-select-container {
+  background: rgb(134, 134, 134);
+  position: absolute;
+  width: 100%;
+  text-align: left;
+  padding: .25em 0;
+}
+
+.option-select-container * {
+  padding: .25em .5em;
+}
+
+.option-select-container *:hover {
+  background: rgb(63, 63, 63);
+}
+
+.option-select-container *.selected {
+  background: black;
+}
+
+
+
+
 
 .search-icon {
   width: 1.5em;
@@ -1120,9 +1185,9 @@ input {
 .exercise-category-group-wrapper {
   margin: 2em auto;
   width: 76%;
-  background: #1b1b1b;
+  background: #1c1c1c;
   border: 2px solid black;
-  color:  rgb(204, 204, 204);
+  color:  rgb(218, 218, 218);
   text-align: left;
   padding: .5em 1em 1em 1em;
   box-shadow: -4px 4px #0c0c0c;
@@ -1137,7 +1202,7 @@ input {
 
 .exercise-selection-container {
   text-decoration: none;
-  background: #0e0e0e;
+  background: #0c0c0c;
   border: 2px solid black;
   padding: 1em;
   margin: .5em 0;
@@ -1154,7 +1219,7 @@ input {
 }
 
 .exercise-title {
-  color: rgb(129, 129, 129);
+  color: rgb(155, 155, 155);
   text-decoration: none;
 }
 
