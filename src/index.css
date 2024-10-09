@@ -1099,13 +1099,13 @@ input {
   margin: 30vh 0;
 }
 
-.exercise-elements-container {
-  margin: 0 0 0 0;
+.exercise-elements-container > :first-child {
+  margin-top: .5em;
 }
 
 .select-search-container {
   width: 85%;
-  margin: .75em auto 0 auto;
+  margin: 2.5em auto 0 auto;
   display: flex;
   padding: 0 7.5% .75em 7.5%;
   background: orange;
@@ -1183,7 +1183,7 @@ input {
 }
 
 .exercise-category-group-wrapper {
-  margin: 2em auto;
+  margin: 1.5em auto;
   width: 76%;
   background: #1c1c1c;
   border: 2px solid black;

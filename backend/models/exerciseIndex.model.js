@@ -16,6 +16,11 @@ const exerciseIndexSchema = new mongoose.Schema({
     },
     exerciseDescription: {
         type: String, 
+        required: false,
+    },
+    exerciseRating: { 
+        type: Number, 
+        required: false,
     }
 }, {
     timestamps: true,

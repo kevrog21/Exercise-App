@@ -11,6 +11,7 @@ function Homescreen(props) {
 
     useEffect(() => {
         retrieveData()
+        localStorage.removeItem('selectedCategory')
         console.log('mostRecentCompletedChallengeData', mostRecentCompletedChallengeData)
     }, [])
     

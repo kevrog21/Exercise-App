@@ -11,7 +11,11 @@ export default function BackButton() {
     const themeClass = `${theme}-theme`
 
     const handleBackButtonClick = () => {
-        navigate('/')
+        if (window.history.length > 1) {
+            navigate(-1)
+        } else {
+            navigate('/')
+        }
     }
 
     return (

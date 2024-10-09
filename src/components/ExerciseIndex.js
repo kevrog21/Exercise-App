@@ -47,10 +47,6 @@ export default function Rules() {
         }
     }, [selectedCategory, allExeriseIndexData, uniqueCategories])
 
-    function handleCategorySelectChange(e) {
-        setSelectedCategory(e.target.value)
-    }
-
     const { theme } = useContext(ThemeContext)
 
     const themeClass = `${theme}-theme`
@@ -70,6 +66,11 @@ export default function Rules() {
 
     useEffect(() => {
         retrieveExerciseData()
+        console.log(localStorage)
+        const savedCategory = localStorage.getItem('selectedCategory')
+        if (savedCategory) {
+            setSelectedCategory(savedCategory)
+        }
     }, [])
 
     useEffect(() => {
@@ -136,7 +137,6 @@ export default function Rules() {
                         uniqueCategories={uniqueCategories}
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
-                        handleCategorySelectChange={handleCategorySelectChange}
                         theme={theme}
                     />
                     <SearchIcon 

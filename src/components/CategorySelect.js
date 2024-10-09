@@ -13,6 +13,7 @@ export default function CategorySelect(props) {
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category)
+        localStorage.setItem('selectedCategory', category)
         window.scrollTo(0, 0)
         setIsOpen(false)
     }
