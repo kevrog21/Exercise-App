@@ -18,6 +18,10 @@ const exerciseIndexSchema = new mongoose.Schema({
         type: String, 
         required: false,
     },
+    tips: {
+        type: String, 
+        required: false,
+    },
     exerciseRating: { 
         type: Number, 
         required: false,

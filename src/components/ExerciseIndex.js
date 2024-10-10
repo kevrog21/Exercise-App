@@ -20,6 +20,8 @@ export default function Rules() {
     const [filteredExercises, setFilteredExercises] = useState([])
     const [uniqueCategories, setUniqueCategories] = useState([])
 
+    window.scrollTo(0, 0)
+
     useEffect(() => {
         const categories = [
             ...new Set(allExeriseIndexData.map(exercise => exercise.exerciseCategory))
@@ -56,17 +58,25 @@ export default function Rules() {
     }
 
     const retrieveExerciseData = async () => {
+        console.log('making request to get exercise index')
         try {
             const allExerciseIndexDataResponse = await axios.get(`https://dailyfitchallenge.com/exercise-index-data`)
             setAllExerciseIndexData(allExerciseIndexDataResponse.data)
+            localStorage.setItem('allExerciseIndexLocalStorage', JSON.stringify(allExerciseIndexDataResponse.data))
         } catch (error) {
           console.error('Error: ', error)
       }
     }
 
     useEffect(() => {
-        retrieveExerciseData()
-        console.log(localStorage)
+        const localStorageExerciseIndexData = localStorage.getItem('allExerciseIndexLocalStorage')
+        const parsedExerciseIndexData = localStorageExerciseIndexData ? JSON.parse(localStorageExerciseIndexData) : null
+        if (!parsedExerciseIndexData) {
+            retrieveExerciseData()
+        } else {
+            setAllExerciseIndexData(parsedExerciseIndexData)
+        }
+        console.log('current storage', parsedExerciseIndexData)
         const savedCategory = localStorage.getItem('selectedCategory')
         if (savedCategory) {
             setSelectedCategory(savedCategory)
@@ -148,7 +158,11 @@ export default function Rules() {
                         <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
                             <div className='category-title'>{group.exerciseCategory}</div>
                             {group.exercises.map(exercise => (
-                                <Link to={`${exercise._id}`} key={exercise.exerciseTitle} className='exercise-selection-container'>
+                                <Link to={`${exercise._id}`} state={
+                                    {
+                                        allExeriseIndexData: allExeriseIndexData
+                                    }
+                                } key={exercise.exerciseTitle} className='exercise-selection-container'>
                                     <div className='select-exercise-circle'></div>
                                     <div className='exercise-title'>{exercise.exerciseTitle}</div>
                                     <div className='exerise-elipses-container'>

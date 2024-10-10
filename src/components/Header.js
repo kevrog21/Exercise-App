@@ -42,7 +42,6 @@ export default function Header() {
 
     function clearNoScrollFromBody() {
         document.querySelector('body').classList.remove('no-scroll')
-        console.log('running no scroll')
     }
 
     const handleMenuToggle = () => {
