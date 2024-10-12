@@ -15,12 +15,11 @@ export default function Rules() {
     const [exerciseIndexItemEls, setExerciseIndexItemEls] = useState()
     const [activeFormState, setActiveFormState] = useState(false)
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+    const [showSuccessfulDeletion, setShowSuccessfulDeletion] = useState(false)
 
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [filteredExercises, setFilteredExercises] = useState([])
     const [uniqueCategories, setUniqueCategories] = useState([])
-
-    window.scrollTo(0, 0)
 
     useEffect(() => {
         const categories = [
@@ -69,10 +68,13 @@ export default function Rules() {
     }
 
     useEffect(() => {
+        const shouldRefresh = localStorage.getItem('refreshIndexData')
         const localStorageExerciseIndexData = localStorage.getItem('allExerciseIndexLocalStorage')
         const parsedExerciseIndexData = localStorageExerciseIndexData ? JSON.parse(localStorageExerciseIndexData) : null
-        if (!parsedExerciseIndexData) {
+        if (!parsedExerciseIndexData || shouldRefresh) {
             retrieveExerciseData()
+            localStorage.removeItem('refreshIndexData')
+            setShowSuccessfulDeletion(true)
         } else {
             setAllExerciseIndexData(parsedExerciseIndexData)
         }
@@ -90,6 +92,14 @@ export default function Rules() {
             }, 3000)
         }
     }, [showSuccessMessage])
+
+    useEffect(() => {
+        if (showSuccessfulDeletion) {
+            setTimeout(() => {
+                setShowSuccessfulDeletion(false)
+            }, 3000)
+        }
+    }, [showSuccessfulDeletion])
 
     const closeModal = (e) => {
         if (e.target === e.currentTarget) {
@@ -127,8 +137,8 @@ export default function Rules() {
                         onClick={handleAddExerciseClick} 
                     />
                 </div>
-                <div className={`add-exercise-success-msg-container ${showSuccessMessage && 'show'}`}>
-                    <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}</div>
+                <div className={`add-exercise-success-msg-container ${showSuccessMessage && 'show' || showSuccessfulDeletion && 'show'}`}>
+                    <div className='add-exercise-success-msg'>{showSuccessMessage && 'Successfully Added Exercise!'}{showSuccessfulDeletion && 'Exercise Deleted!'}</div>
                 </div>
                 <div className={`add-exercise-container ${addExerciseMode && 'show'}`} style={addExerciseMode ? {} : {pointerEvents: 'none'}} onClick={activeFormState ? deactivateFormState : closeModal}>
                     {addExerciseMode && 

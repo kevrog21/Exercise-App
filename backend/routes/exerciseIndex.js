@@ -13,7 +13,6 @@ router.use(express.json())
 router.use(cors())
 
 router.route('/add').post(async (req, res) => {
-    console.log('trying to add now')
     try{
         const exerciseTitle = req.body.exerciseTitle
         const exerciseCategory = req.body.exerciseCategory
@@ -45,6 +44,12 @@ router.route('/').get((req, res) => {
 router.route('/:id').get((req, res) => {
     ExerciseIndex.findById(req.params.id)
         .then(exercise => res.json(exercise))
+        .catch(err => res.status(400).json('Error: ' + err))
+})
+
+router.route('/:id').delete((req, res) => {
+    ExerciseIndex.findByIdAndDelete(req.params.id)
+        .then(res.json('Exercise Deleted.'))
         .catch(err => res.status(400).json('Error: ' + err))
 })
 

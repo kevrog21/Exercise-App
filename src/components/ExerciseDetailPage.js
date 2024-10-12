@@ -1,7 +1,8 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { ThemeContext } from './ThemeProvider'
 import BackButton from './BackButton'
+import DeleteExerciseModal from './DeleteExerciseModal'
 import { ReactComponent as EditIcon } from '../assets/edit_icon.svg'
 import { ReactComponent as TrashIcon } from '../assets/trash_icon.svg'
 
@@ -13,12 +14,24 @@ export default function ExerciseDetailPage() {
     const { theme } = useContext(ThemeContext)
     const themeClass = `${theme}-theme`
 
+    const [deleteExerciseMode, setDeleteExerciseMode] = useState(false)
+
     console.log('allExerciseData: ', allExerciseData)
 
     const currentExercise = allExerciseData?.find(exercise => exercise._id === id)
 
     console.log('currentExercise', currentExercise)
 
+    const handleDeleteIconClick = () => {
+        setDeleteExerciseMode(true)
+    }
+
+    const closeDeleteModal = (e) => {
+        if (e.target === e.currentTarget) {
+            setDeleteExerciseMode(false)
+        }
+    }
+ 
     if (!currentExercise) {
         return (
             <main>
@@ -37,13 +50,26 @@ export default function ExerciseDetailPage() {
                     <BackButton />
                     <EditIcon 
                         className={`edit-icon-symbol ${themeClass}`}
-                        onClick={() => {}} 
+                        
                     />
                     <TrashIcon 
                         className={`trash-symbol ${themeClass}`}
-                        onClick={() => {}} 
+                        onClick={handleDeleteIconClick} 
                     />
                 </div>
+                <div className={`add-exercise-container ${deleteExerciseMode && 'show'}`} style={deleteExerciseMode ? {} : {pointerEvents: 'none'}} 
+                onClick={closeDeleteModal}>
+                    { deleteExerciseMode &&
+                       <DeleteExerciseModal 
+                            closeDeleteModal={closeDeleteModal}
+                            setDeleteExerciseMode={setDeleteExerciseMode}
+                            exerciseName={currentExercise.exerciseTitle}
+                            currentID={id}
+                       /> 
+                    }
+                </div>
+                    
+                
                 <div className='exercise-detail-body-container'>
                     <div className='detail-container'>
                         <h2 className='exercise-overview-title'>{currentExercise.exerciseTitle}</h2>

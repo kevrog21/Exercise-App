@@ -1250,13 +1250,14 @@ input {
   background-color: rgba(68, 68, 68, 0.85);
 }
 
-.exercise-modal-container {
+.exercise-modal-container,
+.delete-modal-container {
   width: 85vw;
   margin: 2vh 0 0 0;
   box-shadow: black 0 0 .5em;
 }
 
-#exercise-modal-id {
+.exercise-modal-container.dark-mode-theme {
   background: black;
 }
 
@@ -1347,7 +1348,8 @@ input {
 }
 
 .exercise-dropdown,
-.exercise-password {
+.exercise-password,
+.delete-password {
   background: none;
   margin: 0 0 0 auto;
   color: #6B6B6B;
@@ -1364,7 +1366,8 @@ select option:checked {
 }
 
 .exercise-description-input,
-.exercise-password {
+.exercise-password,
+.delete-password {
   margin: 0 0 .5em auto;
   padding: .35em;
   border: none;
@@ -1377,8 +1380,6 @@ select option:checked {
 .has-selection {
   color: #cacaca;
 }
-
-
 
 .exercise-index-submit-btn,
 .save-exercise-symbol {
@@ -1463,11 +1464,40 @@ select option:checked {
   padding: .25em 0 0 15%;
 }
 
-
 .sign-up-text {
   color: rgb(112, 112, 112);
 }
 
+.delete-modal-container {
+  padding: 1em 0;
+}
+
+.delete-modal-container.dark-mode-theme {
+  background: black;
+}
+
+.delete-name {
+  margin: .25em 0 0 0;
+}
+
+.delete-pword-container {
+  margin: 3em 0 0 0;
+}
+
+.delete-input-label {
+  margin: 0 .5em 0 0;
+  color: rgb(146, 146, 146);
+}
+
+.delete-submit-btn {
+  color: red;
+  background: none;
+  border: 2px solid red;
+  padding: .5em 3em;
+  margin: 1em 0 1em 0;
+  letter-spacing: .08em;
+  border-radius: 2em;
+}
 
 .back-arrow-container {
   height: 1.5em;

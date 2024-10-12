@@ -118,7 +118,7 @@ export default function AddExerciseToIndexModal(props) {
     }
 
     return (
-        <div className={`exercise-modal-container ${themeClass}`} id='exercise-modal-id'>
+        <div className={`exercise-modal-container ${themeClass}`}>
             <div className='adding-exercise'>adding exercise...</div>
             <div className="x-button-container" onClick={closeModal}>
                 <div className="x-1"  onClick={closeModal}></div>
