@@ -15,6 +15,7 @@ export default function AddExerciseToIndexModal(props) {
         exerciseCategory: '',
         workoutType: '',
         exerciseDescription: '',
+        exerciseTips: '',
         pword: '',
         honeyp: ''
     })
@@ -99,6 +100,7 @@ export default function AddExerciseToIndexModal(props) {
                             exerciseCategory: '',
                             workoutType: '',
                             exerciseDescription: '',
+                            exerciseTips: '',
                             pword: '',
                             honeyp: ''
                         })
@@ -157,6 +159,11 @@ export default function AddExerciseToIndexModal(props) {
                     <div className='add-exercise-input-container exercise-input-with-border'>
                         <label htmlFor='exerciseDescription' className='exercise-input-label' >description:</label>
                         <textarea rows="3" type="text" className='exercise-description-input' name='exerciseDescription' value={formData.exerciseDescription} onChange={handleInputChange}
+                        placeholder='(optional)'></textarea>
+                    </div>
+                    <div className='add-exercise-input-container exercise-input-with-border'>
+                        <label htmlFor='exerciseTips' className='exercise-input-label' >tips:</label>
+                        <textarea type="text" className='exercise-description-input' name='exerciseTips' value={formData.exerciseTips} onChange={handleInputChange}
                         placeholder='(optional)'></textarea>
                     </div>
                     <div className='add-exercise-input-container exercise-input-with-border'>

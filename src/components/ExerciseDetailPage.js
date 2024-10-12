@@ -75,9 +75,9 @@ export default function ExerciseDetailPage() {
                         <h2 className='exercise-overview-title'>{currentExercise.exerciseTitle}</h2>
                         <p className='exercise-description-text'>{currentExercise.exerciseDescription}</p>
                     </div>
-                    {currentExercise.tips && <div className='tips-container'>
+                    {currentExercise.exerciseTips && <div className='tips-container'>
                         <div className='tips-title'>tips:</div>
-                        <div className='tips-detail'>{currentExercise.tips}</div>
+                        <div className='tips-detail'>{currentExercise.exerciseTips}</div>
                     </div>}
                     <div className='detail-container'>
                         <h3 className='detail-title'>Your Stats</h3>

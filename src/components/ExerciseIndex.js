@@ -185,6 +185,7 @@ export default function Rules() {
                         </div>
                     ))}
                 </div>
+                <div onClick={retrieveExerciseData}>refresh</div>
             </div>
         </main>
     )

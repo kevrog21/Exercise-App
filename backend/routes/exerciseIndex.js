@@ -18,12 +18,14 @@ router.route('/add').post(async (req, res) => {
         const exerciseCategory = req.body.exerciseCategory
         const workoutType = req.body.workoutType
         const exerciseDescription = req.body.exerciseDescription
+        const exerciseTips = req.body.exerciseTips
     
         const exercise = new ExerciseIndex({
             exerciseTitle,
             exerciseCategory,
             workoutType,
-            exerciseDescription
+            exerciseDescription,
+            exerciseTips
         })
     
         await exercise.save()

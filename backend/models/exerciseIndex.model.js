@@ -18,7 +18,7 @@ const exerciseIndexSchema = new mongoose.Schema({
         type: String, 
         required: false,
     },
-    tips: {
+    exerciseTips: {
         type: String, 
         required: false,
     },
