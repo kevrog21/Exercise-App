@@ -1116,6 +1116,7 @@ input {
 
 .category-button-wrapper {
   position: relative;
+  margin: auto 0;
 }
 
 .current-category-display {
@@ -1168,18 +1169,74 @@ input {
   background: black;
 }
 
+.search-elements-container {
+  display: flex;
+  width: 100%;
+  margin: 0 0 0 1.5em;
+  overflow-x: hidden;
+  align-items: center;
+}
 
+.search-box-container {
+  width: 100%;
+  margin: 0 0 0 auto;
+  padding: .25em 0;
+  display: flex;
+  position: relative;
+}
+
+input.search-box {
+  width: 82%;
+}
+
+.search-box {
+  background: rgba(129, 129, 129, 0);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  border: none;
+  color: rgb(27, 27, 27);
+  border-radius: 1.5em;
+  margin: 0 0 0 auto;
+  padding: .25em 1em;
+  transform: translateX(90vw);
+  transition: all .5s ease-in-out;
+  width: auto;
+}
+
+.search-box.show {
+  transform: translateX(0%);
+  background: rgb(129, 129, 129);
+}
+
+.search-box::placeholder {
+  color: rgba(209, 209, 209, 0);
+  transition: all 1.5s ease;
+}
+
+.search-box.show::placeholder {
+  color: rgb(209, 209, 209);
+}
 
 
 
 .search-icon {
   width: 1.5em;
-  margin: 0 .25em 0 auto;
+  margin: 0 0 0 auto;
+  padding: 0 .25em 0 0;
+  position: absolute;
+  right: .25em;
+  top: .45em;
+  transition: all 1s ease;
 }
 
 .search-icon.dark-mode-theme {
   fill: rgb(155, 155, 155);
+  z-index: 1;
   background: none;
+}
+
+.search-icon.dark-mode-theme.show {
+  fill: rgb(32, 32, 32);
 }
 
 .exercise-category-group-wrapper {

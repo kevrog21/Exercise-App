@@ -16,6 +16,7 @@ export default function Rules() {
     const [activeFormState, setActiveFormState] = useState(false)
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
     const [showSuccessfulDeletion, setShowSuccessfulDeletion] = useState(false)
+    const [activeSearchBox, setActiveSearchBox] = useState(false)
 
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [filteredExercises, setFilteredExercises] = useState([])
@@ -126,6 +127,11 @@ export default function Rules() {
         disableBackgroundScroll()
     }, [addExerciseMode])
 
+    const handleSearchClick = () => {
+        setActiveSearchBox(prevState => (!prevState))
+        console.log('clicked')
+    }
+
     return (
         <main>
             <div className=''>
@@ -159,9 +165,17 @@ export default function Rules() {
                         setSelectedCategory={setSelectedCategory}
                         theme={theme}
                     />
-                    <SearchIcon 
-                        className={`search-icon ${themeClass}`}
-                    />
+                    <div className='search-elements-container'>
+                        <div className='search-box-container'>
+                            <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...'></input>
+                            <SearchIcon 
+                                className={`search-icon ${themeClass} ${activeSearchBox ? 'show' : ''}`}
+                                onClick={handleSearchClick}
+                            />
+                        </div>
+                        
+
+                    </div>
                 </div>
                 <div className='exercise-elements-container'>
                     {filteredExercises.map(group => (
