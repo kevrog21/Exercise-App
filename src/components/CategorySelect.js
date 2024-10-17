@@ -6,9 +6,11 @@ export default function CategorySelect(props) {
     const { selectedCategory, setSelectedCategory, uniqueCategories, theme } = props
 
     const [ isOpen, setIsOpen] = useState(false)
+    const [filterBackgroundOpen, setFilterBackgroundOpen] = useState(false)
 
     const toggleDropDown = () => {
         setIsOpen(!isOpen)
+        setFilterBackgroundOpen(!filterBackgroundOpen)
     }
 
     const handleCategorySelect = (category) => {
@@ -16,33 +18,37 @@ export default function CategorySelect(props) {
         localStorage.setItem('selectedCategory', category)
         window.scrollTo(0, 0)
         setIsOpen(false)
+        setFilterBackgroundOpen(false)
     }
 
     return (
-        <div className='category-button-wrapper'>
-            <div className={`current-category-display ${theme}-theme`} onClick={toggleDropDown}>
-                <span className='filter-text'>{selectedCategory}</span>
-                <FilterIcon 
-                    className={`filter-icon ${theme}-theme`}
-                />
-            </div>
-            { isOpen && (
-                <div className='option-select-container'>
-                    { selectedCategory !== 'all' && (
-                        <div key='all'  onClick={() => handleCategorySelect('all')}>
-                            all
-                        </div>
-                    )}
-                    {uniqueCategories.map((category, index) => (
-                        <div key={index} className={`${selectedCategory === category ? 'selected' : ''}`} onClick={() => handleCategorySelect(category)}>
-                            {category}
-                        </div>
-                    ))
-
-                    }
+        <div className='filter-wrapper'>
+            {filterBackgroundOpen && <div className={`filter-background`} onClick={toggleDropDown}></div>}
+            <div className='category-button-wrapper'>
+                <div className={`current-category-display ${theme}-theme`} onClick={toggleDropDown}>
+                    <span className='filter-text'>{selectedCategory}</span>
+                    <FilterIcon 
+                        className={`filter-icon ${theme}-theme`}
+                    />
                 </div>
-            )
-            }
+                { isOpen && (
+                    <div className='option-select-container'>
+                        { selectedCategory !== 'all' && (
+                            <div key='all'  onClick={() => handleCategorySelect('all')}>
+                                all
+                            </div>
+                        )}
+                        {uniqueCategories.map((category, index) => (
+                            <div key={index} className={`${selectedCategory === category ? 'selected' : ''}`} onClick={() => handleCategorySelect(category)}>
+                                {category}
+                            </div>
+                        ))
+
+                        }
+                    </div>
+                )
+                }
+            </div>
         </div>
     )
 }

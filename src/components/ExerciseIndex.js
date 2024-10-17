@@ -158,13 +158,14 @@ export default function Rules() {
                         /> }
                 </div>
 
-                <div className={`select-search-container ${theme}-theme`}>
+                <div className={`select-search-container ${theme}-theme`}>  
                     <CategorySelect 
                         uniqueCategories={uniqueCategories}
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
                         theme={theme}
                     />
+                    
                     <div className='search-elements-container'>
                         <div className='search-box-container'>
                             <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...'></input>
