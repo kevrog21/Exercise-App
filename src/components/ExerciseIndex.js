@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import BackButton from './BackButton'
@@ -17,10 +17,24 @@ export default function Rules() {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
     const [showSuccessfulDeletion, setShowSuccessfulDeletion] = useState(false)
     const [activeSearchBox, setActiveSearchBox] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [showUpdatedResultsVisual, setShowUpdatedResultsVisual] = useState(false)
 
     const [selectedCategory, setSelectedCategory] = useState('all')
     const [filteredExercises, setFilteredExercises] = useState([])
     const [uniqueCategories, setUniqueCategories] = useState([])
+
+    const isFirstRender = useRef(true)
+    const allowUpdate = useRef(false)
+    const initialTimeout = useRef(null)
+
+    useEffect(() => {
+        initialTimeout.current = setTimeout(() => {
+            allowUpdate.current = true
+        }, 1000)
+
+        return () => clearTimeout(initialTimeout.current)
+    }, [])
 
     useEffect(() => {
         const categories = [
@@ -31,23 +45,31 @@ export default function Rules() {
 
     useEffect(() => {
         if (selectedCategory === 'all') {
-            const groupedExercises = uniqueCategories.map(exerciseCategory => ({
-                exerciseCategory,
-                exercises: allExeriseIndexData.filter(
+            const groupedExercises = uniqueCategories.map(exerciseCategory => {
+                const exercises = allExeriseIndexData.filter(
                     exercise => exercise.exerciseCategory === exerciseCategory
+                ).filter(exercise => 
+                (exercise.exerciseTitle?.toLowerCase().includes(searchTerm.toLowerCase()))
                 )
-            }))
+
+                return {
+                    exerciseCategory,
+                    exercises
+                }
+            }).filter(grouping => grouping.exercises.length > 0)
+            
             setFilteredExercises(groupedExercises)
         } else {
             const exercises = allExeriseIndexData.filter(
                 exercise => exercise.exerciseCategory === selectedCategory
-            )
+            ).filter(exercise => 
+                exercise.exerciseTitle?.toLowerCase().includes(searchTerm.toLowerCase()))
             setFilteredExercises([{
                 exerciseCategory: selectedCategory, 
                 exercises
             }])
         }
-    }, [selectedCategory, allExeriseIndexData, uniqueCategories])
+    }, [selectedCategory, allExeriseIndexData, uniqueCategories, searchTerm])
 
     const { theme } = useContext(ThemeContext)
 
@@ -132,6 +154,36 @@ export default function Rules() {
         console.log('clicked')
     }
 
+    
+
+    useEffect(() => {
+
+        if (isFirstRender.current || !allowUpdate.current) {
+            isFirstRender.current = false
+            return
+        }
+
+        const restartAnimation = () => {
+            setShowUpdatedResultsVisual(false)
+            setTimeout(() => {
+                setShowUpdatedResultsVisual(true)
+            }, 0)
+        }
+        
+        restartAnimation()
+
+        const timeout = setTimeout(() => {
+            setShowUpdatedResultsVisual(false)
+        }, 1500)
+
+        return () => clearTimeout(timeout)
+        
+    }, [filteredExercises])
+
+    useEffect(() => {
+
+    }, [searchTerm, allExeriseIndexData])
+
     return (
         <main>
             <div className=''>
@@ -168,7 +220,7 @@ export default function Rules() {
                     
                     <div className='search-elements-container'>
                         <div className='search-box-container'>
-                            <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...'></input>
+                            <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
                             <SearchIcon 
                                 className={`search-icon ${themeClass} ${activeSearchBox ? 'show' : ''}`}
                                 onClick={handleSearchClick}
@@ -178,27 +230,31 @@ export default function Rules() {
 
                     </div>
                 </div>
-                <div className='exercise-elements-container'>
-                    {filteredExercises.map(group => (
-                        <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
-                            <div className='category-title'>{group.exerciseCategory}</div>
-                            {group.exercises.map(exercise => (
-                                <Link to={`${exercise._id}`} state={
-                                    {
-                                        allExeriseIndexData: allExeriseIndexData
-                                    }
-                                } key={exercise.exerciseTitle} className='exercise-selection-container'>
-                                    <div className='select-exercise-circle'></div>
-                                    <div className='exercise-title'>{exercise.exerciseTitle}</div>
-                                    <div className='exerise-elipses-container'>
-                                        <div className='circle-one'></div>
-                                        <div className='circle-two'></div>
-                                        <div className='circle-three'></div>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    ))}
+                <div className={`exercise-elements-container ${showUpdatedResultsVisual ? 'update-visual' : ''}`}>
+                    {filteredExercises.length === 0 ? (
+                        <div className='no-results-msg'>no exercises found</div>
+                    ) : (
+                        filteredExercises.map(group => (
+                            <div key={group.exerciseCategory} className='exercise-category-group-wrapper'>
+                                <div className='category-title'>{group.exerciseCategory}</div>
+                                {group.exercises.map(exercise => (
+                                    <Link to={`${exercise._id}`} state={
+                                        {
+                                            allExeriseIndexData: allExeriseIndexData
+                                        }
+                                    } key={exercise.exerciseTitle} className='exercise-selection-container'>
+                                        <div className='select-exercise-circle'></div>
+                                        <div className='exercise-title'>{exercise.exerciseTitle}</div>
+                                        <div className='exerise-elipses-container'>
+                                            <div className='circle-one'></div>
+                                            <div className='circle-two'></div>
+                                            <div className='circle-three'></div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        ))
+                    )}
                 </div>
                 <div onClick={retrieveExerciseData}>refresh</div>
             </div>
