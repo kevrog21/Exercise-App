@@ -27,6 +27,7 @@ export default function Rules() {
     const isFirstRender = useRef(true)
     const allowUpdate = useRef(false)
     const initialTimeout = useRef(null)
+    const searchInputRef = useRef(null)
 
     useEffect(() => {
         initialTimeout.current = setTimeout(() => {
@@ -150,7 +151,14 @@ export default function Rules() {
     }, [addExerciseMode])
 
     const handleSearchClick = () => {
+        
+        if (searchInputRef.current && !activeSearchBox) {
+            setTimeout(() => {
+                searchInputRef.current.focus()
+            }, 300)
+        }
         setActiveSearchBox(prevState => (!prevState))
+        
         console.log('clicked')
     }
 
@@ -179,10 +187,6 @@ export default function Rules() {
         return () => clearTimeout(timeout)
         
     }, [filteredExercises])
-
-    useEffect(() => {
-
-    }, [searchTerm, allExeriseIndexData])
 
     return (
         <main>
@@ -220,7 +224,11 @@ export default function Rules() {
                     
                     <div className='search-elements-container'>
                         <div className='search-box-container'>
-                            <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
+                            <input className={`search-box ${activeSearchBox ? 'show' : ''}`} type='text' placeholder='search...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} ref={searchInputRef}></input>
+                            <AddIcon 
+                                className={`clear-search-icon ${searchTerm && activeSearchBox ? 'show' : ''}`}
+                                onClick={() => setSearchTerm('')}
+                            />
                             <SearchIcon 
                                 className={`search-icon ${themeClass} ${activeSearchBox ? 'show' : ''}`}
                                 onClick={handleSearchClick}
