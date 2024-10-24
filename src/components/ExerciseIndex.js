@@ -18,6 +18,7 @@ export default function Rules() {
     const [showSuccessfulDeletion, setShowSuccessfulDeletion] = useState(false)
     const [activeSearchBox, setActiveSearchBox] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
+    const [searchIsCickable, setSearchIsClickable] = useState(true)
     const [showUpdatedResultsVisual, setShowUpdatedResultsVisual] = useState(false)
 
     const [selectedCategory, setSelectedCategory] = useState('all')
@@ -151,15 +152,19 @@ export default function Rules() {
     }, [addExerciseMode])
 
     const handleSearchClick = () => {
-        
-        if (searchInputRef.current && !activeSearchBox) {
+
+        if (searchIsCickable) {
+            setSearchIsClickable(false)
+            if (searchInputRef.current && !activeSearchBox) {
+                setTimeout(() => {
+                    searchInputRef.current.focus()
+                }, 300)
+            }
+            setActiveSearchBox(prevState => (!prevState))
             setTimeout(() => {
-                searchInputRef.current.focus()
+                setSearchIsClickable(true)
             }, 300)
         }
-        setActiveSearchBox(prevState => (!prevState))
-        
-        console.log('clicked')
     }
 
     
