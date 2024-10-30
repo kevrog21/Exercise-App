@@ -1056,12 +1056,21 @@ input {
   margin: 1rem 0 0 0;
   position: sticky;
   top: 0;
+  background: rgba(255, 255, 255, .9);
 }
 
 .exercise-index-buttons .back-arrow-container,
 .detail-page-icon-container .back-arrow-container  {
   width: auto;
   margin: 0 auto 0 0;
+}
+
+.exercise-index-buttons {
+  background: rgba(255, 255, 255, .9);
+}
+
+.dark-mode-theme .exercise-index-buttons {
+  background: #2e2e2e;
 }
 
 .add-exercise-btn {
@@ -1135,6 +1144,11 @@ input {
   padding: 0 7.5% .25em 7.5%;
   position: sticky;
   top: calc(4.5rem + 10vw + .75em);
+  background: rgba(255, 255, 255, .9);
+}
+
+.dark-mode-theme .select-search-container {
+  background: #2e2e2e;
 }
 
 .filter-wrapper {
@@ -1154,8 +1168,8 @@ input {
   color: rgb(0, 0, 0);
   min-width: 4em;
   background: #e2e2e2;
-  box-shadow: -2px 2px #cfcfcf;
-  border: 2px solid #cfcfcf;
+  box-shadow: -2px 2px #c7c7c7;
+  border: 2px solid #c7c7c7;
 }
 
 .current-category-display.dark-mode-theme {
@@ -1328,11 +1342,18 @@ input.search-box {
 .exercise-category-group-wrapper {
   margin: 1.5em auto;
   width: 76%;
-  background: #1c1c1c;
-  border: 2px solid black;
-  color:  rgb(218, 218, 218);
+  background: #e2e2e2;
+  border: 2px solid #c7c7c7;
+  color:  #1c1c1c;
   text-align: left;
   padding: .5em 1em 1em 1em;
+  box-shadow: -4px 4px #c7c7c7;
+}
+
+.dark-mode-theme .exercise-category-group-wrapper {
+  background: #1c1c1c;
+  color: rgb(218, 218, 218);
+  border: 2px solid black;
   box-shadow: -4px 4px #0c0c0c;
 }
 
@@ -1340,30 +1361,44 @@ input.search-box {
   font-size: 1.5em;
   display: inline-block;
   border-bottom: 2px solid;
-  margin: 0 0 .25em 0;
+  margin: .25em 0 .5em .25em;
 }
 
 .exercise-selection-container {
   text-decoration: none;
-  background: #0c0c0c;
-  border: 2px solid black;
+  background: #f3f3f3;
+  border: 2px solid rgb(214, 214, 214);
   padding: 1em;
   margin: .5em 0;
   display: flex;
 }
 
+.dark-mode-theme .exercise-selection-container {
+  background: #0c0c0c;
+  border: 2px solid black;
+}
+
 .select-exercise-circle {
   height: .55em;
   width: .55em;
-  background: #252525;
-  border: 2px solid black;
+  background: #c9c9c9;
+  border: 2px solid #f0f0f0;
   border-radius: 50%;
   margin: auto .5em auto 0;
 }
 
+.dark-mode-theme .select-exercise-circle {
+  background: #252525;
+  border: 2px solid black;
+}
+
 .exercise-title {
-  color: rgb(155, 155, 155);
+  color: rgb(80, 80, 80);
   text-decoration: none;
+}
+
+.dark-mode-theme .exercise-title {
+  color: rgb(155, 155, 155);
 }
 
 .exerise-elipses-container {
@@ -1375,10 +1410,15 @@ input.search-box {
 .exerise-elipses-container * {
   height: .3em;
   width: .3em;
-  background: #252525;
-  border: 2px solid black;
+  background: #c9c9c9;
+  border: 2px solid #f0f0f0;
   border-radius: 50%;
   margin: 0 0 0 0;
+}
+
+.dark-mode-theme .exerise-elipses-container * {
+  background: #252525;
+  border: 2px solid black;
 }
 
 .no-results-msg {
@@ -1403,6 +1443,7 @@ input.search-box {
   width: 85vw;
   margin: 2vh 0 0 0;
   box-shadow: black 0 0 .5em;
+  background: rgb(255, 255, 255);
 }
 
 .exercise-modal-container.dark-mode-theme {
@@ -1446,15 +1487,16 @@ input.search-box {
 
 .exercise-index-error {
   color: red;
-  font-size: .75em;
+  font-size: .75em;  
   line-height: 1em;
   margin: 0;
 }
 
 .modal-content-container {
-  background: white;
+  background: rgb(211, 211, 211);
   margin: 1em 1.5em;
   padding: 1em;
+  border: 1px solid #b4b4b4;
 }
 
 .dark-mode-theme .modal-content-container {
@@ -1467,7 +1509,6 @@ input.search-box {
   justify-content: center;
 }
 
-
 .exercise-title-input {
   border: none;
   padding: .5em 0;
@@ -1475,6 +1516,7 @@ input.search-box {
   font-size: 1.5em;
   margin: 0 0 .75em 0;
   width: 100%;
+  background: #b6b6b6;
 }
 
 .dark-mode-theme  .exercise-title-input {
@@ -1484,7 +1526,7 @@ input.search-box {
 
 .exercise-input-with-border {
   margin: 1em 0;
-
+  border-bottom: 1px solid #414141;
 }
 
 .dark-mode-theme .exercise-input-with-border {
@@ -1500,11 +1542,25 @@ input.search-box {
 .delete-password {
   background: none;
   margin: 0 0 0 auto;
-  color: #6B6B6B;
+  color: #8f8f8f;
   border: none;
 }
 
+.dark-mode-theme .exercise-dropdown,
+.dark-mode-theme .exercise-password,
+.dark-mode-theme .delete-password {
+  background: none;
+  margin: 0 0 0 auto;
+  color: #6B6B6B;
+
+}
+
 .exercise-dropdown * {
+  background: rgb(141, 141, 141);
+  color: white;
+}
+
+.dark-mode-theme .exercise-dropdown * {
   background: #414141;
   color: white;
 }
@@ -1519,23 +1575,38 @@ select option:checked {
   margin: 0 0 .5em auto;
   padding: .35em;
   border: none;
-  background: #2c2c2c;
-  color: #cacaca;
+  background: #b6b6b6;
+  color: #000000;
   font-family: inherit;
   width: 60%;
 }
 
+.dark-mode-theme .exercise-description-input,
+.dark-mode-theme .exercise-password,
+.dark-mode-theme .delete-password {
+  background: #2c2c2c;
+  color: #cacaca;
+}
+
 .has-selection {
+  color: #494949;
+}
+
+.dark-mode-theme .has-selection {
   color: #cacaca;
 }
 
 .exercise-index-submit-btn,
 .save-exercise-symbol {
   background: none;
-  color: #C1A014;
+  color: #268114;
   border: none;
   font-size: 1em;
   letter-spacing: .04em;
+}
+
+.dark-mode-theme .exercise-index-submit-btn {
+  color: #C1A014;
 }
 
 .save-exercise-symbol-container {
@@ -1547,6 +1618,7 @@ select option:checked {
 .save-exercise-symbol {
   height: 1.25em;
   width: 1.25em;
+  fill: #268114;
 }
 
 .save-exercise-symbol.dark-mode-theme {
@@ -1558,6 +1630,7 @@ select option:checked {
 .trash-symbol {
   width: 1.25em;
   padding: .25em .5em;
+  fill: rgb(197, 197, 197)
 }
 
 .edit-icon-symbol.dark-mode-theme,
@@ -1566,10 +1639,14 @@ select option:checked {
 }
 
 .detail-container {
-  background: #1c1c1c;
+  background: #ebebeb;
   width: 75%;
   margin: 3em auto 0 auto;
   padding: .25em 1.5em 1em 1.5em;
+}
+
+.dark-mode-theme .detail-container {
+  background: #1c1c1c;
 }
 
 .exercise-overview-title {
@@ -1580,20 +1657,33 @@ select option:checked {
   font-weight: 300;
   letter-spacing: .02em;
   padding: .5em 0 .15em 0;
+  color: rgb(0, 0, 0);
+}
+
+.dark-mode-theme .exercise-overview-title {
+  color: rgb(255, 255, 255);
 }
 
 .exercise-description-text {
   padding: 0 0 0 15%;
   text-align: left;
+  color: rgb(77, 77, 77);
+}
+
+.dark-mode-theme .exercise-description-text {
   color: rgb(167, 167, 167);
 }
 
 .detail-title {
   font-weight: 200;
-  color: rgb(184, 184, 184);
+  color: rgb(110, 110, 110);
   text-align: left;
   border-bottom: 1px solid rgb(75, 75, 75);
   padding: 0 0 .25em 0;
+}
+
+.dark-mode-theme .detail-title {
+  color: rgb(184, 184, 184);
 }
 
 .tips-container {
@@ -1604,8 +1694,12 @@ select option:checked {
 }
 
 .tips-title {
-  border-bottom: 1px solid rgb(75, 75, 75);
+  border-bottom: 1px solid rgb(190, 190, 190);
   padding: 0 .5em .25em .5em;
+}
+
+.dark-mode-theme .tips-title {
+  border-bottom: 1px solid rgb(75, 75, 75);
 }
 
 .tips-detail {
