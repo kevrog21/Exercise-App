@@ -88,7 +88,7 @@ export default function UserStats(props) {
                     <div>Challenges Remaining: {currentUserWorkoutData && (300 - completedChallenges)}</div>
                     <div>Days Remaining: {currentUserWorkoutData && displayDaysRemaining}</div>
                     <div>Rest Days Taken: {currentUserWorkoutData && ((365 - displayDaysRemaining) - (userCompletedTodaysWorkout ? completedChallenges - 1 : completedChallenges))}</div>
-                    <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - completedChallenges))}</div>
+                    <div>Rest Days Remaining: {currentUserWorkoutData && (displayDaysRemaining - (300 - completedChallenges) > 0 ? displayDaysRemaining - (300 - completedChallenges) : 0 )}</div>
                 </div>
             </div>
         </main>
