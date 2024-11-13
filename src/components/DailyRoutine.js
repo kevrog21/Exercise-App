@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import BackButton from './BackButton'
+import { ThemeContext } from './ThemeProvider'
+import { ReactComponent as EditIcon } from '../assets/edit_icon.svg'
 
 function DailyRoutine(props) {
     const { currentUserWorkoutData, retrieveData } = props
@@ -26,6 +28,8 @@ function DailyRoutine(props) {
             unit: 'reps'  
         }
     ])
+    const { theme } = useContext(ThemeContext)
+    const themeClass = `${theme}-theme`
 
     useEffect(() => {
         if (currentUserWorkoutData) {
@@ -178,14 +182,20 @@ function DailyRoutine(props) {
                         Routine Updated!
                     </div>
                 </div>}
-            <div className="page-margin-top">
-                <BackButton />
+            <div>
+                <div className={`detail-page-icon-container ${theme}-theme`}>
+                    <BackButton />
+                    { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ?
+                        <EditIcon 
+                            className={`edit-icon-symbol ${themeClass}`}
+                            onClick={() => setEditRoutineMode(true)}
+                        /> :
+                        <div onClick={() => setEditRoutineMode(false)} className='red regular default-font'>cancel</div>
+                    }
+                </div>
                 <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
 
-                { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ?
-                    <div onClick={() => setEditRoutineMode(true)} className='regular default-font'>edit routine</div> :
-                    <div onClick={() => setEditRoutineMode(false)} className='red regular default-font'>cancel</div>
-                }
+                
                 
                 { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
                     <div className='routine-list-container'>{exerciseEls}</div> : 
