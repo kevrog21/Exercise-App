@@ -187,11 +187,15 @@ function DailyRoutine(props) {
                     <BackButton />
                     { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ?
                         <EditIcon 
-                            className={`edit-icon-symbol ${themeClass}`}
+                            className={`edit-icon-symbol edit-icon-daily-routine ${themeClass}`}
                             onClick={() => setEditRoutineMode(true)}
                         /> :
-                        <div onClick={() => setEditRoutineMode(false)} className='red regular default-font'>cancel</div>
+                        <div onClick={() => setEditRoutineMode(false)} className='red regular default-font edit-icon-daily-routine'>cancel</div>
                     }
+                </div>
+                <div className='challenge-mode-container'>
+                    <div>Challenge Mode:</div>
+                    <div>classic</div>
                 </div>
                 <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
 
