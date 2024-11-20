@@ -15,6 +15,9 @@ function DailyRoutine(props) {
     })
     const [formData, setFormData] = useState([
         {
+            challengeMode: 'classic'
+        },
+        {
             exerciseName: 'push-ups',
             dailyIncrement: 1,
             unit: 'reps'  
@@ -33,7 +36,7 @@ function DailyRoutine(props) {
 
     useEffect(() => {
         if (currentUserWorkoutData) {
-            const exerciseList = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
+            const exerciseList = currentUserWorkoutData.dailyRoutine.slice(1).map((exercise, index) => {
                 return (
                     <div key={index} className='routine-list-item'>
                         <span>- {exercise.exerciseName}</span>
@@ -193,11 +196,14 @@ function DailyRoutine(props) {
                         <div onClick={() => setEditRoutineMode(false)} className='red regular default-font edit-icon-daily-routine'>cancel</div>
                     }
                 </div>
-                <div className='challenge-mode-container'>
-                    <div>Challenge Mode:</div>
-                    <div>classic</div>
-                </div>
-                <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
+                { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
+                    <div className='challenge-mode-container'>
+                        <div>Challenge Mode:</div>
+                        <div className='challenge-mode-display'>from user data</div>
+                    </div> : 
+                    '' 
+                }
+                { !editRoutineMode && <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div> }
 
                 
                 
@@ -207,65 +213,76 @@ function DailyRoutine(props) {
                 }
 
             </div>
-            { editRoutineMode ?
-            <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
-                { formData.map((exercise, index) => (
-                        <div key={index}>
-                            <div className='daily-routine-input-continer'>
-                            <div className='routine-exercise-number'>Exercise {index + 1}</div>
-                                <label htmlFor="exerciseName">Exercise Name</label>
-                                <input 
-                                    type="text"
-                                    name="exerciseName"
-                                    placeholder=""
-                                    value={exercise.exerciseName}
-                                    onChange={(e) => handleInputChange(index, e)}
-                                />
-                                <div className='incremenet-unit-container'>
-                                    <div className='increment-container'>
-                                        <label htmlFor="dailyIncrement" className='incremenet-label'>Increment</label>
-                                        <input className='incremenet-input'
-                                            type="number"
-                                            name="dailyIncrement"
+            { editRoutineMode &&
+                <div>
+                    <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
+                        <div className='challenge-mode-container'>
+                            <label htmlFor='challengeMode' className='' >Challenge Mode:</label>
+                            <select className={`challenge-mode-select ${formData[0].challengeMode ? 'has-selection' : ''}`} name='challengeMode' onChange={handleInputChange} value={formData.challengeMode}>
+                                <option value=''>please select...</option>
+                                <option value='back'>classic</option>
+                                <option value='chest'>split</option>
+                                <option value='legs'>increment</option>
+                            </select>
+                        </div>
+                        <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
+                        { formData.slice(1).map((exercise, index) => (
+                                <div key={index}>
+                                    <div className='daily-routine-input-continer'>
+                                    <div className='routine-exercise-number'>Exercise {index + 1}</div>
+                                        <label htmlFor="exerciseName">Exercise Name</label>
+                                        <input 
+                                            type="text"
+                                            name="exerciseName"
                                             placeholder=""
-                                            value={exercise.dailyIncrement}
+                                            value={exercise.exerciseName}
                                             onChange={(e) => handleInputChange(index, e)}
                                         />
-                                    </div>
-                                    <div  className='unit-container'>
-                                        <label htmlFor="unit" className='unit-label'>Unit</label>
-                                        <select className='unit-input'
-                                            name="unit"
-                                            value={exercise.unit}
-                                            onChange={(e) => handleInputChange(index, e)}
-                                        >
-                                            <option value="reps">reps</option>
-                                            <option value="seconds">seconds</option>
-                                        </select>
+                                        <div className='incremenet-unit-container'>
+                                            <div className='increment-container'>
+                                                <label htmlFor="dailyIncrement" className='incremenet-label'>Increment</label>
+                                                <input className='incremenet-input'
+                                                    type="number"
+                                                    name="dailyIncrement"
+                                                    placeholder=""
+                                                    value={exercise.dailyIncrement}
+                                                    onChange={(e) => handleInputChange(index, e)}
+                                                />
+                                            </div>
+                                            <div  className='unit-container'>
+                                                <label htmlFor="unit" className='unit-label'>Unit</label>
+                                                <select className='unit-input'
+                                                    name="unit"
+                                                    value={exercise.unit}
+                                                    onChange={(e) => handleInputChange(index, e)}
+                                                >
+                                                    <option value="reps">reps</option>
+                                                    <option value="seconds">seconds</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button type="button" className='routine-remove-btn' onClick={() => removeExerciseInput(index)}>remove</button>
                                     </div>
                                 </div>
-                                <button type="button" className='routine-remove-btn' onClick={() => removeExerciseInput(index)}>remove</button>
+                            ))
+                        }
+                        <button type='button' onClick={addNewExerciseInput} className='add-exercise-button'>+ <br/>add another exercise</button>
+                        <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleTempFormDataChange} tabIndex='-1' autoComplete="off"></input>
+                        <label htmlFor='pword' className='password-label'>password</label>
+                        <input type='password' name='pword' className="daily-routine-password" value={formData.pword} onChange={handleTempFormDataChange}></input>
+                        <div id='incorrect-password-message' className='hide'>incorrect password</div>
+                        {formErrors.length > 0 && (
+                            <div>
+                                {formErrors.map((error, index) => (
+                                    <p key={index} className='red'>{error}</p>
+                                ))}
                             </div>
-                        </div>
-                    ))
-                }
-                <button type='button' onClick={addNewExerciseInput} className='add-exercise-button'>+ <br/>add another exercise</button>
-                <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleTempFormDataChange} tabIndex='-1' autoComplete="off"></input>
-                <label htmlFor='pword' className='password-label'>password</label>
-                <input type='password' name='pword' className="daily-routine-password" value={formData.pword} onChange={handleTempFormDataChange}></input>
-                <div id='incorrect-password-message' className='hide'>incorrect password</div>
-                {formErrors.length > 0 && (
-                    <div>
-                        {formErrors.map((error, index) => (
-                            <p key={index} className='red'>{error}</p>
-                        ))}
-                    </div>
-                )}
-                <div id='success-message' className='hide'>routine set!</div>
-                <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} routine</button>
-            </form> :
-            ''
-        }
+                        )}
+                        <div id='success-message' className='hide'>routine set!</div>
+                        <button type='submit' className='set-routine-btn'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'update' : 'set'} routine</button>
+                    </form>
+                </div> 
+            }
         </main>
     )
 }

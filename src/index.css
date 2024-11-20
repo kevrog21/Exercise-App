@@ -405,6 +405,16 @@ footer {
   margin: 0 0 6em 0;
 }
 
+.challenge-mode-select {
+  display: block;
+  margin: .5em auto;
+  padding: .25em;
+}
+
+.challenge-mode-display {
+  margin: .75em 0;
+}
+
 .routine-exercise-number {
   text-align: left;
   font-weight: bold;
