@@ -180,7 +180,9 @@ function App() {
             />
           } />
           <Route exact path="/goals" element={
-            <Goals />
+            <Goals 
+              currentUserWorkoutData={currentUserWorkoutData}
+            />
           } />
           <Route exact path="/user-rules" element={
             <Rules />

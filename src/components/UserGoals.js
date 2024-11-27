@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ThemeContext } from './ThemeProvider'
 import BackButton from './BackButton'
+import { ReactComponent as EditIcon } from '../assets/edit_icon.svg'
 
-export default function Goals() {
+export default function Goals(props) {
+
+    const { currentUserWorkoutData, retrieveData } = props
 
     const [editGoalseMode, setEditGoalsMode] = useState(false)
 
@@ -9,10 +13,22 @@ export default function Goals() {
         setEditGoalsMode(prevState => (!prevState))
     }
 
+    const { theme } = useContext(ThemeContext)
+    const themeClass = `${theme}-theme`
+
     return (
         <main>
-            <div className='page-margin-top'>
-                <BackButton />
+            <div>
+                <div className={`detail-page-icon-container ${theme}-theme`}>
+                    <BackButton />
+                    { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editGoalseMode ?
+                        <EditIcon 
+                            className={`edit-icon-symbol edit-icon-daily-routine ${themeClass}`}
+                            onClick={() => setEditGoalsMode(true)}
+                        /> :
+                        <div onClick={() => setEditGoalsMode(false)} className='red regular default-font edit-icon-daily-routine'>cancel</div>
+                    }
+                </div>
             
                 <div className='goals-container'>
                     <div className='goals-header'>Goals</div>
@@ -25,7 +41,6 @@ export default function Goals() {
                     <label htmlFor='newGoal'>new goal:</label>
                     <input type='text' name='newGoal'></input>
                 </form>}
-                <button className='edit-goals-btn' onClick={handleEditGoalsClick}>{editGoalseMode ? 'cancel' : 'edit'}</button>
             </div>
         </main>
     )
