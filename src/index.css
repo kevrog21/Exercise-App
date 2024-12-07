@@ -184,6 +184,13 @@ main {
   text-decoration: none;
 }
 
+.start-workout-txt {
+  background: none;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  color: rgb(189, 189, 189);
+}
+
 .workout-completed-msg {
   color: green;
   font-size: 1.25em;
