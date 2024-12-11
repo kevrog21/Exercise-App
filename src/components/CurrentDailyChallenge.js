@@ -233,7 +233,7 @@ export default function CurrentDailyChallenge(props) {
 
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
-            const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.map((exercise, index) => {
+            const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.slice(1).map((exercise, index) => {
                 const completedCount = formData[exercise.exerciseName].count || 0
                 const goalReps = Math.ceil(formData[exercise.exerciseName].goalReps) || 1
                 const percentageCompleted = (completedCount / goalReps) * 100

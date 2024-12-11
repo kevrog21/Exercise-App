@@ -204,7 +204,7 @@ function DailyRoutine(props) {
                 { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
                     <div className='challenge-mode-container'>
                         <div>Challenge Mode:</div>
-                        <div className='challenge-mode-display'>from user data</div>
+                        <div className='challenge-mode-display'>{currentUserWorkoutData.dailyRoutine[0].challengeMode}</div>
                     </div> : 
                     '' 
                 }
