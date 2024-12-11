@@ -70,8 +70,13 @@ function DailyRoutine(props) {
         if (name === 'dailyIncrement') {
             newFormData[index][name] = value === '' ? '' : Number(value)
         } else {
-            newFormData[index][name] = value
+            if (index === 0) {
+                newFormData[index] = { [name]: value }
+            } else {
+                newFormData[index][name] = value
+            }
         }
+        console.log('new data: ', newFormData)
         
         setFormData(newFormData)
     }
@@ -97,7 +102,7 @@ function DailyRoutine(props) {
     const validateFormData = () => {
         const newErrors = []
 
-        formData.forEach((exercise, index) => {
+        formData.slice(1).forEach((exercise, index) => {
             if (!exercise.exerciseName) {
                 newErrors.push(`A name is required for exercise ${index + 1}`)
             }
@@ -218,11 +223,11 @@ function DailyRoutine(props) {
                     <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
                         <div className='challenge-mode-container'>
                             <label htmlFor='challengeMode' className='' >Challenge Mode:</label>
-                            <select className={`challenge-mode-select ${formData[0].challengeMode ? 'has-selection' : ''}`} name='challengeMode' onChange={handleInputChange} value={formData.challengeMode}>
+                            <select className={`challenge-mode-select ${formData[0].challengeMode ? 'has-selection' : ''}`} name='challengeMode' onChange={(e) => handleInputChange(0, e)} value={formData.challengeMode}>
                                 <option value=''>please select...</option>
-                                <option value='back'>classic</option>
-                                <option value='chest'>split</option>
-                                <option value='legs'>increment</option>
+                                <option value='classic'>classic</option>
+                                <option value='split'>split</option>
+                                <option value='increment'>increment</option>
                             </select>
                         </div>
                         <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
