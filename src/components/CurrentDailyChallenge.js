@@ -46,7 +46,7 @@ export default function CurrentDailyChallenge(props) {
                     localStorage.removeItem('formData')
                     localStorage.removeItem('formDate')
 
-                    const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                    const initialFormData = currentUserWorkoutData.dailyRoutine.slice(1).reduce((acc, exercise, index) => {
                         return { 
                             ...acc, 
                             [exercise.exerciseName]: {
@@ -70,7 +70,7 @@ export default function CurrentDailyChallenge(props) {
                 
             } else if (currentUserWorkoutData) {
                 setChallengeNumber(1)
-                const initialFormData = currentUserWorkoutData.dailyRoutine.reduce((acc, exercise, index) => {
+                const initialFormData = currentUserWorkoutData.dailyRoutine.slice(1).reduce((acc, exercise, index) => {
                     return { 
                         ...acc, 
                         [exercise.exerciseName]: {
@@ -137,7 +137,7 @@ export default function CurrentDailyChallenge(props) {
             const timer = setTimeout(() => {
                 setFormData((prevFormData) => {
                     const updatedFormData = { ...prevFormData }
-                    Object.keys(updatedFormData).forEach((key) => {
+                    Object.keys(updatedFormData).slice(1).forEach((key) => {
                         if (key !== 'honeyp' && key !== 'pword' && key !== 'challengeNumber' && updatedFormData[key].repChange !== 0 && !repInputChangeTransition) {
                             updatedFormData[key] = { 
                                 ...updatedFormData[key], 

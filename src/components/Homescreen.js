@@ -50,7 +50,7 @@ function Homescreen(props) {
                     <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn' onClick={handleContinueChallengeClick}>continue today's challenge</button></Link> :
                     <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn'>{savedFormDataLocalStorage ? 'continue' : 'start'} today's challenge</button></Link>
                 }
-                <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn start-workout-txt' onClick={handleContinueChallengeClick}>start a workout</button></Link>
+                <Link to='/current-daily-challenge' className='no-underline'><button className='start-workout-btn start-workout-txt'>start a workout</button></Link>
                 
                 {userCompletedTodaysWorkout && 
                 <div>

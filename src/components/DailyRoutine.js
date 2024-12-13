@@ -73,7 +73,7 @@ function DailyRoutine(props) {
             if (index === 0) {
                 newFormData[index] = { [name]: value }
             } else {
-                newFormData[index][name] = value
+                newFormData[index + 1][name] = value
             }
         }
         console.log('new data: ', newFormData)
@@ -201,6 +201,7 @@ function DailyRoutine(props) {
                         <div onClick={() => setEditRoutineMode(false)} className='red regular default-font edit-icon-daily-routine'>cancel</div>
                     }
                 </div>
+                { !editRoutineMode && <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine</div> }
                 { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
                     <div className='challenge-mode-container'>
                         <div>Challenge Mode:</div>
@@ -208,9 +209,8 @@ function DailyRoutine(props) {
                     </div> : 
                     '' 
                 }
-                { !editRoutineMode && <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div> }
 
-                
+                { !editRoutineMode && <div>Exercises:</div> }
                 
                 { currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 && !editRoutineMode ? 
                     <div className='routine-list-container'>{exerciseEls}</div> : 
@@ -220,6 +220,7 @@ function DailyRoutine(props) {
             </div>
             { editRoutineMode &&
                 <div>
+                    <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine</div>
                     <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
                         <div className='challenge-mode-container'>
                             <label htmlFor='challengeMode' className='' >Challenge Mode:</label>
@@ -230,7 +231,8 @@ function DailyRoutine(props) {
                                 <option value='increment'>increment</option>
                             </select>
                         </div>
-                        <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine:</div>
+                        <div className='routine-exercise-title'>Exercises:</div>
+                        
                         { formData.slice(1).map((exercise, index) => (
                                 <div key={index}>
                                     <div className='daily-routine-input-continer'>
