@@ -7,11 +7,13 @@ import { ThemeContext } from './ThemeProvider'
 export default function CurrentDailyChallenge(props) {
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
+    const [exercisesToShow, setExercisesToShow] = useState()
     
     const { currentUserWorkoutData, userCompletedTodaysWorkout, mostRecentCompletedChallengeData, userCompletedChallengeYesterday, userCanContinueChallenge, userIsContinuingChallenge } = props
 
     const [formData, setFormData] = useState({honeyp: '', pword: ''})
     const [isChallengeComplete, setIsChallengeComplete] = useState(false)
+    const [currentChallengeMode, setCurrentChallengeMode] = useState(null)
 
     const [lastButtonClickTime, setLastButtonClickTime] = useState(0)
     const [repChangeInTransition, setRepChangeInTransition] = useState(false)
@@ -233,6 +235,7 @@ export default function CurrentDailyChallenge(props) {
 
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
+            setCurrentChallengeMode(currentUserWorkoutData.dailyRoutine[0].challengeMode)
             const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.slice(1).map((exercise, index) => {
                 const completedCount = formData[exercise.exerciseName].count || 0
                 const goalReps = Math.ceil(formData[exercise.exerciseName].goalReps) || 1
@@ -307,6 +310,47 @@ export default function CurrentDailyChallenge(props) {
             checkCompletionStatus(formData)
         }
     }, [currentUserWorkoutData, formData, visibleRepsContainers])
+
+    useEffect(() => {
+        if (currentUserWorkoutData && Object.keys(formData).length > 2) {
+            console.log('challenge mode!: ', currentChallengeMode)
+            console.log('challenge mode!: ', mostRecentCompletedChallengeData.challengeNumber)
+            const exerciseElsToShow = () => {
+                if (currentChallengeMode === 'classic') {
+                    if (mostRecentCompletedChallengeData.challengeNumber > 200) {
+                        return (
+                            <div>A/B routine + 2 exercises off</div>
+                        )
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 150) {
+                        return (
+                            <div>A/B routine + 1 exercise off</div>
+                        )
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 100) {
+                        return (
+                            <div>A/B routine</div>
+                        )
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 80) {
+                        return (
+                            <div>2 exercises off</div>
+                        )
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 40) {
+                        return (
+                            <div>1 exercise off</div>
+                        )
+                    } else {
+                        return (
+                            <div>full routine</div>
+                        )
+                    }
+                } else {
+                    return (
+                    <div>goodbye</div>
+                )
+                }
+            }
+            setExercisesToShow(exerciseElsToShow)
+        }
+    }, [currentChallengeMode])
 
     const handleFormChange = (event) => {
         const { name, value } = event.target
@@ -437,7 +481,8 @@ export default function CurrentDailyChallenge(props) {
                 <div className="day-title">
                     Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
                 </div>
-                
+                <div>{currentChallengeMode}</div>
+                {exercisesToShow}
                 {allExerciseEls}
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>

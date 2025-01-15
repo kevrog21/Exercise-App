@@ -224,7 +224,7 @@ function DailyRoutine(props) {
                     <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
                         <div className='challenge-mode-container'>
                             <label htmlFor='challengeMode' className='' >Challenge Mode:</label>
-                            <select className={`challenge-mode-select ${formData[0].challengeMode ? 'has-selection' : ''}`} name='challengeMode' onChange={(e) => handleInputChange(0, e)} value={formData.challengeMode}>
+                            <select className='challenge-mode-select' name='challengeMode' onChange={(e) => handleInputChange(0, e)} value={formData[0].challengeMode}>
                                 <option value=''>please select...</option>
                                 <option value='classic'>classic</option>
                                 <option value='split'>split</option>
