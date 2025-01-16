@@ -5,6 +5,7 @@ import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
 
 export default function CurrentDailyChallenge(props) {
+    const tempChallengeNumber = 123
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     const [exercisesToShow, setExercisesToShow] = useState()
@@ -315,40 +316,49 @@ export default function CurrentDailyChallenge(props) {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             console.log('challenge mode!: ', currentChallengeMode)
             console.log('challenge mode!: ', mostRecentCompletedChallengeData.challengeNumber)
-            const exerciseElsToShow = () => {
+            const generateExerciseEls = () => {
                 if (currentChallengeMode === 'classic') {
-                    if (mostRecentCompletedChallengeData.challengeNumber > 200) {
-                        return (
-                            <div>A/B routine + 2 exercises off</div>
-                        )
-                    } else if (mostRecentCompletedChallengeData.challengeNumber > 150) {
-                        return (
-                            <div>A/B routine + 1 exercise off</div>
-                        )
-                    } else if (mostRecentCompletedChallengeData.challengeNumber > 100) {
-                        return (
-                            <div>A/B routine</div>
-                        )
-                    } else if (mostRecentCompletedChallengeData.challengeNumber > 80) {
-                        return (
-                            <div>2 exercises off</div>
-                        )
-                    } else if (mostRecentCompletedChallengeData.challengeNumber > 40) {
-                        return (
-                            <div>1 exercise off</div>
-                        )
+                    const exercises = [...currentUserWorkoutData.dailyRoutine.slice(1)]
+                    const totalExercises = exercises.length
+                    let todaysExercises
+                    //next split into A/B routine
+
+                    if (tempChallengeNumber > 199) {
+                        // A/B routine + 2 exercises off
+                        todaysExercises = exercises.slice(0, -2)
+                    } else if (tempChallengeNumber > 159) {
+                        // A/B routine + 1 exercise off
+                        todaysExercises = exercises.slice(0, -1)
+                    } else if (tempChallengeNumber > 119) {
+                        // A/B routine
+                        const isOddDay = tempChallengeNumber % 2 === 1
+
+                        const midpoint = Math.ceil(totalExercises / 2)
+                        todaysExercises = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
+                    } else if (tempChallengeNumber > 79) {
+                        // 2 exercises off
+                        const skipIndex1 = tempChallengeNumber % totalExercises
+                        const skipIndex2 = (skipIndex1 + 1) % totalExercises
+                        todaysExercises = exercises.filter((_, index) => index !== skipIndex1 && index !== skipIndex2)
+                    } else if (tempChallengeNumber > 39) {
+                        // 1 exercise off
+                        const skipIndex = tempChallengeNumber % totalExercises
+                        todaysExercises = exercises.filter((_, index) => index !== skipIndex)
                     } else {
-                        return (
-                            <div>full routine</div>
-                        )
+                        // full routine
+                        todaysExercises = exercises
                     }
+
+                    return todaysExercises.map((exercise, index) => (
+                        <div key={index}>{exercise.exerciseName}</div>
+                    ))
                 } else {
                     return (
                     <div>goodbye</div>
                 )
                 }
             }
-            setExercisesToShow(exerciseElsToShow)
+            setExercisesToShow(generateExerciseEls)
         }
     }, [currentChallengeMode])
 
