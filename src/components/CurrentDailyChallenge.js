@@ -5,7 +5,7 @@ import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
 
 export default function CurrentDailyChallenge(props) {
-    const tempChallengeNumber = 123
+    const tempChallengeNumber = 43
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     const [exercisesToShow, setExercisesToShow] = useState()
@@ -237,103 +237,35 @@ export default function CurrentDailyChallenge(props) {
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             setCurrentChallengeMode(currentUserWorkoutData.dailyRoutine[0].challengeMode)
-            const dailyChallengeExercises = currentUserWorkoutData.dailyRoutine.slice(1).map((exercise, index) => {
-                const completedCount = formData[exercise.exerciseName].count || 0
-                const goalReps = Math.ceil(formData[exercise.exerciseName].goalReps) || 1
-                const percentageCompleted = (completedCount / goalReps) * 100
-                return (
-                    <div key={index} className='current-workout-list-item'>
-                        {percentageCompleted == 0 && <div className='progress-bar-placer'></div>}
-                        {percentageCompleted !== 0 && <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
-                            {percentageCompleted !== 0 && <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>}
-                            {percentageCompleted !== 0 && <div className='progress-bar-indicator'></div>}
-                            {percentageCompleted < 100 && <div className='count-remaining-progress'>{Math.ceil(formData[exercise.exerciseName].goalReps) - formData[exercise.exerciseName].count}</div>}
-                        </div>}
-                        <div className='exercise-timer-container'>
-                            <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
-                                <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
-                                    <span className='required-rep-label'>{Math.ceil(formData[exercise.exerciseName].goalReps)} {exercise.unit}</span>
-                                    {formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps && <div className='exercise-completed-check'>✓</div>}
-                                </div>
-                                <div className='exercise-label-right-side'>
-                                    <div className='rep-scroller-container'>
-                                        <div className='current-rep-label'>current</div>
-                                        <div className='rep-scroller'>
-                                            <div className='increase-rep-button' onClick={() => handleIncrement(exercise.exerciseName)}></div>
-                                            <div className='current-rep'>{formData[exercise.exerciseName].count}</div>
-                                            <div className='decrease-rep-button' onClick={() => handleDecrement(exercise.exerciseName)}></div>
-                                            {/* <div className='temp-button-container'>
-                                                <div className='temp-button' onClick={() => handleDecrement(exercise.exerciseName)}>-</div>
-                                                <div className='temp-button' onClick={() => handleIncrement(exercise.exerciseName)}>+</div>
-                                            </div> */}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {exercise.unit === 'seconds' ?
-                            <div className={`timer-background ${themeClass}`}>
-                                <div className="rep-change-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
-                                <div className='timer-icon-container'>
-                                    <div className='timer-icon'
-                                    onClick={() => {
-                                        setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
-                                        setShowTimer(true)
-                                    }} >
-                                        <div className="timer-top"></div>
-                                        <div className="timer-stem"></div>
-                                        <div className="timer-circle">
-                                            <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * challengeNumber)}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> :
-                            <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
-                        </div>
-                        <div className={`previous-reps-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-previous-reps-container'}`}>
-                            <div>{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
-                                <div className='manual-rep-input-container'>
-                                    <input 
-                                        className="manual-rep-input"
-                                        type='number'
-                                        value={formData[exercise.exerciseName].manualRepInput || ''}
-                                        onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
-                                        onKeyDown={(e) => handleRepInputKeydown(exercise.exerciseName, e)}
-                                        >
-                                    </input>
-                                    {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })
-            setAllExerciseEls(dailyChallengeExercises)
-            checkCompletionStatus(formData)
         }
-    }, [currentUserWorkoutData, formData, visibleRepsContainers])
+    }, [currentUserWorkoutData, formData])
 
     useEffect(() => {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             console.log('challenge mode!: ', currentChallengeMode)
             console.log('challenge mode!: ', mostRecentCompletedChallengeData.challengeNumber)
-            const generateExerciseEls = () => {
+            const generateExerciseList = () => {
                 if (currentChallengeMode === 'classic') {
                     const exercises = [...currentUserWorkoutData.dailyRoutine.slice(1)]
                     const totalExercises = exercises.length
+                    const isOddDay = tempChallengeNumber % 2 === 1
+                    const midpoint = Math.ceil(totalExercises / 2)
                     let todaysExercises
                     //next split into A/B routine
 
                     if (tempChallengeNumber > 199) {
                         // A/B routine + 2 exercises off
-                        todaysExercises = exercises.slice(0, -2)
+                        const selectedHalf = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
+                        const skipIndex1 = tempChallengeNumber % selectedHalf.length
+                        const skipIndex2 = (skipIndex1 + 1) % selectedHalf.length
+                        todaysExercises = selectedHalf.filter((_, index) => index !== skipIndex1 && index !== skipIndex2)
                     } else if (tempChallengeNumber > 159) {
                         // A/B routine + 1 exercise off
-                        todaysExercises = exercises.slice(0, -1)
+                        const selectedHalf = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
+                        const skipIndex = tempChallengeNumber % selectedHalf.length
+                        todaysExercises = selectedHalf.filter((_, index) => index !== skipIndex)
                     } else if (tempChallengeNumber > 119) {
                         // A/B routine
-                        const isOddDay = tempChallengeNumber % 2 === 1
-
-                        const midpoint = Math.ceil(totalExercises / 2)
                         todaysExercises = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
                     } else if (tempChallengeNumber > 79) {
                         // 2 exercises off
@@ -342,25 +274,104 @@ export default function CurrentDailyChallenge(props) {
                         todaysExercises = exercises.filter((_, index) => index !== skipIndex1 && index !== skipIndex2)
                     } else if (tempChallengeNumber > 39) {
                         // 1 exercise off
-                        const skipIndex = tempChallengeNumber % totalExercises
+                        const adjustedChallengeNumber = tempChallengeNumber - 40
+                        const skipIndex = adjustedChallengeNumber % totalExercises
                         todaysExercises = exercises.filter((_, index) => index !== skipIndex)
                     } else {
                         // full routine
                         todaysExercises = exercises
                     }
 
-                    return todaysExercises.map((exercise, index) => (
-                        <div key={index}>{exercise.exerciseName}</div>
-                    ))
+                    setExercisesToShow(todaysExercises)
+                    
                 } else {
                     return (
                     <div>goodbye</div>
-                )
+                    )
                 }
             }
-            setExercisesToShow(generateExerciseEls)
+            generateExerciseList()
         }
     }, [currentChallengeMode])
+
+    useEffect(() => {
+        if (exercisesToShow) {
+            const generateExerciseEls = () => {
+                return exercisesToShow.map((exercise, index) => {
+                    const completedCount = formData[exercise.exerciseName].count || 0
+                    const goalReps = Math.ceil(formData[exercise.exerciseName].goalReps) || 1
+                    const percentageCompleted = (completedCount / goalReps) * 100
+                    return (
+                        <div key={index} className='current-workout-list-item'>
+                            {percentageCompleted == 0 && <div className='progress-bar-placer'></div>}
+                            {percentageCompleted !== 0 && <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
+                                {percentageCompleted !== 0 && <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>}
+                                {percentageCompleted !== 0 && <div className='progress-bar-indicator'></div>}
+                                {percentageCompleted < 100 && <div className='count-remaining-progress'>{Math.ceil(formData[exercise.exerciseName].goalReps) - formData[exercise.exerciseName].count}</div>}
+                            </div>}
+                            <div className='exercise-timer-container'>
+                                <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
+                                    <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
+                                        <span className='required-rep-label'>{Math.ceil(formData[exercise.exerciseName].goalReps)} {exercise.unit}</span>
+                                        {formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps && <div className='exercise-completed-check'>✓</div>}
+                                    </div>
+                                    <div className='exercise-label-right-side'>
+                                        <div className='rep-scroller-container'>
+                                            <div className='current-rep-label'>current</div>
+                                            <div className='rep-scroller'>
+                                                <div className='increase-rep-button' onClick={() => handleIncrement(exercise.exerciseName)}></div>
+                                                <div className='current-rep'>{formData[exercise.exerciseName].count}</div>
+                                                <div className='decrease-rep-button' onClick={() => handleDecrement(exercise.exerciseName)}></div>
+                                                {/* <div className='temp-button-container'>
+                                                    <div className='temp-button' onClick={() => handleDecrement(exercise.exerciseName)}>-</div>
+                                                    <div className='temp-button' onClick={() => handleIncrement(exercise.exerciseName)}>+</div>
+                                                </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {exercise.unit === 'seconds' ?
+                                <div className={`timer-background ${themeClass}`}>
+                                    <div className="rep-change-visual-timer">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>
+                                    <div className='timer-icon-container'>
+                                        <div className='timer-icon'
+                                        onClick={() => {
+                                            setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
+                                            setShowTimer(true)
+                                        }} >
+                                            <div className="timer-top"></div>
+                                            <div className="timer-stem"></div>
+                                            <div className="timer-circle">
+                                                <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * challengeNumber)}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> :
+                                <div className="rep-change-visual">{formData[exercise.exerciseName].repChange !== 0 && `${formData[exercise.exerciseName].repChange > 0 ? '+' : '-'}${Math.abs(formData[exercise.exerciseName].repChange)}`}</div>}
+                            </div>
+                            <div className={`previous-reps-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-previous-reps-container'}`}>
+                                <div>{formData[exercise.exerciseName].previousSets.join(' + ')}{formData[exercise.exerciseName].previousSets.length > 0 ? ' +' : ''}
+                                    <div className='manual-rep-input-container'>
+                                        <input 
+                                            className="manual-rep-input"
+                                            type='number'
+                                            value={formData[exercise.exerciseName].manualRepInput || ''}
+                                            onChange={(e) => handleRepInputChange(exercise.exerciseName, e.target.value)}
+                                            onKeyDown={(e) => handleRepInputKeydown(exercise.exerciseName, e)}
+                                            >
+                                        </input>
+                                        {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+            setAllExerciseEls(generateExerciseEls)
+            checkCompletionStatus(formData)
+        }
+    }, [exercisesToShow, formData, visibleRepsContainers])
 
     const handleFormChange = (event) => {
         const { name, value } = event.target
@@ -489,10 +500,11 @@ export default function CurrentDailyChallenge(props) {
             <BackButton />
             <form onSubmit={handleSubmit}>
                 <div className="day-title">
-                    Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
+                    {/* Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span> */}
+                    {tempChallengeNumber}
                 </div>
                 <div>{currentChallengeMode}</div>
-                {exercisesToShow}
+                {/* {exercisesToShow} */}
                 {allExerciseEls}
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>
