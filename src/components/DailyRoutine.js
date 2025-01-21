@@ -5,7 +5,7 @@ import { ReactComponent as EditIcon } from '../assets/edit_icon.svg'
 
 function DailyRoutine(props) {
     const { currentUserWorkoutData, retrieveData } = props
-    const [editRoutineMode, setEditRoutineMode] = useState(false)
+    const [editRoutineMode, setEditRoutineMode] = useState(true)
     const [exerciseEls, setExerciseEls] = useState()
     const [formErrors, setFormErrors] = useState([])
     const [showUpdateMessage, setShowUpdateMessage] = useState(false)
@@ -52,6 +52,8 @@ function DailyRoutine(props) {
     useEffect(() => {
         if (editRoutineMode && currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0) {
             setFormData(currentUserWorkoutData.dailyRoutine)
+        } else {
+            console.log('logging here: ', editRoutineMode)
         }
 
     }, [editRoutineMode])
@@ -68,7 +70,7 @@ function DailyRoutine(props) {
         const { name, value } = event.target
         const newFormData = [...formData]
         if (name === 'dailyIncrement') {
-            newFormData[index][name] = value === '' ? '' : Number(value)
+            newFormData[index + 1][name] = value === '' ? '' : Number(value)
         } else {
             if (index === 0) {
                 newFormData[index] = { [name]: value }
@@ -95,7 +97,7 @@ function DailyRoutine(props) {
     }
 
     const removeExerciseInput = (index) => {
-        const newFormData = formData.filter((_, i) => i !== index)
+        const newFormData = formData.filter((_, i) => i !== (index + 1))
         setFormData(newFormData)
     }
 
@@ -223,7 +225,7 @@ function DailyRoutine(props) {
                     <div className='daily-routine-title'>{currentUserWorkoutData && currentUserWorkoutData.dailyRoutine.length > 0 ? 'Current' : 'Set'} Daily Routine</div>
                     <form className='daily-routine-form' onSubmit={submitDailyRoutine}>
                         <div className='challenge-mode-container'>
-                            <label htmlFor='challengeMode' className='' >Challenge Mode:</label>
+                            <label htmlFor='challengeMode' className=''>Challenge Mode:</label>
                             <select className='challenge-mode-select' name='challengeMode' onChange={(e) => handleInputChange(0, e)} value={formData[0].challengeMode}>
                                 <option value=''>please select...</option>
                                 <option value='classic'>classic</option>

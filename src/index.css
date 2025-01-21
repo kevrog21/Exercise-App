@@ -108,9 +108,10 @@ main {
 .new-user-message-container {
   background: #EAEAEA;
   width: 60%;
-  margin: 15vw auto;
+  margin: 30vw auto;
   padding: 10vw 5vw;
   border-radius: 15px;
+  color: black;
 }
 
 .new-user-header {
@@ -420,6 +421,7 @@ footer {
   display: block;
   margin: .5em auto;
   padding: .25em;
+  cursor: pointer;
 }
 
 .challenge-mode-display {

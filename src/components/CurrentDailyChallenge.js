@@ -5,7 +5,6 @@ import BackButton from './BackButton'
 import { ThemeContext } from './ThemeProvider'
 
 export default function CurrentDailyChallenge(props) {
-    const tempChallengeNumber = 43
     const navigate = useNavigateToLink()
     const [allExerciseEls, setAllExerciseEls] = useState([])
     const [exercisesToShow, setExercisesToShow] = useState()
@@ -244,37 +243,37 @@ export default function CurrentDailyChallenge(props) {
         if (currentUserWorkoutData && Object.keys(formData).length > 2) {
             console.log('challenge mode!: ', currentChallengeMode)
             console.log('challenge mode!: ', mostRecentCompletedChallengeData.challengeNumber)
+            const exercises = [...currentUserWorkoutData.dailyRoutine.slice(1)]
+            const totalExercises = exercises.length
+            let todaysExercises
             const generateExerciseList = () => {
                 if (currentChallengeMode === 'classic') {
-                    const exercises = [...currentUserWorkoutData.dailyRoutine.slice(1)]
-                    const totalExercises = exercises.length
-                    const isOddDay = tempChallengeNumber % 2 === 1
+                    const isOddDay = mostRecentCompletedChallengeData.challengeNumber % 2 === 1
                     const midpoint = Math.ceil(totalExercises / 2)
-                    let todaysExercises
                     //next split into A/B routine
 
-                    if (tempChallengeNumber > 199) {
+                    if (mostRecentCompletedChallengeData.challengeNumber > 199) {
                         // A/B routine + 2 exercises off
                         const selectedHalf = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
-                        const skipIndex1 = tempChallengeNumber % selectedHalf.length
+                        const skipIndex1 = mostRecentCompletedChallengeData.challengeNumber % selectedHalf.length
                         const skipIndex2 = (skipIndex1 + 1) % selectedHalf.length
                         todaysExercises = selectedHalf.filter((_, index) => index !== skipIndex1 && index !== skipIndex2)
-                    } else if (tempChallengeNumber > 159) {
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 159) {
                         // A/B routine + 1 exercise off
                         const selectedHalf = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
-                        const skipIndex = tempChallengeNumber % selectedHalf.length
+                        const skipIndex = mostRecentCompletedChallengeData.challengeNumber % selectedHalf.length
                         todaysExercises = selectedHalf.filter((_, index) => index !== skipIndex)
-                    } else if (tempChallengeNumber > 119) {
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 119) {
                         // A/B routine
                         todaysExercises = isOddDay ? exercises.slice(midpoint) : exercises.slice(0, midpoint)
-                    } else if (tempChallengeNumber > 79) {
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 79) {
                         // 2 exercises off
-                        const skipIndex1 = tempChallengeNumber % totalExercises
+                        const skipIndex1 = mostRecentCompletedChallengeData.challengeNumber % totalExercises
                         const skipIndex2 = (skipIndex1 + 1) % totalExercises
                         todaysExercises = exercises.filter((_, index) => index !== skipIndex1 && index !== skipIndex2)
-                    } else if (tempChallengeNumber > 39) {
+                    } else if (mostRecentCompletedChallengeData.challengeNumber > 39) {
                         // 1 exercise off
-                        const adjustedChallengeNumber = tempChallengeNumber - 40
+                        const adjustedChallengeNumber = mostRecentCompletedChallengeData.challengeNumber - 40
                         const skipIndex = adjustedChallengeNumber % totalExercises
                         todaysExercises = exercises.filter((_, index) => index !== skipIndex)
                     } else {
@@ -284,10 +283,8 @@ export default function CurrentDailyChallenge(props) {
 
                     setExercisesToShow(todaysExercises)
                     
-                } else {
-                    return (
-                    <div>goodbye</div>
-                    )
+                } else if (currentChallengeMode === 'increment') {
+                    setExercisesToShow(exercises)
                 }
             }
             generateExerciseList()
@@ -307,13 +304,13 @@ export default function CurrentDailyChallenge(props) {
                             {percentageCompleted !== 0 && <div className={`exercise-progress-container ${visibleRepsContainers[exercise.exerciseName] ? '' : 'hide-progress-container'}`}>
                                 {percentageCompleted !== 0 && <div className='count-completed-progress' style={{ width: `${percentageCompleted}%` }}>{formData[exercise.exerciseName].count}</div>}
                                 {percentageCompleted !== 0 && <div className='progress-bar-indicator'></div>}
-                                {percentageCompleted < 100 && <div className='count-remaining-progress'>{Math.ceil(formData[exercise.exerciseName].goalReps) - formData[exercise.exerciseName].count}</div>}
+                                {percentageCompleted < 100 && <div className='count-remaining-progress'>{goalReps - formData[exercise.exerciseName].count}</div>}
                             </div>}
                             <div className='exercise-timer-container'>
-                                <div className={`exercise ${formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps ? 'completed-exercise' : ''}`}>
+                                <div className={`exercise ${formData[exercise.exerciseName].count >= goalReps ? 'completed-exercise' : ''}`}>
                                     <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
-                                        <span className='required-rep-label'>{Math.ceil(formData[exercise.exerciseName].goalReps)} {exercise.unit}</span>
-                                        {formData[exercise.exerciseName].count >= formData[exercise.exerciseName].goalReps && <div className='exercise-completed-check'>✓</div>}
+                                        <span className='required-rep-label'>{goalReps} {exercise.unit}</span>
+                                        {formData[exercise.exerciseName].count >= goalReps && <div className='exercise-completed-check'>✓</div>}
                                     </div>
                                     <div className='exercise-label-right-side'>
                                         <div className='rep-scroller-container'>
@@ -500,11 +497,9 @@ export default function CurrentDailyChallenge(props) {
             <BackButton />
             <form onSubmit={handleSubmit}>
                 <div className="day-title">
-                    {/* Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span> */}
-                    {tempChallengeNumber}
+                    Day <span className="day-title-number">{allExerciseEls.length > 0 && challengeNumber}</span>
                 </div>
                 <div>{currentChallengeMode}</div>
-                {/* {exercisesToShow} */}
                 {allExerciseEls}
                 <input type='text' name='honeyp' className='honeyp' value={formData.honeyp} onChange={handleFormChange} tabIndex='-1' autoComplete="off"></input>
                 <input type='password' name='pword' className="password-input" value={formData.pword} onChange={handleFormChange}></input>
