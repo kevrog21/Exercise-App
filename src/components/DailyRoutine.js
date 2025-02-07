@@ -20,15 +20,18 @@ function DailyRoutine(props) {
         {
             exerciseName: 'push-ups',
             dailyIncrement: 1,
-            unit: 'reps'  
+            unit: 'reps',
+            maxReps: 0
         },{
             exerciseName: 'sit-ups',
             dailyIncrement: 1,
-            unit: 'reps'  
+            unit: 'reps',
+            maxReps: 0  
         },{
             exerciseName: 'pull ups',
             dailyIncrement: .5,
-            unit: 'reps'  
+            unit: 'reps',
+            maxReps: 0  
         }
     ])
     const { theme } = useContext(ThemeContext)
@@ -42,6 +45,7 @@ function DailyRoutine(props) {
                         <span>- {exercise.exerciseName}</span>
                         <div className='routine-details'> daily increment: {exercise.dailyIncrement}</div>
                         <div className='routine-details'> unit: {exercise.unit}</div>
+                        {exercise.maxReps && <div>has max reps</div>}
                     </div>
                 )
             })
@@ -69,10 +73,11 @@ function DailyRoutine(props) {
     const handleInputChange = (index, event) => {
         const { name, value } = event.target
         const newFormData = [...formData]
-        if (name === 'dailyIncrement') {
+        console.log('the index of the item being updated is ... ', index)
+        if (name === 'dailyIncrement' || name === 'maxReps') {
             newFormData[index + 1][name] = value === '' ? '' : Number(value)
         } else {
-            if (index === 0) {
+            if (name === 'challengeMode') {
                 newFormData[index] = { [name]: value }
             } else {
                 newFormData[index + 1][name] = value
@@ -93,7 +98,7 @@ function DailyRoutine(props) {
     }
 
     const addNewExerciseInput = () => {
-        setFormData([...formData, { exerciseName: '', dailyIncrement: 1, unit: 'reps' }])
+        setFormData([...formData, { exerciseName: '', dailyIncrement: 1, unit: 'reps', maxReps: 0 }])
     }
 
     const removeExerciseInput = (index) => {
@@ -269,7 +274,18 @@ function DailyRoutine(props) {
                                                     <option value="seconds">seconds</option>
                                                 </select>
                                             </div>
+                                            <div className='max-container'>
+                                                <label htmlFor="maxReps">Max {exercise.unit}</label>
+                                                <input className='max-input'
+                                                    type="number"
+                                                    name="maxReps"
+                                                    placeholder=""
+                                                    value={exercise.maxReps}
+                                                    onChange={(e) => handleInputChange(index, e)}
+                                                />
+                                            </div>
                                         </div>
+                                        
                                         <button type="button" className='routine-remove-btn' onClick={() => removeExerciseInput(index)}>remove</button>
                                     </div>
                                 </div>

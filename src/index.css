@@ -467,13 +467,26 @@ footer {
   display: flex;
 }
 
-.incremenet-input {
-  width: 3em;
+.increment-container {
   margin: 0 1em 0 0;
 }
 
+.incremenet-input {
+  margin: 0 1em 0 0;
+  width: 100%;
+}
+
 .unit-container {
-  margin: 0 0 0 1em;
+  margin: 0 1em 0 1em;
+}
+
+.max-container {
+  margin: 0 auto 0 0;
+  width: 100%;
+}
+
+.max-input {
+  width: 90%;
 }
 
 .routine-remove-btn {
