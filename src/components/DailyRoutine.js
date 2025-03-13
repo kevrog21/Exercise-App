@@ -5,7 +5,7 @@ import { ReactComponent as EditIcon } from '../assets/edit_icon.svg'
 
 function DailyRoutine(props) {
     const { currentUserWorkoutData, retrieveData } = props
-    const [editRoutineMode, setEditRoutineMode] = useState(true)
+    const [editRoutineMode, setEditRoutineMode] = useState(false)
     const [exerciseEls, setExerciseEls] = useState()
     const [formErrors, setFormErrors] = useState([])
     const [showUpdateMessage, setShowUpdateMessage] = useState(false)
@@ -21,17 +21,17 @@ function DailyRoutine(props) {
             exerciseName: 'push-ups',
             dailyIncrement: 1,
             unit: 'reps',
-            maxReps: 0
+            maxReps: ''
         },{
             exerciseName: 'sit-ups',
             dailyIncrement: 1,
             unit: 'reps',
-            maxReps: 0  
+            maxReps: ''
         },{
             exerciseName: 'pull ups',
             dailyIncrement: .5,
             unit: 'reps',
-            maxReps: 0  
+            maxReps: ''
         }
     ])
     const { theme } = useContext(ThemeContext)
@@ -242,7 +242,7 @@ function DailyRoutine(props) {
                         
                         { formData.slice(1).map((exercise, index) => (
                                 <div key={index}>
-                                    <div className='daily-routine-input-continer'>
+                                    <div className='daily-routine-input-container'>
                                     <div className='routine-exercise-number'>Exercise {index + 1}</div>
                                         <label htmlFor="exerciseName">Exercise Name</label>
                                         <input 
@@ -275,11 +275,11 @@ function DailyRoutine(props) {
                                                 </select>
                                             </div>
                                             <div className='max-container'>
-                                                <label htmlFor="maxReps">Max {exercise.unit}</label>
+                                                <label htmlFor="maxReps" className='max-reps-label'>Max {exercise.unit}</label>
                                                 <input className='max-input'
                                                     type="number"
                                                     name="maxReps"
-                                                    placeholder=""
+                                                    placeholder="(optional)"
                                                     value={exercise.maxReps}
                                                     onChange={(e) => handleInputChange(index, e)}
                                                 />

@@ -435,7 +435,7 @@ footer {
   margin: .5em 0 2em -1em;
 }
 
-.daily-routine-input-continer {
+.daily-routine-input-container {
   margin: 2em auto 2em auto;
   display: flex;
   flex-direction: column;
@@ -447,20 +447,21 @@ footer {
   
 }
 
-.daily-routine-input-continer label {
+.daily-routine-input-container label {
   font-size: .75em;
   margin: 0 0 .25em .25em;
   display: block;
   color: rgb(104, 104, 104);
 }
 
-.daily-routine-input-continer input,
+.daily-routine-input-container input,
 .unit-input {
   background: #d4d4d4;
   border: none;
-  margin: 0 0 1em 0;
+  margin: 0 0 .5em 0;
   border-radius: 3px;
   padding: .25em .5em;
+  box-sizing: border-box;
 }
 
 .incremenet-unit-container {
@@ -468,7 +469,7 @@ footer {
 }
 
 .increment-container {
-  margin: 0 1em 0 0;
+
 }
 
 .incremenet-input {
@@ -485,14 +486,23 @@ footer {
   width: 100%;
 }
 
+.max-reps-label {
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
 .max-input {
   width: 90%;
+}
+
+.max-input::placeholder {
+  font-size: .75em;
 }
 
 .routine-remove-btn {
   color: rgb(204, 30, 30);
   text-align: right;
-  margin: 0 0 0 auto;
+  margin: .5em 0 0 auto;
   border: none;
 }
 

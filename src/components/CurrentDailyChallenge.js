@@ -222,14 +222,20 @@ export default function CurrentDailyChallenge(props) {
     }
 
     const checkCompletionStatus = (objectToCheck) => {
+        const relevantExercises = exercisesToShow.map(exercise => exercise.exerciseName)
+
         const itemsWithIsCompleteKey = Object.keys(objectToCheck)
-        .filter(key => objectToCheck[key].hasOwnProperty('isComplete'))
+        .filter(key => 
+            objectToCheck[key].hasOwnProperty('isComplete') && relevantExercises.includes(key)
+        )
         .map(key => objectToCheck[key].isComplete)
 
         if (itemsWithIsCompleteKey.length > 0 && itemsWithIsCompleteKey.every(isComplete => isComplete)) {
             setIsChallengeComplete(true)
+            console.log("itemsWithIsCompleteKey", itemsWithIsCompleteKey)
         } else {
             setIsChallengeComplete(false)
+            console.log("itemsWithIsCompleteKey", itemsWithIsCompleteKey)
         }
     }
 
@@ -293,6 +299,7 @@ export default function CurrentDailyChallenge(props) {
 
     useEffect(() => {
         if (exercisesToShow) {
+        console.log("exercisesToShow", exercisesToShow)
             const generateExerciseEls = () => {
                 return exercisesToShow.map((exercise, index) => {
                     const completedCount = formData[exercise.exerciseName].count || 0
