@@ -23,6 +23,7 @@ export default function CurrentDailyChallenge(props) {
 
     const [showTimer, setShowTimer] = useState(false)
     const [timerTime, setTimerTime] = useState(0)
+    const [timerExerciseName, setTimerExerciseName] = useState()
 
     const { theme } = useContext(ThemeContext)
 
@@ -196,6 +197,27 @@ export default function CurrentDailyChallenge(props) {
         })
     }
 
+    const completedTimedExercise = (exerciseName) => {
+        console.log('completedTimedExercise running')
+        setShowTimer(false)
+        setRepInputChangeTransition(true)
+        setLastButtonClickTime(Date.now())
+        setFormData((prevFormData) => {
+            const updatedFormData = { ...prevFormData }
+            const repValue = updatedFormData[exerciseName].goalReps
+
+            updatedFormData[exerciseName] = {
+                ...updatedFormData[exerciseName],
+                count: updatedFormData[exerciseName].count + repValue,
+                isComplete: prevFormData[exerciseName].count + repValue >= prevFormData[exerciseName].goalReps,
+                repChange: repValue,
+                previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
+                manualRepInput: '',
+            }
+            return updatedFormData
+        })
+    }
+
     const handleRepInputChange = (exerciseName, value) => {
         const newFormData = {
             ...formData,
@@ -232,10 +254,8 @@ export default function CurrentDailyChallenge(props) {
 
         if (itemsWithIsCompleteKey.length > 0 && itemsWithIsCompleteKey.every(isComplete => isComplete)) {
             setIsChallengeComplete(true)
-            console.log("itemsWithIsCompleteKey", itemsWithIsCompleteKey)
         } else {
             setIsChallengeComplete(false)
-            console.log("itemsWithIsCompleteKey", itemsWithIsCompleteKey)
         }
     }
 
@@ -314,7 +334,7 @@ export default function CurrentDailyChallenge(props) {
                                 {percentageCompleted < 100 && <div className='count-remaining-progress'>{goalReps - formData[exercise.exerciseName].count}</div>}
                             </div>}
                             <div className='exercise-timer-container'>
-                                <div className={`exercise ${formData[exercise.exerciseName].count >= goalReps ? 'completed-exercise' : ''}`}>
+                                <div className={`exercise ${formData[exercise.exerciseName].count >= goalReps ? 'completed-exercise' : ''} ${visibleRepsContainers[exercise.exerciseName] ? 'exercise-updating' : ''}`}>
                                     <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
                                         <span className='required-rep-label'>{goalReps} {exercise.unit}</span>
                                         {formData[exercise.exerciseName].count >= goalReps && <div className='exercise-completed-check'>✓</div>}
@@ -341,6 +361,7 @@ export default function CurrentDailyChallenge(props) {
                                         <div className='timer-icon'
                                         onClick={() => {
                                             setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
+                                            setTimerExerciseName(exercise.exerciseName)
                                             setShowTimer(true)
                                         }} >
                                             <div className="timer-top"></div>
@@ -367,6 +388,7 @@ export default function CurrentDailyChallenge(props) {
                                         {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
                                     </div>
                                 </div>
+                                {exercise.unit === 'seconds' && <div onClick={() => completedTimedExercise(exercise.exerciseName)} className='mark-complete'>mark complete</div>}
                             </div>
                         </div>
                     )
@@ -500,6 +522,8 @@ export default function CurrentDailyChallenge(props) {
                     showTimer={showTimer}
                     setShowTimer={setShowTimer}
                     timerTime={timerTime}
+                    completedTimedExercise={completedTimedExercise}
+                    timerExerciseName={timerExerciseName}
                 />}
             <BackButton />
             <form onSubmit={handleSubmit}>

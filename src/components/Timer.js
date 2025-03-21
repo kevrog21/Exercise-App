@@ -2,8 +2,11 @@ import { useEffect, useState } from "react"
 
 export default function Timer(props) {
 
-    const [time, setTime] = useState(props.timerTime)
+    // const [time, setTime] = useState(props.timerTime)
+    const [time, setTime] = useState(3)
     const [timesUp, setTimesUp] = useState(false)
+
+    const {completedTimedExercise, timerExerciseName} = props
 
     useEffect(() => {
         if (time <= 0) return
@@ -32,7 +35,7 @@ export default function Timer(props) {
             <div className="timer-contents">
                 <div className="timer-time-display">{time > 0 ? formatTime(time) : timesUp ? "Time's Up" : handleTimesUp()}</div>
             </div>
-            <div className="timer-btns-container">
+            <div className={`timer-btns-container ${timesUp ? '' : 'complete-btn-placeholder'}`}>
                 <div className={`timer-reset-btn ${timesUp ? 'white-btn' : ''}`}
                     onClick={() => {
                         setTimesUp(false)
@@ -41,7 +44,8 @@ export default function Timer(props) {
                 <div className={`timer-back-btn ${timesUp ? 'white-btn' : ''}`}
                     onClick={() => {
                         props.setShowTimer(false)
-                }}>back</div>
+                }}>{timesUp ? 'back' : 'cancel'}</div>
+                {timesUp && <div className='timer-mark-complete' onClick={() => completedTimedExercise(timerExerciseName)}>✓ mark complete</div>}
             </div>
         </div>
     )

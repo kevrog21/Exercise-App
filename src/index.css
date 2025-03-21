@@ -638,7 +638,6 @@ footer {
 .exercise {
   color: black;
   text-align: left;
-  /* background: red; */
   background: #F1F1F1;
   flex: 1;
   max-width: 70%;
@@ -646,6 +645,11 @@ footer {
   border-radius: 1em;
   padding: 0 .5em 0 0;
   font-size: .75em;
+  border: 2px solid rgb(41, 41, 41);
+}
+
+.exercise-updating {
+  border: 2px solid rgb(13, 158, 13);
 }
 
 .completed-exercise {
@@ -795,6 +799,16 @@ footer {
   display: flex;
   transition: all .15s ease;
   align-items: center;
+}
+
+.mark-complete {
+  font-size: .8em;
+  margin: 0 0 0 auto;
+  background: rgb(15, 63, 15);
+  padding: .25em 1em;
+  border-radius: 2em;
+  border: 1px solid rgb(8, 49, 8);
+  color:rgb(184, 250, 184)
 }
 
 .progress-bar-placer {
@@ -1051,10 +1065,13 @@ input {
   display: flex;
   justify-content: space-around;
   margin: 2em 0 0 0;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .timer-back-btn,
-.timer-reset-btn  {
+.timer-reset-btn,
+.timer-mark-complete  {
   padding: .5em 3em;
   border-radius: 2em;
   border: 2px solid rgb(104, 104, 104);
@@ -1062,11 +1079,23 @@ input {
 }
 
 .timer-back-btn {
-  margin: 0 0 0 1em;
+  margin: 0 5vw 0 0;
 }
 
 .timer-reset-btn {
-  margin: 0 1em 0 0;
+  margin: 0 0 0 5vw;
+}
+
+.timer-mark-complete {
+  width: 50%;
+  margin: 1.5em 1em;
+  background: rgb(29, 18, 18);
+  color: rgb(84, 197, 84);
+  border: 2px solid rgb(29, 18, 18);
+}
+
+.timer-btns-container.complete-btn-placeholder {
+  padding: 0 0 calc(5.25em + 4px) 0;
 }
 
 .edit-goals-btn {
