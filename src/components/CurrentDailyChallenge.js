@@ -197,24 +197,67 @@ export default function CurrentDailyChallenge(props) {
         })
     }
 
-    const completedTimedExercise = (exerciseName) => {
-        console.log('completedTimedExercise running')
+    const markComplete = (exerciseName) => {
+        console.log('markComplete running')
         setShowTimer(false)
         setRepInputChangeTransition(true)
         setLastButtonClickTime(Date.now())
         setFormData((prevFormData) => {
             const updatedFormData = { ...prevFormData }
-            const repValue = updatedFormData[exerciseName].goalReps
+            const repValue = Math.ceil(updatedFormData[exerciseName].goalReps - updatedFormData[exerciseName].count)
 
+            if (repValue > 0) {
+                updatedFormData[exerciseName] = {
+                    ...updatedFormData[exerciseName],
+                    count: updatedFormData[exerciseName].count + repValue,
+                    isComplete: prevFormData[exerciseName].count + repValue >= prevFormData[exerciseName].goalReps,
+                    repChange: repValue,
+                    previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
+                    manualRepInput: '',
+                }
+                return updatedFormData
+            } else {
+                return updatedFormData
+            }
+        })
+    }
+
+    const clearReps = (exerciseName) => {
+        setFormData((prevFormData) => {
+            const updatedFormData = { ...prevFormData }
             updatedFormData[exerciseName] = {
                 ...updatedFormData[exerciseName],
-                count: updatedFormData[exerciseName].count + repValue,
-                isComplete: prevFormData[exerciseName].count + repValue >= prevFormData[exerciseName].goalReps,
-                repChange: repValue,
-                previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
+                count: 0,
+                isComplete: false,
+                repChange: 0,
+                previousSets: [],
                 manualRepInput: '',
             }
             return updatedFormData
+        })
+    }
+
+    const saveTimerProgress = (exerciseName, currentTimerTime) => {
+        setShowTimer(false)
+        setRepInputChangeTransition(true)
+        setLastButtonClickTime(Date.now())
+        setFormData((prevFormData) => {
+            const updatedFormData = { ...prevFormData }
+            const repValue = Math.ceil((formData[exerciseName].goalReps - formData[exerciseName].count) - currentTimerTime)
+
+            if (repValue > 0) {
+                updatedFormData[exerciseName] = {
+                    ...updatedFormData[exerciseName],
+                    count: updatedFormData[exerciseName].count + repValue,
+                    isComplete: prevFormData[exerciseName].count + repValue >= prevFormData[exerciseName].goalReps,
+                    repChange: repValue,
+                    previousSets: [...updatedFormData[exerciseName].previousSets, repValue],
+                    manualRepInput: '',
+                }
+                return updatedFormData
+            } else {
+                return updatedFormData
+            }
         })
     }
 
@@ -360,14 +403,14 @@ export default function CurrentDailyChallenge(props) {
                                     <div className='timer-icon-container'>
                                         <div className='timer-icon'
                                         onClick={() => {
-                                            setTimerTime(Math.ceil(exercise.dailyIncrement * challengeNumber))
+                                            setTimerTime(Math.ceil(goalReps - formData[exercise.exerciseName].count))
                                             setTimerExerciseName(exercise.exerciseName)
                                             setShowTimer(true)
                                         }} >
                                             <div className="timer-top"></div>
                                             <div className="timer-stem"></div>
                                             <div className="timer-circle">
-                                                <div className='timer-icon-text'>{Math.ceil(exercise.dailyIncrement * challengeNumber)}</div>
+                                                <div className='timer-icon-text'>{Math.ceil(goalReps - formData[exercise.exerciseName].count)}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -388,7 +431,9 @@ export default function CurrentDailyChallenge(props) {
                                         {<div className={`manual-rep-input-submit ${!formData[exercise.exerciseName].manualRepInput && 'opacity-none'}`} onClick={() => pushRepToPrevReps(exercise.exerciseName)}>OK</div>}
                                     </div>
                                 </div>
-                                {exercise.unit === 'seconds' && <div onClick={() => completedTimedExercise(exercise.exerciseName)} className='mark-complete'>mark complete</div>}
+                                {formData[exercise.exerciseName].count < goalReps ? 
+                                <div onClick={() => markComplete(exercise.exerciseName)} className='mark-complete-btn'>mark complete</div> :
+                                <div onClick={() => clearReps(exercise.exerciseName)} className='clear-reps-btn'>clear reps</div>}
                             </div>
                         </div>
                     )
@@ -522,7 +567,8 @@ export default function CurrentDailyChallenge(props) {
                     showTimer={showTimer}
                     setShowTimer={setShowTimer}
                     timerTime={timerTime}
-                    completedTimedExercise={completedTimedExercise}
+                    markComplete={markComplete}
+                    saveTimerProgress={saveTimerProgress}
                     timerExerciseName={timerExerciseName}
                 />}
             <BackButton />

@@ -801,14 +801,36 @@ footer {
   align-items: center;
 }
 
-.mark-complete {
-  font-size: .8em;
+.mark-complete-btn,
+.clear-reps-btn {
+  font-size: .65em;
   margin: 0 0 0 auto;
-  background: rgb(15, 63, 15);
-  padding: .25em 1em;
+  background: rgb(105, 243, 105);
+  padding: .5em 1em;
   border-radius: 2em;
-  border: 1px solid rgb(8, 49, 8);
-  color:rgb(184, 250, 184)
+  border: 1px solid rgb(15, 63, 15);
+  color:rgb(0, 0, 0);
+  text-align: center;
+  line-height: 1em;
+  min-width: 20%;
+}
+
+.dark-mode-theme .mark-complete-btn {
+  background: rgb(30, 87, 30);
+  color:rgb(184, 250, 184);
+  border: 1px solid rgb(0, 0, 0);
+}
+
+.clear-reps-btn {
+  background: rgb(255, 133, 133);
+  border: 1px solid rgb(0, 0, 0);
+  color:rgb(0, 0, 0);
+}
+
+.dark-mode-theme .clear-reps-btn {
+  background: rgb(36, 34, 34);
+  border: 1px solid rgb(212, 0, 0);
+  color:rgb(248, 45, 45);
 }
 
 .progress-bar-placer {
@@ -883,7 +905,7 @@ input {
 
 .timer-background {
   /* background: blue; */
-  width: 15%;
+  width: calc(15% - 2px);
   position: absolute;
   right: 0;
 }
@@ -1042,7 +1064,6 @@ input {
 .timer-container {
   background:rgba(0, 0, 0, .98);
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   color: white;
@@ -1052,13 +1073,27 @@ input {
   background-color: red;
 }
 
+.timer-container-gray {
+  background:rgb(59, 59, 59)
+}
+
 .timer-contents {
 
 }
 
+.paused-label {
+  margin: 40vh 0 .5rem 0;
+  font-size: 1.25rem;
+  height: 1.25rem;
+}
+
 .timer-time-display {
   font-size: 4em;
-  margin: 3em 0 0 0;
+  margin: calc(40vh + 1.75rem) 0 0 0;
+}
+
+.timer-time-display-paused {
+  margin: 0 0 0 0;
 }
 
 .timer-btns-container {
@@ -1088,7 +1123,7 @@ input {
 
 .timer-mark-complete {
   width: 50%;
-  margin: 1.5em 1em;
+  margin: 1.5em 1em 0 1em;
   background: rgb(29, 18, 18);
   color: rgb(84, 197, 84);
   border: 2px solid rgb(29, 18, 18);
