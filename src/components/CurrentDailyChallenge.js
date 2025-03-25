@@ -50,15 +50,34 @@ export default function CurrentDailyChallenge(props) {
                     localStorage.removeItem('formDate')
 
                     const initialFormData = currentUserWorkoutData.dailyRoutine.slice(1).reduce((acc, exercise, index) => {
+                        let calculatedGoalReps
+                        let exerciseMaxed = false
+
+                        if (mostRecentCompletedChallengeData[exercise.exerciseName]) {
+                            if (exercise.maxReps > 0) {
+                                if (mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement > exercise.maxReps) {
+                                    calculatedGoalReps = exercise.maxReps
+                                    exerciseMaxed = true
+                                } else {
+                                    calculatedGoalReps = mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement
+                                }
+                            } else {
+                                calculatedGoalReps = mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement
+                            }
+                        } else {
+                            calculatedGoalReps = exercise.dailyIncrement
+                        }
+
                         return { 
                             ...acc, 
                             [exercise.exerciseName]: {
                                 count: 0,
-                                goalReps: mostRecentCompletedChallengeData[exercise.exerciseName] ? mostRecentCompletedChallengeData[exercise.exerciseName].goalReps + exercise.dailyIncrement : exercise.dailyIncrement,
+                                goalReps: calculatedGoalReps,
                                 isComplete: false,
                                 repChange: 0,
                                 manualRepInput: '',
-                                previousSets: []
+                                previousSets: [],
+                                exerciseMaxedOut: exerciseMaxed
                             }
                         }
                     }, {
@@ -380,6 +399,7 @@ export default function CurrentDailyChallenge(props) {
                                 <div className={`exercise ${formData[exercise.exerciseName].count >= goalReps ? 'completed-exercise' : ''} ${visibleRepsContainers[exercise.exerciseName] ? 'exercise-updating' : ''}`}>
                                     <div className='exercise-label' onClick={() => showPreviousReps(exercise.exerciseName)}>{exercise.exerciseName}:
                                         <span className='required-rep-label'>{goalReps} {exercise.unit}</span>
+                                        {formData[exercise.exerciseName].exerciseMaxedOut && <span className='maxed-rep-label'>(maxed-out)</span>}
                                         {formData[exercise.exerciseName].count >= goalReps && <div className='exercise-completed-check'>✓</div>}
                                     </div>
                                     <div className='exercise-label-right-side'>

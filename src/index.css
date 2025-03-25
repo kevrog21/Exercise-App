@@ -664,10 +664,16 @@ footer {
   position: relative;
 }
 
-.required-rep-label {
+.required-rep-label,
+.maxed-rep-label {
   font-weight: 400;
   font-size: .75em;
   padding: 0 0 0 .5em;
+}
+
+.maxed-rep-label {
+  color: rgb(211, 0, 0);
+  font-size: .6em;
 }
 
 .exercise-label-right-side {
@@ -1106,7 +1112,10 @@ input {
 
 .timer-back-btn,
 .timer-reset-btn,
-.timer-mark-complete  {
+.timer-mark-complete,
+.timer-pause-btn,
+.timer-resume-btn,
+.save-return-btn  {
   padding: .5em 3em;
   border-radius: 2em;
   border: 2px solid rgb(104, 104, 104);
@@ -1121,12 +1130,24 @@ input {
   margin: 0 0 0 5vw;
 }
 
-.timer-mark-complete {
-  width: 50%;
+.timer-mark-complete,
+.timer-pause-btn,
+.timer-resume-btn,
+.save-return-btn {
+  width: 52%;
   margin: 1.5em 1em 0 1em;
   background: rgb(29, 18, 18);
   color: rgb(84, 197, 84);
   border: 2px solid rgb(29, 18, 18);
+}
+
+.timer-pause-btn {
+  background: rgb(59, 59, 59);
+}
+
+.save-return-btn {
+
+  color: rgb(165, 165, 165);
 }
 
 .timer-btns-container.complete-btn-placeholder {

@@ -49,9 +49,9 @@ export default function Timer(props) {
                     onClick={() => {
                         props.setShowTimer(false)
                 }}>{timesUp ? 'back' : 'cancel'}</div>
-                {!timesUp && !timerIsPaused && <div className='timer-mark-complete' onClick={() => setTimerIsPaused(true)}>take a break</div>}
-                {!timesUp && timerIsPaused && <div className='timer-mark-complete' onClick={() => setTimerIsPaused(false)}>resume</div>}
-                {timerIsPaused && <div className='timer-mark-complete' onClick={() => saveTimerProgress(timerExerciseName, time)}>save & come back later</div>}
+                {!timesUp && !timerIsPaused && <div className='timer-pause-btn' onClick={() => setTimerIsPaused(true)}>take a break</div>}
+                {!timesUp && timerIsPaused && <div className='timer-resume-btn' onClick={() => setTimerIsPaused(false)}>resume</div>}
+                {timerIsPaused && <div className='save-return-btn' onClick={() => saveTimerProgress(timerExerciseName, time)}>save & come back later</div>}
                 {timesUp && <div className='timer-mark-complete' onClick={() => markComplete(timerExerciseName)}>✓ mark complete</div>}
             </div>
         </div>

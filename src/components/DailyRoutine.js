@@ -45,7 +45,7 @@ function DailyRoutine(props) {
                         <span>- {exercise.exerciseName}</span>
                         <div className='routine-details'> daily increment: {exercise.dailyIncrement}</div>
                         <div className='routine-details'> unit: {exercise.unit}</div>
-                        {exercise.maxReps && <div>has max reps</div>}
+                        {exercise.maxReps && <div className='routine-details'>max reps: {exercise.maxReps}</div>}
                     </div>
                 )
             })
@@ -98,7 +98,7 @@ function DailyRoutine(props) {
     }
 
     const addNewExerciseInput = () => {
-        setFormData([...formData, { exerciseName: '', dailyIncrement: 1, unit: 'reps', maxReps: 0 }])
+        setFormData([...formData, { exerciseName: '', dailyIncrement: 1, unit: 'reps', maxReps: '' }])
     }
 
     const removeExerciseInput = (index) => {
